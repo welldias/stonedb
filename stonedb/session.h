@@ -16,8 +16,8 @@ namespace Oci20 {
         Connect m_connect;
         bool m_databaseOpen;
     public:
-        void Open(const std::string& uid, const std::string& pswd, const std::string& alias, ConnectionMode mode, Safety safety);
-        void Open(const std::string& uid, const std::string& pswd, const std::string& host, const std::string& port, const std::string& sid, bool serviceInsteadOfSid, ConnectionMode mode, Safety safety);
+        void Open(const std::string& uid, const std::string& pswd, const std::string& alias, Connect::Mode mode, Connect::Safety safety);
+        void Open(const std::string& uid, const std::string& pswd, const std::string& host, const std::string& port, const std::string& sid, bool serviceInsteadOfSid, Connect::Mode mode, Connect::Safety safety);
         void Reconnect();
         void Close(bool purge);
         bool IsDatabaseOpen() const { return m_databaseOpen; }
@@ -51,7 +51,7 @@ namespace Oci20 {
     public:
         std::string   GetGlobalName();
         std::string   GetVersionStr();
-        ServerVersion GetVersion();
+        Connect::ServerVersion GetVersion();
 
     private:
         std::string m_CurrentSqlAddress;

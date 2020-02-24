@@ -171,6 +171,7 @@
     <ClCompile Include="buff_cursor.cpp" />
     <ClCompile Include="connect.cpp" />
     <ClCompile Include="host_array.cpp" />
+    <ClCompile Include="list_ctrl_manager.cpp" />
     <ClCompile Include="session.cpp" />
     <ClCompile Include="date_var.cpp" />
     <ClCompile Include="dummy_var.cpp" />
@@ -198,6 +199,9 @@
     <ClInclude Include="buff_cursor.h" />
     <ClInclude Include="connect.h" />
     <ClInclude Include="host_array.h" />
+    <ClInclude Include="list_ctrl_data_provider.h" />
+    <ClInclude Include="list_ctrl_data_provider_helper.h" />
+    <ClInclude Include="list_ctrl_manager.h" />
     <ClInclude Include="session.h" />
     <ClInclude Include="date_var.h" />
     <ClInclude Include="dummy_var.h" />

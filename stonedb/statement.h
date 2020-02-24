@@ -13,25 +13,27 @@
 
 namespace Oci20 {
 
-    enum class StatementType {
-        Unknown  = 0,
-        Select   = OCI_STMT_SELECT,
-        Update   = OCI_STMT_UPDATE,
-        Delete   = OCI_STMT_DELETE,
-        Insert   = OCI_STMT_INSERT,
-        Create   = OCI_STMT_CREATE,
-        Drop     = OCI_STMT_DROP,
-        Alter    = OCI_STMT_ALTER,
-        Begin    = OCI_STMT_BEGIN,
-        Declare  = OCI_STMT_DECLARE,
-        Explain  = 15,
-        Merge    = OCI_STMT_MERGE,
-        Rollback = 17,
-        Commit   = 21,
-    };
 
 	class Statement : public Object {
     public:
+
+        enum class Type {
+            Unknown = 0,
+            Select = OCI_STMT_SELECT,
+            Update = OCI_STMT_UPDATE,
+            Delete = OCI_STMT_DELETE,
+            Insert = OCI_STMT_INSERT,
+            Create = OCI_STMT_CREATE,
+            Drop = OCI_STMT_DROP,
+            Alter = OCI_STMT_ALTER,
+            Begin = OCI_STMT_BEGIN,
+            Declare = OCI_STMT_DECLARE,
+            Explain = 15,
+            Merge = OCI_STMT_MERGE,
+            Rollback = 17,
+            Commit = 21,
+        };
+
         Statement(Connect& connect, const std::string& statementString, int prefetch = 100);
         Statement(Connect& connect, int prefetch = 100);
         ~Statement();
@@ -59,7 +61,7 @@ namespace Oci20 {
         OCIError* GetOCIError() const { return m_connect.GetOCIError(); }
 
         bool IsReadOnly();
-        StatementType GetType();
+        Type GetType();
         ub4 GetRowCount();
         ub2 GetSQLFunctionCode();
         std::string GetSQLFunctionDescription();
