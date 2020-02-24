@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-#include "connect.h"
-#include "exception.h"
+#include "session.h"
+#include "error_util.h"
 #include "settings.h"
 
 using namespace Stone;
@@ -16,46 +16,57 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-    Oci20::Connect connect;
+    Oci20::Session ociSession;
+
+    //Oci20::ConnectionMode mode = Oci20::ConnectionMode::Default;
+    //Oci20::Safety safety = Oci20::Safety::ReadOnly;
+    //std::string user = "lasadb01_safe_fai";
+    //std::string password = "lasadb01_safe_fai";
+    //std::string tnsAlias = "ORA11GD";
+
+    std::string user = "system";
+    std::string password = "custonil";
+    std::string tnsAlias = "";
+    std::string host = "localhost";
+    std::string port = "1521";
+    std::string sid = "XEPDB1";
+    bool serviceInsteadOfSid = true;
     Oci20::ConnectionMode mode = Oci20::ConnectionMode::Default;
-    Oci20::Safety safety = Oci20::Safety::ReadOnly;
+    Oci20::Safety safety = Oci20::Safety::None;
 
-    std::string user = "lasadb01_safe_fai";
-    std::string password = "lasadb01_safe_fai";
-    std::string tnsAlias = "ORA11GD";
-
-    Settings::GetInstance().SetDateFormat("dd.mm.yy");
-    Settings::GetInstance().SetAutocommit(false);
-    Settings::GetInstance().SetCommitOnDisconnect(2);
-    Settings::GetInstance().SetSavePassword(true);
-    Settings::GetInstance().SetOutputEnable(true);
-    Settings::GetInstance().SetOutputSize(100000);
-    Settings::GetInstance().SetSessionStatistics(false);
-    Settings::GetInstance().SetSessionStatisticsMode("Auto");
-    Settings::GetInstance().SetScanForSubstitution(false);
-    Settings::GetInstance().SetPlanTable("PLAN_TABLE");
-    Settings::GetInstance().SetCancelQueryDelay(1);
-    Settings::GetInstance().SetTopmostCancelQuery(true);
-    Settings::GetInstance().SetDbmsXplanDisplayCursor(false);
-    Settings::GetInstance().SetWhitespaceLineDelim(true);
-    Settings::GetInstance().SetEmptyLineDelim(true);
-    Settings::GetInstance().SetUnlimitedOutputSize(false);
-    Settings::GetInstance().SetExternalToolCommand("");
-    Settings::GetInstance().SetExternalToolParameters("");
+    Settings::SetDateFormat("dd.mm.yy");
+    Settings::SetAutocommit(false);
+    Settings::SetCommitOnDisconnect(2);
+    Settings::SetSavePassword(true);
+    Settings::SetOutputEnable(true);
+    Settings::SetOutputSize(100000);
+    Settings::SetSessionStatistics(false);
+    Settings::SetSessionStatisticsMode("Auto");
+    Settings::SetScanForSubstitution(false);
+    Settings::SetPlanTable("PLAN_TABLE");
+    Settings::SetCancelQueryDelay(1);
+    Settings::SetTopmostCancelQuery(true);
+    Settings::SetDbmsXplanDisplayCursor(false);
+    Settings::SetWhitespaceLineDelim(true);
+    Settings::SetEmptyLineDelim(true);
+    Settings::SetUnlimitedOutputSize(false);
+    Settings::SetExternalToolCommand("");
+    Settings::SetExternalToolParameters("");
 
     /* new properties */
-    Settings::GetInstance().SetTimestampSupported(true);
-    Settings::GetInstance().SetIntervalToTextSupported(true);
+    Settings::SetTimestampSupported(true);
+    Settings::SetIntervalToTextSupported(true);
 
     try {
-		connect.Open(user, password, tnsAlias, mode, safety);
+        //ociSession.Open(user, password, tnsAlias, mode, safety);
+        ociSession.Open(user, password, host, port, sid, serviceInsteadOfSid, mode, safety);
     }
-    catch (const Exception& e) {
+    catch (const Oci20::OciException& e) {
         std::cout << e.what() << std::endl;
     }
 
 
-    connect.Close();
+    ociSession.Close(false);
 
     return 0;
 }

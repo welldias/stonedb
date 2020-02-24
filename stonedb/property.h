@@ -12,7 +12,8 @@ namespace Utils {
         std::string m_name;
         std::string m_value;
     public:
-        Property();
+        //Property();
+        Property(const std::string& name);
         Property(const std::string& name, const std::string& value);
         ~Property();
 

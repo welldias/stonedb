@@ -97,7 +97,7 @@ namespace Oci20 {
 
 		m_open = true;
 
-		if (UTILS_SETTINGS_BOOL_PROPERTY(DbmsXplanDisplayCursor) || UTILS_SETTINGS_BOOL_PROPERTY(SessionStatistics)) {
+		if (SETTINGS_PROPERTY_BOOL(DbmsXplanDisplayCursor) || SETTINGS_PROPERTY_BOOL(SessionStatistics)) {
 			ERROR_UTIL_CHECKTHROW(OCISessionBegin(m_svchp, m_errhp, m_auth_shadowp, m_ext_auth ? OCI_CRED_EXT : OCI_CRED_RDBMS, static_cast<unsigned int>(m_mode)), *this, "");
 			m_openShadow = true;
 		}

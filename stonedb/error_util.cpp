@@ -60,7 +60,7 @@ namespace Oci20 {
 		case 28002: // ORA-28002: the password will expire within <x> days
 			// if encountered while connection is open, report it as usual
 			if (connect.IsOpen()
-				&& (connect.IsOpenShadow() || !(UTILS_SETTINGS_BOOL_PROPERTY(DbmsXplanDisplayCursor) || UTILS_SETTINGS_BOOL_PROPERTY(SessionStatistics))))
+				&& (connect.IsOpenShadow() || !(SETTINGS_PROPERTY_BOOL(DbmsXplanDisplayCursor) || SETTINGS_PROPERTY_BOOL(SessionStatistics))))
 				throw OciException(errcode, strMessage);
 			// if encountered while opening the connection, report it but continue
 			else {

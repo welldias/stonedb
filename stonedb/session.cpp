@@ -129,7 +129,7 @@ namespace Oci20 {
         if (m_OutputEnable != enable
             || m_OutputEnable && connectInit
             || m_OutputSize != size
-            || m_UnlimitedOutputSize != UTILS_SETTINGS_BOOL_PROPERTY(UnlimitedOutputSize)) {
+            || m_UnlimitedOutputSize != SETTINGS_PROPERTY_BOOL(UnlimitedOutputSize)) {
 
             if (size != ULONG_MAX)
                 m_OutputSize = size;
@@ -140,7 +140,7 @@ namespace Oci20 {
 
                     // Version 10 and above support unlimited output buffer size
                     if ((GetVersion() >= ServerVersion::Server10X) 
-                        && ((m_OutputSize > 1000000) || UTILS_SETTINGS_BOOL_PROPERTY(UnlimitedOutputSize)))
+                        && ((m_OutputSize > 1000000) || SETTINGS_PROPERTY_BOOL(UnlimitedOutputSize)))
                         strStatement = "BEGIN dbms_output.enable(NULL); END;";
                     else {
                         strStatement = "BEGIN dbms_output.enable(";
@@ -155,7 +155,7 @@ namespace Oci20 {
             }
 
             m_OutputEnable = enable;
-            m_UnlimitedOutputSize = UTILS_SETTINGS_BOOL_PROPERTY(UnlimitedOutputSize);
+            m_UnlimitedOutputSize = SETTINGS_PROPERTY_BOOL(UnlimitedOutputSize);
         }
     }
 

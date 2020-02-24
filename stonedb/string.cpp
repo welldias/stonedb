@@ -4,9 +4,7 @@ namespace Utils {
 
 	bool String::ToBool(const std::string& str) {
 		std::string value = ToLower(Trim(str));
-		if (value == "true")
-			return true;
-		if (ToInt(value) != 0)
+		if (value == "true" && value != "0")
 			return true;
 		return false;
 	}

@@ -10,32 +10,29 @@
 
 namespace Utils {
 
-#define UTILS_DECLARE_PROPERTY(T,N) \
-        Property&  Get##N () const { return GetProperty(#N); }; \
-        void  Set##N (const T value) { AddProperty(std::string(#N), value); }
-
-#define UTILS_SETTINGS_BOOL_PROPERTY(N) (Settings::GetInstance().Get##N().ToBool())
-
+#define SETTINGS_PROPERTY(N)        (Settings::Get##N().ToString())
+#define SETTINGS_PROPERTY_BOOL(N)   (Settings::Get##N().ToBool())
+#define SETTINGS_PROPERTY_INT(N)    (Settings::Get##N().ToInt())
+#define SETTINGS_PROPERTY_DOUBLE(N) (Settings::Get##N().ToDouble())
 
     class Settings  {
     private:
-        std::set<Property*> m_properties;
+        static std::set<Property*> m_properties;
         Settings();
 
-    public:
-        static Settings& GetInstance() {
-            static Settings INSTANCE;
-            return INSTANCE;
-        }
+    private:
+        static Property& GetProperty(const std::string& name);
 
-        Property& GetProperty(const std::string& name) const;
-
-        void  AddProperty(const std::string& name, std::string value);
-        void  AddProperty(const std::string& name, bool value);
-        void  AddProperty(const std::string& name, int  value);
-        void  AddProperty(const std::string& name, double value);
+        static void  AddProperty(const std::string& name, std::string value);
+        static void  AddProperty(const std::string& name, bool value);
+        static void  AddProperty(const std::string& name, int  value);
+        static void  AddProperty(const std::string& name, double value);
 
     public:
+#define UTILS_DECLARE_PROPERTY(T,N) \
+        static Property&  Get##N () { return Settings::GetProperty(#N); }; \
+        static void  Set##N (const T value) { Settings::AddProperty(std::string(#N), value); }
+
         UTILS_DECLARE_PROPERTY(std::string, DateFormat);
         UTILS_DECLARE_PROPERTY(bool, Autocommit);
         UTILS_DECLARE_PROPERTY(int, CommitOnDisconnect); // 0-rollback,1-commit,2-confirm

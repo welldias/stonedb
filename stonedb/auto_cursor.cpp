@@ -207,14 +207,14 @@ namespace Oci20 {
 			case SQLT_TIMESTAMP:
 			case SQLT_TIMESTAMP_TZ:
 			case SQLT_TIMESTAMP_LTZ:
-				if (UTILS_SETTINGS_BOOL_PROPERTY(TimestampSupported)) {
+				if (SETTINGS_PROPERTY_BOOL(TimestampSupported)) {
 					TimeStampType timeStampeType = static_cast<TimeStampType>(type);
 					fld = new TimestampVar(m_connect.GetOCIEnv(), timeStampeType, m_TimestampFormat);
 				}
 				break;
 			case SQLT_INTERVAL_YM:
 			case SQLT_INTERVAL_DS:
-				if (UTILS_SETTINGS_BOOL_PROPERTY(IntervalToTextSupported)) {
+				if (SETTINGS_PROPERTY_BOOL(IntervalToTextSupported)) {
 					IntervalVarType intervalType = static_cast<IntervalVarType>(type);
 					fld = new IntervalVar(m_connect.GetOCIEnv(), intervalType);
 				}

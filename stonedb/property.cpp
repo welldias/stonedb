@@ -3,7 +3,8 @@
 
 namespace Utils {
 
-	Property::Property() {
+	Property::Property(const std::string& name)
+		: m_name(name) {
 	}
 
 	Property::Property(const std::string& name, const std::string& value)
