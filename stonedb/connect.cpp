@@ -16,7 +16,7 @@ namespace Oci20 {
 		m_ext_auth = false;
 		m_lastExecutionClockTime = 0;
 
-		m_mode = ConnectionMode::Default;
+		m_mode = Mode::Default;
 		m_safety = Safety::None;
 		m_clientVersion = ClientVersion::ClientUnknown;
 
@@ -105,7 +105,7 @@ namespace Oci20 {
 			m_openShadow = false;
 	}
 
-	void Connect::ProcAuthenticationInfo(const std::string& uid, const std::string& pswd, const std::string& alias, ConnectionMode mode, Safety safety) {
+	void Connect::ProcAuthenticationInfo(const std::string& uid, const std::string& pswd, const std::string& alias, Mode mode, Safety safety) {
 		m_version = ServerVersion::ServerUnknown;
 		m_sessionCookies.clear();
 
@@ -153,7 +153,7 @@ namespace Oci20 {
 		}
 	}
 
-	void Connect::Open(const std::string& uid, const std::string& pswd, const std::string& alias, ConnectionMode mode, Safety safety) {
+	void Connect::Open(const std::string& uid, const std::string& pswd, const std::string& alias, Mode mode, Safety safety) {
 
 		m_bypassTns = false;
 		m_strHost.clear();
@@ -164,7 +164,7 @@ namespace Oci20 {
 		DoOpen();
 	}
 
-	void Connect::Open(const std::string& uid, const std::string& pswd, const std::string& host, const std::string& port, const std::string& sid, bool serviceInsteadOfSid, ConnectionMode mode, Safety safety) {
+	void Connect::Open(const std::string& uid, const std::string& pswd, const std::string& host, const std::string& port, const std::string& sid, bool serviceInsteadOfSid, Mode mode, Safety safety) {
 
 		m_bypassTns = true;
 		m_strHost = host;
@@ -324,8 +324,8 @@ namespace Oci20 {
 
 		if (mode) {
 			switch (GetMode()) {
-			case ConnectionMode::SysDba:  displayStr += " as sysdba"; break;
-			case ConnectionMode::SysOper: displayStr += " as sysoper"; break;
+			case Mode::SysDba:  displayStr += " as sysdba"; break;
+			case Mode::SysOper: displayStr += " as sysoper"; break;
 			}
 		}
 

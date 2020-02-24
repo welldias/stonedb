@@ -58,7 +58,7 @@ namespace Oci20 {
 
 		Clock64 startTime = SystemClock::StartCount();
 
-		if (GetType() == StatementType::Select) {
+		if (GetType() == Statement::Type::Select) {
 			Statement::Execute(0);
 			Define();
 		}
@@ -75,7 +75,7 @@ namespace Oci20 {
 
 		Clock64 startTime = SystemClock::StartCount();
 
-		if (GetType() == StatementType::Select) {
+		if (GetType() == Statement::Type::Select) {
 			Statement::ExecuteShadow(0);
 			Define();
 		}
@@ -159,7 +159,7 @@ namespace Oci20 {
 				if (m_SkipLobs)
 					fld = new DummyVar(true);
 				else
-					fld = new CLobVar(m_connect.GetOCIEnv(), m_connect.GetOCISvcCtx(), m_connect.GetOCIError(), m_StringLimit, static_cast<CharForm>(char_form));
+					fld = new CLobVar(m_connect.GetOCIEnv(), m_connect.GetOCISvcCtx(), m_connect.GetOCIError(), m_StringLimit, static_cast<LobVar::CharForm>(char_form));
 				break;
 			case SQLT_BLOB:
 				if (m_SkipLobs)
@@ -208,14 +208,14 @@ namespace Oci20 {
 			case SQLT_TIMESTAMP_TZ:
 			case SQLT_TIMESTAMP_LTZ:
 				if (SETTINGS_PROPERTY_BOOL(TimestampSupported)) {
-					TimeStampType timeStampeType = static_cast<TimeStampType>(type);
+					TimestampVar::Type timeStampeType = static_cast<TimestampVar::Type>(type);
 					fld = new TimestampVar(m_connect.GetOCIEnv(), timeStampeType, m_TimestampFormat);
 				}
 				break;
 			case SQLT_INTERVAL_YM:
 			case SQLT_INTERVAL_DS:
 				if (SETTINGS_PROPERTY_BOOL(IntervalToTextSupported)) {
-					IntervalVarType intervalType = static_cast<IntervalVarType>(type);
+					IntervalVar::Type intervalType = static_cast<IntervalVar::Type>(type);
 					fld = new IntervalVar(m_connect.GetOCIEnv(), intervalType);
 				}
 				break;

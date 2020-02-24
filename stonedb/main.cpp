@@ -10,16 +10,17 @@
 
 using namespace Stone;
 using namespace Utils;
+using namespace Oci20;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-    Oci20::Session ociSession;
+    Session ociSession;
 
-    //Oci20::ConnectionMode mode = Oci20::ConnectionMode::Default;
-    //Oci20::Safety safety = Oci20::Safety::ReadOnly;
+    //ConnectionMode mode = ConnectionMode::Default;
+    //Safety safety = Safety::ReadOnly;
     //std::string user = "lasadb01_safe_fai";
     //std::string password = "lasadb01_safe_fai";
     //std::string tnsAlias = "ORA11GD";
@@ -31,8 +32,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     std::string port = "1521";
     std::string sid = "XEPDB1";
     bool serviceInsteadOfSid = true;
-    Oci20::ConnectionMode mode = Oci20::ConnectionMode::Default;
-    Oci20::Safety safety = Oci20::Safety::None;
+    Connect::Mode mode = Connect::Mode::Default;
+    Connect::Safety safety = Connect::Safety::None;
 
     Settings::SetDateFormat("dd.mm.yy");
     Settings::SetAutocommit(false);
@@ -61,7 +62,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         //ociSession.Open(user, password, tnsAlias, mode, safety);
         ociSession.Open(user, password, host, port, sid, serviceInsteadOfSid, mode, safety);
     }
-    catch (const Oci20::OciException& e) {
+    catch (const OciException& e) {
         std::cout << e.what() << std::endl;
     }
 

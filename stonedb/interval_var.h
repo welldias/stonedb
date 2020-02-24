@@ -5,14 +5,14 @@
 
 namespace Oci20 {
 
-    enum class IntervalVarType {
-        Ym = SQLT_INTERVAL_YM,
-        Ds = SQLT_INTERVAL_DS,
-    };
-
 	class IntervalVar : public NativeOciVariable {
     public:
-        IntervalVar(OCIEnv* ociEnv, IntervalVarType type);
+        enum class Type {
+            Ym = SQLT_INTERVAL_YM,
+            Ds = SQLT_INTERVAL_DS,
+        };
+
+        IntervalVar(OCIEnv* ociEnv, Type type);
 
         virtual sword GetString(std::string& strBuff, const std::string& null = m_null) const;
 

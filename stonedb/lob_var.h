@@ -5,18 +5,20 @@
 
 namespace Oci20 {
 
-    enum class LobSubtype { 
-        CLob  = SQLT_CLOB, 
-        BLob  = SQLT_BLOB, 
-        BFile = SQLT_FILE 
-    };
-
-    enum class CharForm { 
-        Implicit = SQLCS_IMPLICIT, 
-        Nchar = SQLCS_NCHAR 
-    };
-
 	class LobVar : public NativeOciVariable {
+    public:
+        enum class Type {
+            CLob = SQLT_CLOB,
+            BLob = SQLT_BLOB,
+            BFile = SQLT_FILE
+        };
+
+        enum class CharForm {
+            Implicit = SQLCS_IMPLICIT,
+            Nchar = SQLCS_NCHAR
+        };
+
+
     protected:
         OCISvcCtx* m_ociSvcCtx;
         OCIError* m_ociError;
@@ -24,7 +26,7 @@ namespace Oci20 {
         int m_limit;
         CharForm m_charForm;
         
-        LobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, LobSubtype type, int limit, CharForm charForm = CharForm::Implicit);
+        LobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, Type type, int limit, CharForm charForm = CharForm::Implicit);
 
         virtual sword GetString(std::string& strbuff, const std::string& null = m_null) const;
 
@@ -34,7 +36,7 @@ namespace Oci20 {
     class CLobVar : public LobVar {
     public:
         CLobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, int limit, CharForm charForm = CharForm::Implicit)
-            : LobVar(ociEnv, ociSvcCtx, ociError, LobSubtype::CLob, limit, charForm) {}
+            : LobVar(ociEnv, ociSvcCtx, ociError, Type::CLob, limit, charForm) {}
 
         using LobVar::GetString;
     };
@@ -42,7 +44,7 @@ namespace Oci20 {
     class BLobVar : public LobVar {
     protected:
         int m_hexFormatLength;
-        BLobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, LobSubtype type, int limit, int hexFormatLength);
+        BLobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, Type type, int limit, int hexFormatLength);
 
     public:
         BLobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, int limit, int hexFormatLength);

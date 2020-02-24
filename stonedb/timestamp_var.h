@@ -5,18 +5,19 @@
 
 namespace Oci20 {
 
-    enum class TimeStampType {
-        Date = SQLT_DATE,
-        Time = SQLT_TIME,
-        Timestamp = SQLT_TIMESTAMP,
-        TimestampTz = SQLT_TIMESTAMP_TZ,
-        TimestampLtz = SQLT_TIMESTAMP_LTZ,
-    };
-
     class TimestampVar : public NativeOciVariable {
     public:
-        TimestampVar(OCIEnv* ociEnv, TimeStampType type);
-        TimestampVar(OCIEnv* ociEnv, TimeStampType type, const std::string& dateFormat);
+
+        enum class Type {
+            Date = SQLT_DATE,
+            Time = SQLT_TIME,
+            Timestamp = SQLT_TIMESTAMP,
+            TimestampTz = SQLT_TIMESTAMP_TZ,
+            TimestampLtz = SQLT_TIMESTAMP_LTZ,
+        };
+
+        TimestampVar(OCIEnv* ociEnv, Type type);
+        TimestampVar(OCIEnv* ociEnv, Type type, const std::string& dateFormat);
 
         virtual sword GetString(std::string& strbuff, const std::string& null = m_null) const;
 

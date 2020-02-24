@@ -3,11 +3,11 @@
 
 namespace Oci20 {
 
-    TimestampVar::TimestampVar(OCIEnv* ociEnv, TimeStampType type)
+    TimestampVar::TimestampVar(OCIEnv* ociEnv, Type type)
         : NativeOciVariable(ociEnv, static_cast<ub2>(type), SqltDtypeMap(static_cast<ub2>(type))) {
     }
 
-    TimestampVar::TimestampVar(OCIEnv* ociEnv, TimeStampType type, const std::string& dateFormat)
+    TimestampVar::TimestampVar(OCIEnv* ociEnv, Type type, const std::string& dateFormat)
         : NativeOciVariable(ociEnv, static_cast<ub2>(type), SqltDtypeMap(static_cast<ub2>(type))),
         m_dateFormat(dateFormat) {
 

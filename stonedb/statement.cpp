@@ -47,7 +47,7 @@ namespace Oci20
         //              ie: indp / rcodep may be incorrect.
         //              Workaround: Set OCI_ATTR_PREFETCH_ROWS to 0
         //              This problem was introduced in 8.1.6
-        if (m_connect.GetClientVersion() >= ClientVersion::Client9X) {
+        if (m_connect.GetClientVersion() >= Connect::ClientVersion::Client9X) {
             ERROR_UTIL_CHECKTHROW(OCIAttrSet(m_sttmp, OCI_HTYPE_STMT, &m_prefetch, 0, OCI_ATTR_PREFETCH_ROWS, GetOCIError()), m_connect, m_sttmText);
         }
         ERROR_UTIL_CHECKTHROW(OCIStmtPrepare(m_sttmp, GetOCIError(), (oratext*)statementString.c_str(), static_cast<ub4>(statementString.length()), OCI_NTV_SYNTAX, OCI_DEFAULT), m_connect, m_sttmText);
@@ -57,7 +57,7 @@ namespace Oci20
 
         ERROR_UTIL_CHECKINTERRUPT(m_connect);
 
-        if (!guaranteedSafe && m_connect.GetSafety() == Safety::ReadOnly && !IsReadOnly()) {
+        if (!guaranteedSafe && m_connect.GetSafety() == Connect::Safety::ReadOnly && !IsReadOnly()) {
             throw OciException(0, "Oci20::Statement::Execute: Only SELECT is allowed for Read-Only connection!");
         }
 
@@ -71,7 +71,7 @@ namespace Oci20
 
         ERROR_UTIL_CHECKINTERRUPT(m_connect);
 
-        if (!guaranteedSafe && m_connect.GetSafety() == Safety::ReadOnly && !IsReadOnly()) {
+        if (!guaranteedSafe && m_connect.GetSafety() == Connect::Safety::ReadOnly && !IsReadOnly()) {
             throw OciException(0, "Oci20::Statement::Execute: Only SELECT is allowed for Read-Only connection!");
         }
 
@@ -170,37 +170,37 @@ namespace Oci20
     bool Statement::IsReadOnly() {
         
         switch (GetType()) {
-        case StatementType::Select:
-        case StatementType::Explain:
+        case Type::Select:
+        case Type::Explain:
             return true;
         }
 
         return false;
     }
 
-    StatementType Statement::GetType() {
+    Statement::Type Statement::GetType() {
         
         ub2 type = 0;
 
         ERROR_UTIL_CHECKTHROW(OCIAttrGet(m_sttmp, OCI_HTYPE_STMT, &type, (ub4*)0, OCI_ATTR_STMT_TYPE, GetOCIError()), m_connect, m_sttmText);
         
-        StatementType result = static_cast<StatementType>(type);
+        Type result = static_cast<Type>(type);
 
         switch (result) {
-        case StatementType::Unknown:
-        case StatementType::Select:
-        case StatementType::Update:
-        case StatementType::Delete:
-        case StatementType::Insert:
-        case StatementType::Create:
-        case StatementType::Drop:
-        case StatementType::Alter:
-        case StatementType::Begin:
-        case StatementType::Declare:
-        case StatementType::Explain:
-        case StatementType::Merge:
-        case StatementType::Rollback:
-        case StatementType::Commit:
+        case Type::Unknown:
+        case Type::Select:
+        case Type::Update:
+        case Type::Delete:
+        case Type::Insert:
+        case Type::Create:
+        case Type::Drop:
+        case Type::Alter:
+        case Type::Begin:
+        case Type::Declare:
+        case Type::Explain:
+        case Type::Merge:
+        case Type::Rollback:
+        case Type::Commit:
             break;
         default:
             throw OciException(type, "Oci20::Statement::GetType: statement type not supported!");
@@ -262,7 +262,7 @@ namespace Oci20
         ub2 offset;
 
         ub4 attrType = OCI_ATTR_PARSE_ERROR_OFFSET;
-        if (m_connect.GetClientVersion() == ClientVersion::Client80X)
+        if (m_connect.GetClientVersion() == Connect::ClientVersion::Client80X)
             attrType = OCI80X_ATTR_PARSE_ERROR_OFFSET;
 
         // 10.09.2003 bug fix, 8.0.5 compatibility

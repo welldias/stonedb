@@ -18,7 +18,7 @@ namespace Oci20 {
     Session::~Session() {
 	}
 
-    void Session::Open(const std::string& uid, const std::string& pswd, const std::string& alias, ConnectionMode mode, Safety safety) {
+    void Session::Open(const std::string& uid, const std::string& pswd, const std::string& alias, Connect::Mode mode, Connect::Safety safety) {
         
         m_GetSIDFailed = false;
         m_sessionSid.clear();
@@ -42,7 +42,7 @@ namespace Oci20 {
             SetShadowClientInfo();
     }
 
-    void Session::Open(const std::string& uid, const std::string& pswd, const std::string& host, const std::string& port, const std::string& sid, bool serviceInsteadOfSid, ConnectionMode mode, Safety safety) {
+    void Session::Open(const std::string& uid, const std::string& pswd, const std::string& host, const std::string& port, const std::string& sid, bool serviceInsteadOfSid, Connect::Mode mode, Connect::Safety safety) {
         m_GetSIDFailed = false;
         m_sessionSid.clear();
         m_strVersion.clear();
@@ -139,7 +139,7 @@ namespace Oci20 {
                     std::string strStatement;
 
                     // Version 10 and above support unlimited output buffer size
-                    if ((GetVersion() >= ServerVersion::Server10X) 
+                    if ((GetVersion() >= Connect::ServerVersion::Server10X)
                         && ((m_OutputSize > 1000000) || SETTINGS_PROPERTY_BOOL(UnlimitedOutputSize)))
                         strStatement = "BEGIN dbms_output.enable(NULL); END;";
                     else {
@@ -180,7 +180,7 @@ namespace Oci20 {
             }
         }
 
-        return m_sessionSid.c_str();
+        return m_sessionSid;
     }
 
     void Session::LoadSessionNlsParameters() {
@@ -290,10 +290,10 @@ namespace Oci20 {
         return m_strVersion;
     }
 
-    ServerVersion Session::GetVersion() {
+    Connect::ServerVersion Session::GetVersion() {
 
-        ServerVersion version = m_connect.GetVersion();
-        if (version != ServerVersion::ServerUnknown) {
+        Connect::ServerVersion version = m_connect.GetVersion();
+        if (version != Connect::ServerVersion::ServerUnknown) {
             return version;
         }
 
@@ -301,13 +301,13 @@ namespace Oci20 {
             GetVersionStr();
 
         if (!m_strVersion.empty()) {
-            if (!strncmp(m_strVersion.c_str(), "11", sizeof("11") - 1)) version = ServerVersion::Server11X;
-            else if (!strncmp(m_strVersion.c_str(), "10", sizeof("10") - 1)) version = ServerVersion::Server10X;
-            else if (!strncmp(m_strVersion.c_str(), "9", sizeof("9") - 1)) version = ServerVersion::Server9X;
-            else if (!strncmp(m_strVersion.c_str(), "8.1", sizeof("8.1") - 1)) version = ServerVersion::Server81X;
-            else if (!strncmp(m_strVersion.c_str(), "8.0", sizeof("8.0") - 1)) version = ServerVersion::Server80X;
-            else if (!strncmp(m_strVersion.c_str(), "7.3", sizeof("7.3") - 1)) version = ServerVersion::Server73X;
-            else if (!strncmp(m_strVersion.c_str(), "7", sizeof("7") - 1)) version = ServerVersion::Server7X;
+            if (!strncmp(m_strVersion.c_str(), "11", sizeof("11") - 1)) version = Connect::ServerVersion::Server11X;
+            else if (!strncmp(m_strVersion.c_str(), "10", sizeof("10") - 1)) version = Connect::ServerVersion::Server10X;
+            else if (!strncmp(m_strVersion.c_str(), "9", sizeof("9") - 1)) version = Connect::ServerVersion::Server9X;
+            else if (!strncmp(m_strVersion.c_str(), "8.1", sizeof("8.1") - 1)) version = Connect::ServerVersion::Server81X;
+            else if (!strncmp(m_strVersion.c_str(), "8.0", sizeof("8.0") - 1)) version = Connect::ServerVersion::Server80X;
+            else if (!strncmp(m_strVersion.c_str(), "7.3", sizeof("7.3") - 1)) version = Connect::ServerVersion::Server73X;
+            else if (!strncmp(m_strVersion.c_str(), "7", sizeof("7") - 1)) version = Connect::ServerVersion::Server7X;
 
             m_connect.SetVersion(version);
         }
@@ -321,7 +321,7 @@ namespace Oci20 {
 
         BuffCursor cursor(m_connect);
 
-        if (GetVersion() < ServerVersion::Server81X)
+        if (GetVersion() < Connect::ServerVersion::Server81X)
             cursor.Prepare("SELECT USER, USER FROM dual");
         else
             cursor.Prepare("SELECT SYS_CONTEXT('USERENV', 'CURRENT_USER'), SYS_CONTEXT('USERENV', 'CURRENT_SCHEMA') FROM dual");
@@ -342,7 +342,7 @@ namespace Oci20 {
 
         try {
             BuffCursor cursor(m_connect);
-            if (GetVersion() < ServerVersion::Server10X)
+            if (GetVersion() < Connect::ServerVersion::Server10X)
                 cursor.Prepare("SELECT rawtohex(sql_address) as sql_address, sql_hash_value, rawtohex(prev_sql_addr) as prev_sql_addr, prev_hash_value, sql_id, prev_sql_id, sql_child_number, prev_child_number from v$session where sid = :sid");
             else
                 cursor.Prepare("SELECT rawtohex(sql_address) as sql_address, sql_hash_value, rawtohex(prev_sql_addr) as prev_sql_addr, prev_hash_value from v$session where sid = :sid");
@@ -357,7 +357,7 @@ namespace Oci20 {
                 cursor.GetString(1, sql_hash_value);
                 cursor.GetString(2, prev_sql_addr);
                 cursor.GetString(3, prev_hash_value);
-                if (GetVersion() < ServerVersion::Server10X) {
+                if (GetVersion() < Connect::ServerVersion::Server10X) {
                     cursor.GetString(4, sql_id);
                     cursor.GetString(5, prev_sql_id);
                     cursor.GetString(6, sql_child_number);
@@ -367,7 +367,7 @@ namespace Oci20 {
                 if (sql_address == "00") {
                     m_CurrentSqlAddress = prev_sql_addr;
                     m_CurrentSqlHashValue = prev_hash_value;
-                    if (GetVersion() >= ServerVersion::Server10X) {
+                    if (GetVersion() >= Connect::ServerVersion::Server10X) {
                         m_CurrentSqlID = prev_sql_id;
                         m_CurrentSqlChildNumber = prev_child_number;
                     }
@@ -375,7 +375,7 @@ namespace Oci20 {
                 else {
                     m_CurrentSqlAddress = sql_address;
                     m_CurrentSqlHashValue = sql_hash_value;
-                    if (GetVersion() >= ServerVersion::Server10X)
+                    if (GetVersion() >= Connect::ServerVersion::Server10X)
                     {
                         m_CurrentSqlID = sql_id;
                         m_CurrentSqlChildNumber = sql_child_number;

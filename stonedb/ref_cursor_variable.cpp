@@ -33,7 +33,7 @@ namespace Oci20 {
 		//              ie: indp / rcodep may be incorrect.
 		//              Workaround: Set OCI_ATTR_PREFETCH_ROWS to 0
 		//              This problem was introduced in 8.1.6
-		if (m_connect.GetClientVersion() >= ClientVersion::Client9X)
+		if (m_connect.GetClientVersion() >= Connect::ClientVersion::Client9X)
 			result = OCIAttrSet(m_sttmp, OCI_HTYPE_STMT, &m_prefetch, 0, OCI_ATTR_PREFETCH_ROWS, GetOCIError());
 
 		if (result == OCI_SUCCESS) {

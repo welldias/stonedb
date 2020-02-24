@@ -6,7 +6,7 @@
 
 namespace Oci20 {
 
-    LobVar::LobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, LobSubtype subtype, int limit, CharForm charForm)
+    LobVar::LobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, Type subtype, int limit, CharForm charForm)
         : NativeOciVariable(ociEnv, static_cast<ub2>(subtype), OCI_DTYPE_LOB),
         m_ociSvcCtx(ociSvcCtx),
         m_ociError(ociError),
@@ -58,7 +58,7 @@ namespace Oci20 {
         return OCILobRead(m_ociSvcCtx, m_ociError, (OCILobLocator*)m_buffer, &readsize, offset, pStrbuff, readsize, 0, 0, 0, static_cast<ub1>(m_charForm));
     }
 
-    BLobVar::BLobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, LobSubtype type, int limit, int hexFormatLength)
+    BLobVar::BLobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, Type type, int limit, int hexFormatLength)
         : LobVar(ociEnv, ociSvcCtx, ociError, type, limit),
         m_hexFormatLength(hexFormatLength) {
 
@@ -68,7 +68,7 @@ namespace Oci20 {
     }
 
     BLobVar::BLobVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, int limit, int hexFormatLength)
-        : LobVar(ociEnv, ociSvcCtx, ociError, LobSubtype::BLob, limit),
+        : LobVar(ociEnv, ociSvcCtx, ociError, Type::BLob, limit),
         m_hexFormatLength(hexFormatLength) {
         if (!(m_hexFormatLength % 2 == 0)) {
             throw OciException(0, "Oci20::BLobVar::BLobVar: Hex line length must be even.");
@@ -104,7 +104,7 @@ namespace Oci20 {
     }
 
     BFileVar::BFileVar(OCIEnv* ociEnv, OCISvcCtx* ociSvcCtx, OCIError* ociError, int limit, int hexFormatLength)
-        : BLobVar(ociEnv, ociSvcCtx, ociError, LobSubtype::BFile, limit, hexFormatLength) {
+        : BLobVar(ociEnv, ociSvcCtx, ociError, Type::BFile, limit, hexFormatLength) {
     }
 
     sword BFileVar::GetString(std::string& buff, const std::string& null) const {

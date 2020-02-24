@@ -3,7 +3,7 @@
 
 namespace Oci20 {
 
-    IntervalVar::IntervalVar(OCIEnv* ociEnv, IntervalVarType type)
+    IntervalVar::IntervalVar(OCIEnv* ociEnv, Type type)
         : NativeOciVariable(ociEnv, static_cast<ub2>(type), SqltDtypeMap(static_cast<ub2>(type))) {
     }
 

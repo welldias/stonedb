@@ -14,6 +14,9 @@
     <Filter Include="basic">
       <UniqueIdentifier>{6cd8c6ba-f4a8-4504-ad98-c28e5ed13ddb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{9c822052-0dc3-4545-a5c3-7fb75a38dce6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -91,6 +94,9 @@
     <ClCompile Include="host_array.cpp">
       <Filter>oci20</Filter>
     </ClCompile>
+    <ClCompile Include="list_ctrl_manager.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="error_util.h">
@@ -167,6 +173,15 @@
     </ClInclude>
     <ClInclude Include="host_array.h">
       <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="list_ctrl_data_provider.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="list_ctrl_data_provider_helper.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="list_ctrl_manager.h">
+      <Filter>data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
