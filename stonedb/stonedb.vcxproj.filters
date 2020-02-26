@@ -94,7 +94,19 @@
     <ClCompile Include="host_array.cpp">
       <Filter>oci20</Filter>
     </ClCompile>
-    <ClCompile Include="list_ctrl_manager.cpp">
+    <ClCompile Include="substitutor.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="table_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="list_manager.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="view_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="constraint_list_adapter.cpp">
       <Filter>data</Filter>
     </ClCompile>
   </ItemGroup>
@@ -174,13 +186,25 @@
     <ClInclude Include="host_array.h">
       <Filter>oci20</Filter>
     </ClInclude>
-    <ClInclude Include="list_ctrl_data_provider.h">
+    <ClInclude Include="substitutor.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="table_list_adapter.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="list_ctrl_data_provider_helper.h">
+    <ClInclude Include="list_data_provider.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="list_ctrl_manager.h">
+    <ClInclude Include="list_data_provider_helper.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="list_manager.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="view_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="constraint_list_adapter.h">
       <Filter>data</Filter>
     </ClInclude>
   </ItemGroup>

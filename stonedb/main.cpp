@@ -7,10 +7,14 @@
 #include "session.h"
 #include "error_util.h"
 #include "settings.h"
+#include "table_list_adapter.h"
+#include "view_list_adapter.h"
+#include "constraint_list_adapter.h"
 
 using namespace Stone;
 using namespace Utils;
 using namespace Oci20;
+using namespace Data;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -64,6 +68,66 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
     catch (const OciException& e) {
         std::cout << e.what() << std::endl;
+    }
+
+    TableListAdapter tableList(ociSession.getConnect());
+    if (ociSession.IsDatabaseOpen()) {
+        try {
+            tableList.Query();
+        }
+        catch (const Exception & e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+
+    ViewListAdapter viewList(ociSession.getConnect());
+    if (ociSession.IsDatabaseOpen()) {
+        try {
+            viewList.Query();
+        }
+        catch (const Exception & e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+
+    ConstraintListAdapter pkListAdapter(ociSession.getConnect(), "P");
+    if (ociSession.IsDatabaseOpen()) {
+        try {
+            pkListAdapter.Query();
+        }
+        catch (const Exception & e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+
+    ConstraintListAdapter fkListAdapter(ociSession.getConnect(), "R");
+    if (ociSession.IsDatabaseOpen()) {
+        try {
+            fkListAdapter.Query();
+        }
+        catch (const Exception & e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+
+    ConstraintListAdapter ukListAdapter(ociSession.getConnect(), "U");
+    if (ociSession.IsDatabaseOpen()) {
+        try {
+            ukListAdapter.Query();
+        }
+        catch (const Exception & e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+
+    ConstraintListAdapter chkListAdapter(ociSession.getConnect(), "C");
+    if (ociSession.IsDatabaseOpen()) {
+        try {
+            chkListAdapter.Query();
+        }
+        catch (const Exception & e) {
+            std::cout << e.what() << std::endl;
+        }
     }
 
 

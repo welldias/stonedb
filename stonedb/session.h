@@ -25,6 +25,8 @@ namespace Oci20 {
         void ExecuteStatement(const std::string& statementString, bool guaranteedSafe = false);
         void ExecuteShadowStatement(const std::string& statementString, bool guaranteedSafe = false);
 
+        Connect& getConnect() { return m_connect; }
+
     public:
         void CheckShadowSession(const bool bForceConnectShadow = false);
         void SetShadowClientInfo();

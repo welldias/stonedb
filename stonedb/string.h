@@ -8,6 +8,9 @@
 namespace Utils {
 
     class String  {
+    private:
+        static const std::string  strKip;
+
     public:
         static bool    ToBool(const std::string& str);
         static int     ToInt(const std::string& str);
@@ -15,9 +18,10 @@ namespace Utils {
 
         static std::string ToLower(const std::string& str);
         static std::string ToUpper(const std::string& str);
-        static std::string Rtrim(const std::string& str, const std::string& t = " \t");
-        static std::string Ltrim(const std::string& str, const std::string& t = " \t");
-        static std::string Trim(const std::string& str, const std::string& t = " \t");
+
+        static std::string Rtrim(const std::string& str, const std::string& t = strKip);
+        static std::string Ltrim(const std::string& str, const std::string& t = strKip);
+        static std::string Trim (const std::string& str, const std::string& t = strKip);
     };
 }
 

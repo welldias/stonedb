@@ -2,6 +2,8 @@
 
 namespace Utils {
 
+	const std::string  String::strKip = " \t\n\r";
+
 	bool String::ToBool(const std::string& str) {
 		std::string value = ToLower(Trim(str));
 		if (value == "true" && value != "0")

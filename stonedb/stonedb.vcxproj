@@ -170,8 +170,9 @@
     <ClCompile Include="break_handler.cpp" />
     <ClCompile Include="buff_cursor.cpp" />
     <ClCompile Include="connect.cpp" />
+    <ClCompile Include="constraint_list_adapter.cpp" />
     <ClCompile Include="host_array.cpp" />
-    <ClCompile Include="list_ctrl_manager.cpp" />
+    <ClCompile Include="list_manager.cpp" />
     <ClCompile Include="session.cpp" />
     <ClCompile Include="date_var.cpp" />
     <ClCompile Include="dummy_var.cpp" />
@@ -190,18 +191,22 @@
     <ClCompile Include="statement.cpp" />
     <ClCompile Include="string.cpp" />
     <ClCompile Include="string_var.cpp" />
+    <ClCompile Include="substitutor.cpp" />
+    <ClCompile Include="table_list_adapter.cpp" />
     <ClCompile Include="timestamp_var.cpp" />
     <ClCompile Include="variable.cpp" />
+    <ClCompile Include="view_list_adapter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="auto_cursor.h" />
     <ClInclude Include="break_handler.h" />
     <ClInclude Include="buff_cursor.h" />
     <ClInclude Include="connect.h" />
+    <ClInclude Include="constraint_list_adapter.h" />
     <ClInclude Include="host_array.h" />
-    <ClInclude Include="list_ctrl_data_provider.h" />
-    <ClInclude Include="list_ctrl_data_provider_helper.h" />
-    <ClInclude Include="list_ctrl_manager.h" />
+    <ClInclude Include="list_data_provider.h" />
+    <ClInclude Include="list_data_provider_helper.h" />
+    <ClInclude Include="list_manager.h" />
     <ClInclude Include="session.h" />
     <ClInclude Include="date_var.h" />
     <ClInclude Include="dummy_var.h" />
@@ -219,9 +224,12 @@
     <ClInclude Include="statement.h" />
     <ClInclude Include="string.h" />
     <ClInclude Include="string_var.h" />
+    <ClInclude Include="substitutor.h" />
     <ClInclude Include="system_clock.h" />
+    <ClInclude Include="table_list_adapter.h" />
     <ClInclude Include="timestamp_var.h" />
     <ClInclude Include="variable.h" />
+    <ClInclude Include="view_list_adapter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
