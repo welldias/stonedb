@@ -2,16 +2,13 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#include <string>
 #include <iostream>
 
-#include "session.h"
-#include "error_util.h"
-#include "settings.h"
-#include "table_list_adapter.h"
-#include "view_list_adapter.h"
-#include "constraint_list_adapter.h"
+#include "utils/utils.h"
+#include "oci20/oci20.h"
+#include "data/data.h"
 
-using namespace Stone;
 using namespace Utils;
 using namespace Oci20;
 using namespace Data;

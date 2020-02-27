@@ -1,11 +1,11 @@
-#ifndef __PROJECT_STONE_STONE_EXCEPTION_H__
-#define __PROJECT_STONE_STONE_EXCEPTION_H__
+#ifndef __PROJECT_STONE_UTILS_EXCEPTION_H__
+#define __PROJECT_STONE_UTILS_EXCEPTION_H__
 
 #include <oci.h>
 
 #include <string>
 
-namespace Stone {
+namespace Utils {
 
     class Exception : public std::exception {
     private:
@@ -28,4 +28,4 @@ namespace Stone {
     };
 }
 
-#endif // __PROJECT_STONE_STONE_EXCEPTION_H__
+#endif // __PROJECT_STONE_UTILS_EXCEPTION_H__

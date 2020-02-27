@@ -1,5 +1,6 @@
 #include "property.h"
-#include "string.h"
+
+#include "string_util.h"
 
 namespace Utils {
 
@@ -15,15 +16,15 @@ namespace Utils {
 	}
 
 	bool Property::ToBool() const {
-		return String::ToBool(m_value);
+		return StringUtil::ToBool(m_value);
 	}
 
 	int Property::ToInt() const {
-		return String::ToInt(m_value);
+		return StringUtil::ToInt(m_value);
 	}
 
 	double Property::ToDouble() const {
-		return String::ToDouble(m_value);
+		return StringUtil::ToDouble(m_value);
 	}
 
 	std::string Property::ToString() const {

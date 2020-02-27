@@ -1,7 +1,8 @@
 #include <oci.h>
 
 #include "error_util.h"
-#include "settings.h"
+
+#include "../utils/utils.h"
 
 namespace Oci20 {
 

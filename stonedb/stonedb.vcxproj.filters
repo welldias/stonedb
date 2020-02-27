@@ -11,200 +11,204 @@
     <Filter Include="utils">
       <UniqueIdentifier>{591450ca-af3b-4385-b729-de88ec6e2dbd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="basic">
-      <UniqueIdentifier>{6cd8c6ba-f4a8-4504-ad98-c28e5ed13ddb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="data">
       <UniqueIdentifier>{9c822052-0dc3-4545-a5c3-7fb75a38dce6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ui</Filter>
-    </ClCompile>
-    <ClCompile Include="error_util.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="function_codes.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="statement.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="variable.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="settings.cpp">
+    <ClCompile Include="utils\exception.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="exception.cpp">
-      <Filter>basic</Filter>
-    </ClCompile>
-    <ClCompile Include="property.cpp">
+    <ClCompile Include="utils\property.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="string.cpp">
+    <ClCompile Include="utils\settings.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="object.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="native_oci_variable.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="string_var.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="number_var.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="date_var.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="timestamp_var.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="auto_cursor.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="dummy_var.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="ref_cursor_variable.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="lob_var.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="interval_var.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="break_handler.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="buff_cursor.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="session.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="connect.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="host_array.cpp">
-      <Filter>oci20</Filter>
-    </ClCompile>
-    <ClCompile Include="substitutor.cpp">
+    <ClCompile Include="utils\substitutor.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="table_list_adapter.cpp">
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="oci20\auto_cursor.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\break_handler.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\buff_cursor.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\connect.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\date_var.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\dummy_var.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\error_util.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\function_codes.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\host_array.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\interval_var.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\lob_var.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\native_oci_variable.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\number_var.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\object.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\ref_cursor_variable.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\session.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\statement.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\string_var.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\timestamp_var.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="oci20\variable.cpp">
+      <Filter>oci20</Filter>
+    </ClCompile>
+    <ClCompile Include="data\constraint_list_adapter.cpp">
       <Filter>data</Filter>
     </ClCompile>
-    <ClCompile Include="list_manager.cpp">
+    <ClCompile Include="data\list_manager.cpp">
       <Filter>data</Filter>
     </ClCompile>
-    <ClCompile Include="view_list_adapter.cpp">
+    <ClCompile Include="data\table_list_adapter.cpp">
       <Filter>data</Filter>
     </ClCompile>
-    <ClCompile Include="constraint_list_adapter.cpp">
+    <ClCompile Include="data\view_list_adapter.cpp">
       <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\string_util.cpp">
+      <Filter>utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="error_util.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="function_codes.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="statement.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="variable.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="settings.h">
+    <ClInclude Include="utils\exception.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="exception.h">
-      <Filter>basic</Filter>
-    </ClInclude>
-    <ClInclude Include="property.h">
+    <ClInclude Include="utils\property.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="string.h">
+    <ClInclude Include="utils\settings.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="object.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="native_oci_variable.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="string_var.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="number_var.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="date_var.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="timestamp_var.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="auto_cursor.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="system_clock.h">
+    <ClInclude Include="utils\substitutor.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="dummy_var.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="ref_cursor_variable.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="lob_var.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="interval_var.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="break_handler.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="buff_cursor.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="session.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="connect.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="host_array.h">
-      <Filter>oci20</Filter>
-    </ClInclude>
-    <ClInclude Include="substitutor.h">
+    <ClInclude Include="utils\system_clock.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="table_list_adapter.h">
+    <ClInclude Include="oci20\auto_cursor.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\break_handler.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\buff_cursor.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\connect.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\date_var.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\dummy_var.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\error_util.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\function_codes.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\host_array.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\interval_var.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\lob_var.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\native_oci_variable.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\number_var.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\object.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\ref_cursor_variable.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\session.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\statement.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\string_var.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\timestamp_var.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\variable.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="data\constraint_list_adapter.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="list_data_provider.h">
+    <ClInclude Include="data\list_data_provider.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="list_data_provider_helper.h">
+    <ClInclude Include="data\list_data_provider_helper.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="list_manager.h">
+    <ClInclude Include="data\list_manager.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="view_list_adapter.h">
+    <ClInclude Include="data\table_list_adapter.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="constraint_list_adapter.h">
+    <ClInclude Include="data\view_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\string_util.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\utils.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="oci20\oci20.h">
+      <Filter>oci20</Filter>
+    </ClInclude>
+    <ClInclude Include="data\data.h">
       <Filter>data</Filter>
     </ClInclude>
   </ItemGroup>

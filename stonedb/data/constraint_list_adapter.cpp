@@ -1,13 +1,14 @@
 #include <cstring>
 
 #include "constraint_list_adapter.h"
-#include "substitutor.h"
-#include "buff_cursor.h"
-#include "string.h"
 
-using namespace Oci20;
+#include "../utils/utils.h"
+#include "../oci20/oci20.h"
 
 namespace Data {
+
+    using namespace Utils;
+    using namespace Oci20;
 
     ConstraintEntry::ConstraintEntry()
 		: deleted(false) {
@@ -84,7 +85,7 @@ namespace Data {
                     continue;
             }
 
-            code.search_condition = Utils::String::Trim(code.search_condition);
+            code.search_condition = Utils::StringUtil::Trim(code.search_condition);
 
             m_entries.push_back(code);
         }

@@ -1,11 +1,10 @@
-#include "exception.h"
 #include "connect.h"
 #include "error_util.h"
-#include "settings.h"
+
+#include "../utils/utils.h"
 
 namespace Oci20 {
 
-	using namespace Stone;
 	using namespace Utils;
 
 	Connect::Connect(unsigned mode) {

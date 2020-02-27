@@ -3,7 +3,8 @@
 #include "buff_cursor.h"
 #include "string_var.h"
 #include "error_util.h"
-#include "settings.h"
+
+#include "../utils/utils.h"
 
 namespace Oci20 {
 

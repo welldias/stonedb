@@ -1,12 +1,13 @@
 #include <cstring>
 
 #include "table_list_adapter.h"
-#include "substitutor.h"
-#include "buff_cursor.h"
-
-using namespace Oci20;
+#include "../utils/utils.h"
+#include "../oci20/oci20.h"
 
 namespace Data {
+
+    using namespace Utils;
+    using namespace Oci20;
 
 	TableEntry::TableEntry()
 		: deleted(false) , num_rows(0), blocks(0) {

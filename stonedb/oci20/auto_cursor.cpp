@@ -1,7 +1,6 @@
 #include <algorithm>
 
 #include "auto_cursor.h"
-#include "system_clock.h"
 #include "error_util.h"
 #include "variable.h"
 #include "string_var.h"
@@ -11,7 +10,8 @@
 #include "dummy_var.h"
 #include "lob_var.h"
 #include "interval_var.h"
-#include "settings.h"
+
+#include "../utils/utils.h"
 
 namespace Oci20 {
 

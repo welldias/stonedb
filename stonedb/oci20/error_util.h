@@ -4,11 +4,12 @@
 #include <oci.h>
 
 #include "connect.h"
-#include "exception.h"
+
+#include "../utils/utils.h"
 
 namespace Oci20 {
 
-    using namespace Stone;
+    using namespace Utils;
 
 #define ERROR_UTIL_CHECKTHROW(s,c,m) ErrorUtil::CheckErrorAndThrow(s,c,m)
 #define ERROR_UTIL_CHECKALLOC(s) ErrorUtil::CheckAllocErrorAndThrow(s)

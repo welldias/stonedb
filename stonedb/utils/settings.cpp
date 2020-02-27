@@ -3,8 +3,6 @@
 
 namespace Utils {
 
-	using namespace Stone;
-
 	std::set<Property*> Settings::m_properties;
 
 	Settings::Settings() {

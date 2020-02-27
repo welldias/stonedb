@@ -6,7 +6,8 @@
 
 #include "list_data_provider.h"
 #include "list_data_provider_helper.h"
-#include "connect.h"
+
+#include "../oci20/oci20.h"
 
 namespace Data {
 
