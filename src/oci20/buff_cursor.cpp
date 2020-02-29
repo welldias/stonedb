@@ -1,4 +1,6 @@
 #include <typeinfo>
+#include <cstdint>
+
 
 #include "buff_cursor.h"
 #include "string_var.h"
@@ -238,11 +240,11 @@ namespace Oci20 {
 		return m_fields.at(col)->ToInt(m_curRecord, null);
 	}
 
-	__int64 BuffCursor::ToInt64(int col) const {
+	int64_t BuffCursor::ToInt64(int col) const {
 		return m_fields.at(col)->ToInt64(m_curRecord, m_intNull);
 	}
 
-	__int64 BuffCursor::ToInt64(int col, __int64 null) const {
+	int64_t BuffCursor::ToInt64(int col, int64_t null) const {
 		return m_fields.at(col)->ToInt64(m_curRecord, null);
 	}
 
