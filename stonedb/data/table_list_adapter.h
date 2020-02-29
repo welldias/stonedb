@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <cstdint>
 
 #include "list_data_provider.h"
 #include "list_data_provider_helper.h"
@@ -21,8 +22,8 @@ namespace Data {
         tm created; //"created" "Created"
         tm last_ddl_time; //"last_ddl_time" "Modified"
         tm last_analyzed;
-        __int64 num_rows;
-        __int64 blocks;
+        int64_t num_rows;
+        int64_t blocks;
 
         TableEntry();
         bool deleted;

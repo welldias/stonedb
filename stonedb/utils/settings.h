@@ -1,8 +1,6 @@
 #ifndef __PROJECT_STONE_UTILS_SETTINGS_H__
 #define __PROJECT_STONE_UTILS_SETTINGS_H__
 
-#include <oci.h>
-
 #include <set>
 #include <string>
 

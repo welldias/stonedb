@@ -1,8 +1,6 @@
 #ifndef __PROJECT_STONE_UTILS_PROPERTY_H__
 #define __PROJECT_STONE_UTILS_PROPERTY_H__
 
-#include <oci.h>
-
 #include <string>
 
 namespace Utils {

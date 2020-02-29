@@ -3,6 +3,7 @@
 
 #include <oci.h>
 
+#include <cstdint>
 #include <string>
 
 namespace Oci20 {
@@ -17,7 +18,7 @@ namespace Oci20 {
         virtual void GetTime(int, struct tm&, struct tm* null = 0) const = 0;
 
         virtual int     ToInt(int, int = 0) const = 0;
-        virtual __int64 ToInt64(int, __int64 = 0) const = 0;
+        virtual int64_t ToInt64(int, int64_t = 0) const = 0;
         virtual double  ToDouble(int, double = 0) const = 0;
 
         bool IsGood(int inx) const;
@@ -60,7 +61,7 @@ namespace Oci20 {
         virtual void GetTime(int, struct tm&, struct tm* null = 0) const;
 
         virtual int     ToInt(int, int = 0) const;
-        virtual __int64 ToInt64(int, __int64 = 0) const;
+        virtual int64_t ToInt64(int, int64_t = 0) const;
         virtual double  ToDouble(int, double = 0) const;
     };
 
@@ -72,7 +73,7 @@ namespace Oci20 {
         virtual void GetTime(int, struct tm&, struct tm* null = 0) const;
 
         virtual int    ToInt(int, int = 0) const;
-        virtual __int64 ToInt64(int, __int64 = 0) const;
+        virtual int64_t ToInt64(int, int64_t = 0) const;
         virtual double ToDouble(int, double = 0) const;
     };
 
@@ -84,7 +85,7 @@ namespace Oci20 {
         virtual void GetTime(int, struct tm&, struct tm* null = 0) const;
 
         virtual int    ToInt(int, int = 0) const;
-        virtual __int64 ToInt64(int, __int64 = 0) const;
+        virtual int64_t ToInt64(int, int64_t = 0) const;
         virtual double ToDouble(int, double = 0) const;
 
     protected:

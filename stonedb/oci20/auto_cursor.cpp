@@ -20,7 +20,7 @@ namespace Oci20 {
 	AutoCursor::AutoCursor(Connect& connect, const std::string& statementString, int prefetch, int strLimit, int blobHexRowLength)
 		: Statement(connect, statementString, prefetch),
 		m_IntNull(0),
-		m_DoubleNull(0.0),
+		m_DoubleNull(0.0),	
 		m_ExecutionTime(0.0) {
 		m_StringLimit = strLimit;
 		m_BlobHexRowLength = blobHexRowLength;

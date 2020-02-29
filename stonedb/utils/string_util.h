@@ -3,7 +3,6 @@
 
 #include <string>
 
-
 namespace Utils {
 	class StringUtil {
 	private:

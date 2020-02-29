@@ -1,3 +1,6 @@
+#include <cstring>
+#include <cstdlib>
+
 #include "variable.h"
 #include "error_util.h"
 
@@ -9,7 +12,7 @@ namespace Oci20 {
         m_type = type;
         m_indicator = OCI_IND_NULL;
         m_buffer_size = m_size = size;
-        m_buffer = new char[m_size];
+        m_buffer = malloc(m_size);
         memset(m_buffer, 0, m_size);
         m_owner = true;
         m_ret_size = 0;
@@ -26,7 +29,7 @@ namespace Oci20 {
 
     Variable::~Variable() {
 		if (m_owner)
-			delete[] std::exchange(m_buffer, nullptr);
+			free(m_buffer);
 	}
 
     sword Variable::GetString(std::string&, const std::string& ) const {

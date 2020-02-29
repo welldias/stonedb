@@ -54,8 +54,8 @@ namespace Oci20 {
         int ToInt(int) const;
         int ToInt(int, int) const;
         
-        __int64 ToInt64(int) const;
-        __int64 ToInt64(int, __int64) const;
+        int64_t ToInt64(int) const;
+        int64_t ToInt64(int, int64_t) const;
 
         double ToDouble(int) const;
         double ToDouble(int, double) const;

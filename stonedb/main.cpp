@@ -1,6 +1,8 @@
+#ifdef _WINDOWS
 #include <SDKDDKVer.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#endif
 
 #include <string>
 #include <iostream>
@@ -13,10 +15,14 @@ using namespace Utils;
 using namespace Oci20;
 using namespace Data;
 
+#ifdef _WINDOWS
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
+#else
+int main(int argc, char *argv[])
+#endif
 {
     Session ociSession;
 

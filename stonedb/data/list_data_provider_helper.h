@@ -4,6 +4,9 @@
 #include <string>
 #include <ctime>
 
+#include <cstring>
+#include <cstdint>
+
 namespace Data {
 
 	class ListDataProviderHelper {
@@ -12,8 +15,8 @@ namespace Data {
 
     protected:
         const void ToString(const std::string& str, std::string& result) const { result = str; }
-        const void ToString(__int64 i, std::string& result) const { result = std::to_string(i); }
-        const void ToString(unsigned __int64 i, std::string& result) const { result = std::to_string(i); }
+        const void ToString(int64_t i, std::string& result) const { result = std::to_string(i); }
+        const void ToString(uint64_t i, std::string& result) const { result = std::to_string(i); }
         const void ToString(int i, std::string& result) const { result = std::to_string(i); }
         const void ToString(tm time, std::string& result) const {
             
@@ -28,8 +31,8 @@ namespace Data {
             result = m_buffer;
         }
         const void GetStrTimeT(time_t t, std::string& result) const {
+#ifdef _WINDOWS
             tm time = { 0 };
-
             if (localtime_s(&time, &t)) {
                 m_buffer[0] = 0;
             }
@@ -37,16 +40,29 @@ namespace Data {
                 strftime(m_buffer, sizeof(m_buffer), "%Y-%m-%d %H:%M:%S", &time);
                 m_buffer[sizeof(m_buffer) - 1] = 0;
             }
-
+#else
+            tm* time = localtime(&t);
+            if (time == NULL) {
+                m_buffer[0] = 0;
+            }
+            else {
+                strftime(m_buffer, sizeof(m_buffer), "%Y-%m-%d %H:%M:%S", time);
+                m_buffer[sizeof(m_buffer) - 1] = 0;
+            }
+#endif
             result = m_buffer;
         }
 
         static int Comp(const std::string& s1, const std::string& s2) { 
-            return _stricmp(s1.c_str(), s2.c_str()); 
+            #ifdef _WINDOWS
+            return _stricmp(s1.c_str(), s2.c_str());
+            #else 
+            return strcasecmp(s1.c_str(), s2.c_str());
+            #endif 
         }
         static int Comp(int val1, int val2) { return val1 == val2 ? 0 : (val1 < val2 ? -1 : 1); }
-        static int Comp(__int64 val1, __int64 val2) { return val1 == val2 ? 0 : (val1 < val2 ? -1 : 1); }
-        static int Comp(unsigned __int64 val1, unsigned __int64 val2) { return val1 == val2 ? 0 : (val1 < val2 ? -1 : 1); }
+        static int Comp(int64_t val1, int64_t val2) { return val1 == val2 ? 0 : (val1 < val2 ? -1 : 1); }
+        static int Comp(uint64_t val1, uint64_t val2) { return val1 == val2 ? 0 : (val1 < val2 ? -1 : 1); }
         static int CompTimeT(time_t val1, time_t val2) { return val1 == val2 ? 0 : (val1 < val2 ? -1 : 1); }
         static int Comp(tm val1, tm val2) {
             if (val1.tm_year != val2.tm_year)

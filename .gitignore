@@ -93,6 +93,9 @@ StyleCopReport.xml
 *.svclog
 *.scc
 
+#Files builty by make files
+*.o
+
 # Chutzpah Test files
 _Chutzpah*
 

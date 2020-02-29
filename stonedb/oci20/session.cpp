@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "session.h"
 #include "statement.h"
 #include "buff_cursor.h"

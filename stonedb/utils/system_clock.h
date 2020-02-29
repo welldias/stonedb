@@ -4,19 +4,21 @@
 #ifdef _WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <time.h>
 #endif
 
-#include <time.h>
+#include <cstdint>
 
 namespace Utils {
 
-	typedef unsigned __int64 Clock64;
+	typedef uint64_t Clock64;
 
 	class  SystemClock  {
 
     public:
 		static Clock64 StartCount() {
 
+#ifdef _WINDOWS
             FILETIME filetime;
             GetSystemTimeAsFileTime(&filetime);
 
@@ -25,10 +27,17 @@ namespace Utils {
 
             /* return number of elapsed milliseconds */
             return (current_tics / 10000);
+#else
+            return 0;
+#endif
 		}
 
         static double StopCount(Clock64 startTime) {
+#ifdef _WINDOWS
             return double(GetCurrentTime() - startTime) / CLOCKS_PER_SEC;
+#else
+            return 0.0;
+#endif
         }
 
 	};

@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "connect.h"
 #include "error_util.h"
 

@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "host_array.h"
 #include "error_util.h"
 
@@ -135,7 +137,7 @@ namespace Oci20 {
         throw OciException(0, "Oci20:StringArray::ToInt(): Cannot cast String to Int!");
     }
 
-    __int64 StringArray::ToInt64(int, __int64) const {
+    int64_t StringArray::ToInt64(int, int64_t) const {
 
         throw OciException(0, "Oci20:StringArray::ToInt64(): Cannot cast Date to Int!");
     }
@@ -170,11 +172,13 @@ namespace Oci20 {
         return atoi(At(inx));
     }
 
-    __int64 NumberArray::ToInt64(int inx, __int64 null) const {
+    int64_t NumberArray::ToInt64(int inx, int64_t null) const {
         if (IsNull(inx))
             return null;
 
-        return _atoi64(At(inx));
+        char* pEnd;
+
+        return strtoll(At(inx), &pEnd, 10);
     }
 
     double NumberArray::ToDouble(int inx, double null) const {
@@ -195,7 +199,12 @@ namespace Oci20 {
         tm t2;
 
         time(&t1);
+        #ifdef _WINDOWS
         errno_t err = gmtime_s(&t2, &t1);
+        #else
+        tm* pt2 = gmtime(&t1);
+        t2 = *pt2;
+        #endif
 
         char buff[80];
         strftime(buff, sizeof(buff), m_dateFormat.c_str(), &t2);
@@ -247,7 +256,7 @@ namespace Oci20 {
         throw OciException(0, "Oci20::DateArray::ToInt(): Cannot cast Date to Int!");
     }
 
-    __int64 DateArray::ToInt64(int, __int64) const {
+    int64_t DateArray::ToInt64(int, int64_t) const {
         throw OciException(0, "Oci20::DateArray::ToInt64(): Cannot cast Date to Int!");
     }
 

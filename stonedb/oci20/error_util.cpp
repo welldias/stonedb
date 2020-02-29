@@ -1,5 +1,7 @@
 #include <oci.h>
 
+#include <cstring>
+
 #include "error_util.h"
 
 #include "../utils/utils.h"

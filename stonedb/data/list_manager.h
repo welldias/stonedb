@@ -1,10 +1,12 @@
-#pragma once
 #ifndef __PROJECT_STONE_DATA_LISTCTRLMANAGER_H__
 #define __PROJECT_STONE_DATA_LISTCTRLMANAGER_H__
 
 #ifdef _WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#else
+#define CALLBACK
+#define LPARAM void*
 #endif
 
 #include <string>

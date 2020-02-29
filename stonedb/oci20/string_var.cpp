@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "string_var.h"
 #include "error_util.h"
 
