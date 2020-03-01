@@ -1,4 +1,7 @@
+#include <string.h> 
+
 #include "string_util.h"
+
 
 namespace Utils {
 	const std::string  StringUtil::strKip = " \t\n\r";
@@ -47,4 +50,26 @@ namespace Utils {
 	std::string StringUtil::Trim(const std::string& str, const std::string& t) {
 		return Ltrim(Rtrim(str, t), t);
 	}
+
+	int StringUtil::Compare(const std::string& str1, const std::string& str2, size_t size) {
+
+		if (size >= 0)
+			return strncmp(str1.c_str(), str2.c_str(), size);
+		else
+			return strcmp(str1.c_str(), str2.c_str());
+	}
+
+	int StringUtil::NoCaseCompare(const std::string& str1, const std::string& str2, size_t size) {
+#ifdef  _WINDOWS
+#define strncasecmp(str1, str2, size) _strnicmp(str1, str2, size)
+#define strcasecmp(str1, str2) _stricmp(str1, str2)
+#endif
+		if(size >= 0)
+			return strncasecmp(str1.c_str(), str2.c_str(), size);
+		else
+			return strcasecmp(str1.c_str(), str2.c_str());
+
+		return 0;
+	}
+
 }

@@ -35,11 +35,11 @@ namespace Oci20 {
 
 		if (!version.empty())
 		{
-			if (!strncmp(version.c_str(), "11", sizeof("11") - 1))        m_clientVersoon = ecvClient11X;
-			else if (!strncmp(version.c_str(), "10", sizeof("10") - 1))   m_clientVersoon = ecvClient10X;
-			else if (!strncmp(version.c_str(), "9", sizeof("9") - 1))     m_clientVersoon = ecvClient9X;
-			else if (!strncmp(version.c_str(), "8.1", sizeof("8.1") - 1)) m_clientVersoon = ecvClient81X;
-			else if (!strncmp(version.c_str(), "8.0", sizeof("8.0") - 1)) m_clientVersoon = ecvClient80X;
+			if (!StringUtil::Compare(version.c_str(), "11", 2))       m_clientVersoon = ecvClient11X;
+			else if (!StringUtil::Compare(version.c_str(), "10", 2))  m_clientVersoon = ecvClient10X;
+			else if (!StringUtil::Compare(version.c_str(), "9", 1))   m_clientVersoon = ecvClient9X;
+			else if (!StringUtil::Compare(version.c_str(), "8.1", 3)) m_clientVersoon = ecvClient81X;
+			else if (!StringUtil::Compare(version.c_str(), "8.0", 3)) m_clientVersoon = ecvClient80X;
 		}
 #endif
 

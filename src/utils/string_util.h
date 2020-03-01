@@ -19,6 +19,9 @@ namespace Utils {
 		static std::string Rtrim(const std::string& str, const std::string& t = strKip);
 		static std::string Ltrim(const std::string& str, const std::string& t = strKip);
 		static std::string Trim(const std::string& str, const std::string& t = strKip);
+
+		static int Compare(const std::string& str1, const std::string& str2, size_t size = -1);
+		static int NoCaseCompare(const std::string& str1, const std::string& str2, size_t size = -1);
 	};
 }
 

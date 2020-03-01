@@ -68,6 +68,7 @@ int main(int argc, char *argv[])
     try {
         //ociSession.Open(user, password, tnsAlias, mode, safety);
         ociSession.Open(user, password, host, port, sid, serviceInsteadOfSid, mode, safety);
+        ociSession.GetVersion();
     }
     catch (const OciException& e) {
         std::cout << e.what() << std::endl;
@@ -132,7 +133,6 @@ int main(int argc, char *argv[])
             std::cout << e.what() << std::endl;
         }
     }
-
 
     ociSession.Close(false);
 

@@ -304,13 +304,13 @@ namespace Oci20 {
             GetVersionStr();
 
         if (!m_strVersion.empty()) {
-            if (!strncmp(m_strVersion.c_str(), "11", sizeof("11") - 1)) version = Connect::ServerVersion::Server11X;
-            else if (!strncmp(m_strVersion.c_str(), "10", sizeof("10") - 1)) version = Connect::ServerVersion::Server10X;
-            else if (!strncmp(m_strVersion.c_str(), "9", sizeof("9") - 1)) version = Connect::ServerVersion::Server9X;
-            else if (!strncmp(m_strVersion.c_str(), "8.1", sizeof("8.1") - 1)) version = Connect::ServerVersion::Server81X;
-            else if (!strncmp(m_strVersion.c_str(), "8.0", sizeof("8.0") - 1)) version = Connect::ServerVersion::Server80X;
-            else if (!strncmp(m_strVersion.c_str(), "7.3", sizeof("7.3") - 1)) version = Connect::ServerVersion::Server73X;
-            else if (!strncmp(m_strVersion.c_str(), "7", sizeof("7") - 1)) version = Connect::ServerVersion::Server7X;
+            if (!StringUtil::Compare(m_strVersion.c_str(), "11", 2))       version = Connect::ServerVersion::Server11X;
+            else if (!StringUtil::Compare(m_strVersion.c_str(), "10", 2))  version = Connect::ServerVersion::Server10X;
+            else if (!StringUtil::Compare(m_strVersion.c_str(), "9", 1))   version = Connect::ServerVersion::Server9X;
+            else if (!StringUtil::Compare(m_strVersion.c_str(), "8.1", 3)) version = Connect::ServerVersion::Server81X;
+            else if (!StringUtil::Compare(m_strVersion.c_str(), "8.0", 3)) version = Connect::ServerVersion::Server80X;
+            else if (!StringUtil::Compare(m_strVersion.c_str(), "7.3", 3)) version = Connect::ServerVersion::Server73X;
+            else if (!StringUtil::Compare(m_strVersion.c_str(), "7", 1))   version = Connect::ServerVersion::Server7X;
 
             m_connect.SetVersion(version);
         }

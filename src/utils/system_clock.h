@@ -40,6 +40,33 @@ namespace Utils {
 #endif
         }
 
+        static bool LocalTime(time_t& t, tm& time) {
+#ifdef _WINDOWS
+            return (localtime_s(&time, &t) == 0);
+#else
+            tm* ptrTime = localtime(&t);
+            if (ptrTime != NULL) {
+                memcpy(&time, &ptrTime, sizeof(time));
+                return true;
+            }
+            return false;
+#endif
+        }
+
+        static bool GmTime(time_t& t, tm& time) {
+
+#ifdef _WINDOWS
+            return (gmtime_s(&time, &t) == 0);
+#else
+            tm* ptrTime = gmtime(&t);
+            if (ptrTime != NULL) {
+                memcpy(&time, &ptrTime, sizeof(time));
+                return true;
+            }
+            return false;
+#endif
+        }
+
 	};
 }
 

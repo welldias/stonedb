@@ -102,11 +102,7 @@ namespace Data {
                 table.table_type = "TEMP";
                 std::string duration = cursor.ToString(cn_duration);
 
-#ifdef _WINDOWS
-                if (!_strnicmp(duration.c_str(), "SYS$", 4)) {
-#else
-                if (!strncasecmp(duration.c_str(), "SYS$", 4)) {
-#endif
+                if(!StringUtil::NoCaseCompare(duration, "SYS$", 4)) {
                     table.table_type += " / ";
                     table.table_type += duration.substr(4);
                 }

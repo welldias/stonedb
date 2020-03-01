@@ -4,6 +4,7 @@
 #include <string.h> 
 
 #include "substitutor.h"
+#include "string_util.h"
 
 namespace Utils {
 
@@ -50,9 +51,8 @@ namespace Utils {
                 for (; it != end; ++it, i++) {
                     const std::string& str = (*it);
 
-                    //TODO: strncasecmp or _strnicmp?
                     if ((m_casesensitive && !strncmp(chunk_end, str.c_str(), str.size())) 
-                        || (!m_casesensitive && !strncasecmp(chunk_end, str.c_str(), str.size()))) {
+                        || (!m_casesensitive && !StringUtil::NoCaseCompare(chunk_end, str, str.size()))) {
                         hit = true;
                         break;
                     }

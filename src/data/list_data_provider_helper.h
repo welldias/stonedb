@@ -3,11 +3,14 @@
 
 #include <string>
 #include <ctime>
-
 #include <cstring>
 #include <cstdint>
 
+#include "../utils/utils.h"
+
 namespace Data {
+
+    using namespace Utils;
 
 	class ListDataProviderHelper {
     private:
@@ -31,35 +34,21 @@ namespace Data {
             result = m_buffer;
         }
         const void GetStrTimeT(time_t t, std::string& result) const {
-#ifdef _WINDOWS
             tm time = { 0 };
-            if (localtime_s(&time, &t)) {
+            if (!SystemClock::LocalTime(t, time)) {
                 m_buffer[0] = 0;
             }
             else {
                 strftime(m_buffer, sizeof(m_buffer), "%Y-%m-%d %H:%M:%S", &time);
                 m_buffer[sizeof(m_buffer) - 1] = 0;
             }
-#else
-            tm* time = localtime(&t);
-            if (time == NULL) {
-                m_buffer[0] = 0;
-            }
-            else {
-                strftime(m_buffer, sizeof(m_buffer), "%Y-%m-%d %H:%M:%S", time);
-                m_buffer[sizeof(m_buffer) - 1] = 0;
-            }
-#endif
             result = m_buffer;
         }
 
-        static int Comp(const std::string& s1, const std::string& s2) { 
-            #ifdef _WINDOWS
-            return _stricmp(s1.c_str(), s2.c_str());
-            #else 
-            return strcasecmp(s1.c_str(), s2.c_str());
-            #endif 
+        static int Comp(const std::string& s1, const std::string& s2) {
+            return StringUtil::NoCaseCompare(s1, s2);
         }
+
         static int Comp(int val1, int val2) { return val1 == val2 ? 0 : (val1 < val2 ? -1 : 1); }
         static int Comp(int64_t val1, int64_t val2) { return val1 == val2 ? 0 : (val1 < val2 ? -1 : 1); }
         static int Comp(uint64_t val1, uint64_t val2) { return val1 == val2 ? 0 : (val1 < val2 ? -1 : 1); }

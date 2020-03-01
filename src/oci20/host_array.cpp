@@ -199,12 +199,8 @@ namespace Oci20 {
         tm t2;
 
         time(&t1);
-        #ifdef _WINDOWS
-        errno_t err = gmtime_s(&t2, &t1);
-        #else
-        tm* pt2 = gmtime(&t1);
-        t2 = *pt2;
-        #endif
+
+        SystemClock::GmTime(t1, t2);
 
         char buff[80];
         strftime(buff, sizeof(buff), m_dateFormat.c_str(), &t2);
