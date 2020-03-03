@@ -24,6 +24,9 @@ namespace Data {
 
     size_t ViewListAdapter::Query() {
 
+        if (!m_connect.IsOpen())
+            return -1;
+
         const int cn_owner = 0;
         const int cn_view_name = 1;
         const int cn_text_length = 2;
@@ -31,7 +34,7 @@ namespace Data {
         const int cn_last_ddl_time = 4;
         const int cn_status = 5;
 
-        static const char* csz_sttm =
+        static const char* csz_view_sttm =
             "SELECT <RULE> "
             "v.owner,"
             "v.view_name,"
@@ -50,10 +53,7 @@ namespace Data {
         Connect::ServerVersion serverVersion = m_connect.GetVersion();
 
         substitutor.AddPair("<RULE>", (serverVersion < Connect::ServerVersion::Server10X) ? "/*+RULE*/" : "");
-        substitutor << csz_sttm;
-
-        //TODO: not hard code pls
-        std::string m_schema = "SYSTEM";
+        substitutor << csz_view_sttm;
 
         BuffCursor cursor(m_connect, 50, 196);
         cursor.Prepare(substitutor.GetResult());

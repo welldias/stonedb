@@ -147,6 +147,13 @@ namespace Oci20 {
 		Statement::Bind(name, *fld);
 	}
 
+	void BuffCursor::Bind(const std::string& name, char value) {
+
+		Variable* fld = m_boundFields[name] = new StringVar(std::string(1, value));
+
+		Statement::Bind(name, *fld);
+	}
+
 	void BuffCursor::Bind(const std::string& name, int value) {
 
 		Variable* fld = m_boundFields[name] = new NumberVar(m_connect.GetOCIError(), value);

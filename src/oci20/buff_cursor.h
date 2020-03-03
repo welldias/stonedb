@@ -72,6 +72,7 @@ namespace Oci20 {
         using Statement::Bind;
 
         void Bind(const std::string& name, const std::string& value);
+        void Bind(const std::string& name, char value);
         void Bind(const std::string& name, int value);
         void Bind(const std::string& name, double value);
 

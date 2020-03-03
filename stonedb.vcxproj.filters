@@ -104,6 +104,21 @@
     <ClCompile Include="src\utils\string_util.cpp">
       <Filter>utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\data\user_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\index_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\trigger_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\sequence_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\synonym_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\exception.h">
@@ -209,6 +224,21 @@
       <Filter>oci20</Filter>
     </ClInclude>
     <ClInclude Include="src\data\data.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\user_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\index_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\trigger_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\sequence_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\synonym_list_adapter.h">
       <Filter>data</Filter>
     </ClInclude>
   </ItemGroup>

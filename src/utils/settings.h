@@ -59,6 +59,10 @@ namespace Utils {
 
         UTILS_DECLARE_PROPERTY(bool, TimestampSupported);
         UTILS_DECLARE_PROPERTY(bool, IntervalToTextSupported);
+
+        UTILS_DECLARE_PROPERTY(bool, SynonymWithoutObjectInvalid);
+        UTILS_DECLARE_PROPERTY(std::string, CurrentDBUser);
+        UTILS_DECLARE_PROPERTY(std::string, CurrentDBSchema);
     };
 }
 

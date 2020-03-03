@@ -104,7 +104,7 @@ namespace Data {
             return !col ? 200 : ListDataProvider::GetMinDefColWidth(col);
         }
 
-        size_t Query();
+        virtual size_t Query();
 
         virtual InfoType GetInfoType() const { return InfoType::View; }
     };

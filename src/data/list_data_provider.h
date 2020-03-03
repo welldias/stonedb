@@ -5,6 +5,9 @@ namespace Data {
 
     class ListDataProvider
 	{
+    protected:
+        std::string m_schema;
+
     public:
         enum class InfoType {
             Undefined,
@@ -57,6 +60,11 @@ namespace Data {
         virtual int GetMaxDefColWidth(int col) const { return MAX_DEF_COL_WIDTH; }
 
         virtual InfoType GetInfoType() const = 0;
+
+        virtual size_t Query() = 0;
+
+        void SetSchema(const std::string& schema) { m_schema = schema; }
+        std::string GetSchema() { return m_schema; }
 	};
 }
 

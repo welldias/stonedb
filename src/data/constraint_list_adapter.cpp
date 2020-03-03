@@ -14,12 +14,14 @@ namespace Data {
 		: deleted(false) {
 	}
 
-    ConstraintListAdapter::ConstraintListAdapter(Oci20::Connect& connect, const std::string& constraintType)
-        : m_connect(connect), m_constraintType(constraintType) {
-
+    ConstraintListAdapter::ConstraintListAdapter(Oci20::Connect& connect, Type type)
+        : m_connect(connect), m_type(type) {
 	}
 
     size_t ConstraintListAdapter::Query() {
+
+        if (!m_connect.IsOpen())
+            return -1;
 
         const int cn_owner = 0;
         const int cn_table_name = 1;
@@ -32,7 +34,7 @@ namespace Data {
         const int cn_r_constraint_name = 8;
         const int cn_delete_rule = 9;
 
-        static const char* csz_sttm =
+        static const char* csz_constraint_sttm =
             "SELECT <RULE>"
             " owner, table_name, constraint_name, status,"
             " <DEFERRABLE>,"
@@ -54,15 +56,12 @@ namespace Data {
         substitutor.AddPair("<DEFERRED>", (serverVersion > Connect::ServerVersion::Server73X) ? "decode(deferred,'DEFERRED','Y')" : "NULL");
         substitutor.AddPair("<NOT_RECYCLED>", (serverVersion >= Connect::ServerVersion::Server10X) ? "AND (owner, table_name) NOT IN (SELECT user, object_name FROM user_recyclebin)" : "");
         
-        substitutor << csz_sttm;
-
-        //TODO: not hard code pls
-        std::string m_schema = "SYSTEM";
+        substitutor << csz_constraint_sttm;
 
         BuffCursor cursor(m_connect, 50, 196);
         cursor.Prepare(substitutor.GetResult());
         cursor.Bind(":owner", m_schema.c_str());
-        cursor.Bind(":type", m_constraintType.c_str());
+        cursor.Bind(":type", static_cast<char>(m_type));
 
         cursor.Execute();
         while (cursor.Fetch()) {

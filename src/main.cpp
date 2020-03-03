@@ -15,6 +15,20 @@ using namespace Utils;
 using namespace Oci20;
 using namespace Data;
 
+//#define LINX_ENV
+
+int loadDataProvider(ListDataProvider& dataProvider, const std::string& schema) {
+    try {
+        dataProvider.SetSchema(schema);
+        dataProvider.Query();
+    }
+    catch (const Exception & e) {
+        std::cout << e.what() << std::endl;
+    }
+
+    return dataProvider.GetRowCount();
+}
+
 #ifdef _WINDOWS
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -26,12 +40,17 @@ int main(int argc, char *argv[])
 {
     Session ociSession;
 
-    //ConnectionMode mode = ConnectionMode::Default;
-    //Safety safety = Safety::ReadOnly;
-    //std::string user = "lasadb01_safe_fai";
-    //std::string password = "lasadb01_safe_fai";
-    //std::string tnsAlias = "ORA11GD";
+    std::string currentUser;
+    std::string currentSchema;
 
+    Connect::Mode mode = Connect::Mode::Default;
+    Connect::Safety safety = Connect::Safety::None;
+
+#ifdef LINX_ENV
+    std::string user = "lasadb01_safe_fai";
+    std::string password = "lasadb01_safe_fai";
+    std::string tnsAlias = "ORA11GD";
+#else
     std::string user = "system";
     std::string password = "custonil";
     std::string tnsAlias = "";
@@ -39,8 +58,7 @@ int main(int argc, char *argv[])
     std::string port = "1521";
     std::string sid = "XEPDB1";
     bool serviceInsteadOfSid = true;
-    Connect::Mode mode = Connect::Mode::Default;
-    Connect::Safety safety = Connect::Safety::None;
+#endif 
 
     Settings::SetDateFormat("dd.mm.yy");
     Settings::SetAutocommit(false);
@@ -66,73 +84,55 @@ int main(int argc, char *argv[])
     Settings::SetIntervalToTextSupported(true);
 
     try {
-        //ociSession.Open(user, password, tnsAlias, mode, safety);
+#ifdef LINX_ENV
+        ociSession.Open(user, password, tnsAlias, mode, safety);
+#else
         ociSession.Open(user, password, host, port, sid, serviceInsteadOfSid, mode, safety);
-        ociSession.GetVersion();
+#endif
     }
     catch (const OciException& e) {
         std::cout << e.what() << std::endl;
     }
 
+    Connect::ServerVersion serverVersion = ociSession.GetVersion();
+    ociSession.GetCurrentUserAndSchema(currentUser, currentSchema);
+
+    UserListAdapter userList(ociSession.getConnect());
+    loadDataProvider(userList, "");
+
+    Settings::SetSynonymWithoutObjectInvalid(false);
+    Settings::SetCurrentDBUser(currentUser);
+    Settings::SetCurrentDBSchema(currentSchema);
+
+    SynonymListAdapter synonymList(ociSession.getConnect());
+    loadDataProvider(synonymList, currentSchema);
+
+    SequenceListAdapter sequenceList(ociSession.getConnect());
+    loadDataProvider(sequenceList, currentSchema);
+
+    TriggerListAdapter triggerList(ociSession.getConnect());
+    loadDataProvider(triggerList, currentSchema);
+
+    IndexListAdapter indexList(ociSession.getConnect());
+    loadDataProvider(indexList, currentSchema);
+
     TableListAdapter tableList(ociSession.getConnect());
-    if (ociSession.IsDatabaseOpen()) {
-        try {
-            tableList.Query();
-        }
-        catch (const Exception & e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
+    loadDataProvider(tableList, currentSchema);
 
     ViewListAdapter viewList(ociSession.getConnect());
-    if (ociSession.IsDatabaseOpen()) {
-        try {
-            viewList.Query();
-        }
-        catch (const Exception & e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
+    loadDataProvider(viewList, currentSchema);
 
-    ConstraintListAdapter pkListAdapter(ociSession.getConnect(), "P");
-    if (ociSession.IsDatabaseOpen()) {
-        try {
-            pkListAdapter.Query();
-        }
-        catch (const Exception & e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
+    ConstraintListAdapter pkListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::PrimaryKey);
+    loadDataProvider(pkListAdapter, currentSchema);
 
-    ConstraintListAdapter fkListAdapter(ociSession.getConnect(), "R");
-    if (ociSession.IsDatabaseOpen()) {
-        try {
-            fkListAdapter.Query();
-        }
-        catch (const Exception & e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
+    ConstraintListAdapter fkListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::ForeignKey);
+    loadDataProvider(fkListAdapter, currentSchema);
 
-    ConstraintListAdapter ukListAdapter(ociSession.getConnect(), "U");
-    if (ociSession.IsDatabaseOpen()) {
-        try {
-            ukListAdapter.Query();
-        }
-        catch (const Exception & e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
+    ConstraintListAdapter ukListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::UniqueKey);
+    loadDataProvider(ukListAdapter, currentSchema);
 
-    ConstraintListAdapter chkListAdapter(ociSession.getConnect(), "C");
-    if (ociSession.IsDatabaseOpen()) {
-        try {
-            chkListAdapter.Query();
-        }
-        catch (const Exception & e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
+    ConstraintListAdapter chkListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::Check);
+    loadDataProvider(chkListAdapter, currentSchema);
 
     ociSession.Close(false);
 

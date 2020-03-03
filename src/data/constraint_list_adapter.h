@@ -33,12 +33,6 @@ namespace Data {
     };
 
     class ConstraintListAdapter : public ListDataProvider, ListDataProviderHelper {
-	protected:
-        std::vector<ConstraintEntry> m_entries;
-        Oci20::Connect& m_connect;
-        std::string m_constraintType;
-
-
     public:
         enum class ColumnName {
             Constraint = 0,
@@ -50,7 +44,21 @@ namespace Data {
             Count,
         };
 
-        ConstraintListAdapter(Oci20::Connect& connect, const std::string& constraintType);
+        enum class Type : char {
+            PrimaryKey = 'P',
+            ForeignKey = 'R',
+            UniqueKey = 'U',
+            Check = 'C',
+        };
+    
+    protected:
+        std::vector<ConstraintEntry> m_entries;
+        Oci20::Connect& m_connect;
+        Type m_type;
+
+    public:
+
+        ConstraintListAdapter(Oci20::Connect& connect, Type type);
 
         const ConstraintEntry& Data(int row) const { return m_entries.at(row); }
 
@@ -120,9 +128,23 @@ namespace Data {
             return !col ? 200 : ListDataProvider::GetMinDefColWidth(col);
         }
 
-        size_t Query();
+        virtual size_t Query();
 
-        virtual InfoType GetInfoType() const { return InfoType::Undefined; }
+        virtual InfoType GetInfoType() const { 
+            switch (m_type) {
+            case Type::PrimaryKey:
+                return InfoType::PkConstraint;
+            case Type::ForeignKey:
+                return InfoType::FkConstraint;
+            case Type::UniqueKey:
+                return InfoType::UkConstraint;
+            case Type::Check:
+                return InfoType::ChkConstraint;
+            default:
+                break;
+            }
+            return InfoType:: Undefined; 
+        }
     };
 }
 #endif /*__PROJECT_STONE_DATA_CONSTRAINTLISTADAPTER_H__*/

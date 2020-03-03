@@ -24,6 +24,9 @@ namespace Data {
 
 	size_t TableListAdapter::Query() {
 
+        if (!m_connect.IsOpen())
+            return -1;
+
         const int cn_owner = 0;
         const int cn_table_name = 1;
         const int cn_compression = 2;
@@ -84,9 +87,6 @@ namespace Data {
         substitutor.AddPair("<IOT_FILTER>", (serverVersion >= Connect::ServerVersion::Server81X) ? "AND t1.iot_name IS NULL" : "");
 
         substitutor << csz_table_sttm;
-
-        //TODO: not hard code pls
-        std::string m_schema = "SYSTEM";
 
         BuffCursor cursor(m_connect, 50, 196);
         cursor.Prepare(substitutor.GetResult());

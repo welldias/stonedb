@@ -167,8 +167,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\data\constraint_list_adapter.cpp" />
+    <ClCompile Include="src\data\index_list_adapter.cpp" />
     <ClCompile Include="src\data\list_manager.cpp" />
+    <ClCompile Include="src\data\sequence_list_adapter.cpp" />
+    <ClCompile Include="src\data\synonym_list_adapter.cpp" />
     <ClCompile Include="src\data\table_list_adapter.cpp" />
+    <ClCompile Include="src\data\trigger_list_adapter.cpp" />
+    <ClCompile Include="src\data\user_list_adapter.cpp" />
     <ClCompile Include="src\data\view_list_adapter.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\oci20\auto_cursor.cpp" />
@@ -200,10 +205,15 @@
   <ItemGroup>
     <ClInclude Include="src\data\constraint_list_adapter.h" />
     <ClInclude Include="src\data\data.h" />
+    <ClInclude Include="src\data\index_list_adapter.h" />
     <ClInclude Include="src\data\list_data_provider.h" />
     <ClInclude Include="src\data\list_data_provider_helper.h" />
     <ClInclude Include="src\data\list_manager.h" />
+    <ClInclude Include="src\data\sequence_list_adapter.h" />
+    <ClInclude Include="src\data\synonym_list_adapter.h" />
     <ClInclude Include="src\data\table_list_adapter.h" />
+    <ClInclude Include="src\data\trigger_list_adapter.h" />
+    <ClInclude Include="src\data\user_list_adapter.h" />
     <ClInclude Include="src\data\view_list_adapter.h" />
     <ClInclude Include="src\oci20\auto_cursor.h" />
     <ClInclude Include="src\oci20\break_handler.h" />
