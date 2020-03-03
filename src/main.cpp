@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     std::string user = "system";
     std::string password = "custonil";
     std::string tnsAlias = "";
-    std::string host = "localhost";
+    std::string host = "192.168.15.2";
     std::string port = "1521";
     std::string sid = "XEPDB1";
     bool serviceInsteadOfSid = true;

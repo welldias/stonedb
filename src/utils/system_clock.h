@@ -7,6 +7,7 @@
 #include <time.h>
 #endif
 
+#include <cstring>
 #include <cstdint>
 
 namespace Utils {
