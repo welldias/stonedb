@@ -35,39 +35,26 @@ namespace Data {
         Oci20::Connect& m_connect;
 
     public:
-        enum class ColumnName {
-            TableName = 0,
-            TableType,
-            TablespaceName,
-            Compression,
-            Created,
-            LastDdlTime,
-            NumRows,
-            Blocks,
-            LastAnalyzed,
-            Count,
-        };
-
         TableListAdapter(Oci20::Connect& connect);
 
         const TableEntry& Data(int row) const { return m_entries.at(row); }
 
         virtual int GetRowCount() const { return (int)m_entries.size(); }
 
-        virtual int GetColCount() const { return static_cast<int>(ColumnName::Count); }
+        virtual int GetColCount() const { return 9; }
 
         virtual ListDataProvider::ColumnType GetColumnType(int col) const {
             
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::TableName:      return ColumnType::String; //table_name       
-            case ColumnName::TableType:      return ColumnType::String; //table_type       
-            case ColumnName::Compression:    return ColumnType::String; //compression         
-            case ColumnName::TablespaceName: return ColumnType::Number; //tablespace_name  
-            case ColumnName::Created:        return ColumnType::Date; //created     
-            case ColumnName::LastDdlTime:    return ColumnType::Date; //last_ddl_time
-            case ColumnName::LastAnalyzed:   return ColumnType::Date; //last_analyzed    
-            case ColumnName::NumRows:        return ColumnType::Number;
-            case ColumnName::Blocks:         return ColumnType::Number;
+            switch (col) {
+            case 0: return ColumnType::String;  
+            case 1: return ColumnType::String;  
+            case 2: return ColumnType::String;     
+            case 3: return ColumnType::Number;  
+            case 4: return ColumnType::Date;
+            case 5: return ColumnType::Date;
+            case 6: return ColumnType::Date;
+            case 7: return ColumnType::Number;
+            case 8: return ColumnType::Number;
             }
 
             return ColumnType::String;
@@ -77,16 +64,16 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::TableName:      value = "Name"; //table_name       
-            case ColumnName::TableType:      value = "Type"; //table_type       
-            case ColumnName::Compression:    value = "Compression"; //compression         
-            case ColumnName::TablespaceName: value = "Tablespace"; //tablespace_name  
-            case ColumnName::Created:        value = "Created"; //created
-            case ColumnName::LastDdlTime:    value = "Modified"; //last_ddl_time
-            case ColumnName::LastAnalyzed:   value = "Last Analyzed"; //last_analyzed    
-            case ColumnName::NumRows:        value = "Rows";
-            case ColumnName::Blocks:         value = "Blocks";
+            switch (col) {
+            case 0: value = "Name";          return;
+            case 1: value = "Type";          return;
+            case 2: value = "Compression";   return;
+            case 3: value = "Tablespace";    return;
+            case 4: value = "Created";       return;
+            case 5: value = "Modified";      return;
+            case 6: value = "Last Analyzed"; return;
+            case 7: value = "Rows";          return;
+            case 8: value = "Blocks";        return;
             }
         }
 
@@ -94,34 +81,34 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::TableName:      ToString(Data(row).table_name, value);
-            case ColumnName::TableType:      ToString(Data(row).table_type, value);
-            case ColumnName::Compression:    ToString(Data(row).compression, value);
-            case ColumnName::TablespaceName: ToString(Data(row).tablespace_name, value);
-            case ColumnName::Created:        ToString(Data(row).created, value);
-            case ColumnName::LastDdlTime:    ToString(Data(row).last_ddl_time, value);
-            case ColumnName::LastAnalyzed:   ToString(Data(row).last_analyzed, value);
-            case ColumnName::NumRows:        ToString(Data(row).num_rows, value);
-            case ColumnName::Blocks:         ToString(Data(row).blocks, value);
+            switch (col) {
+            case 0: ToString(Data(row).table_name,      value);  return;
+            case 1: ToString(Data(row).table_type,      value);  return;
+            case 2: ToString(Data(row).compression,     value);  return;
+            case 3: ToString(Data(row).tablespace_name, value);  return;
+            case 4: ToString(Data(row).created,         value);  return;
+            case 5: ToString(Data(row).last_ddl_time,   value);  return;
+            case 6: ToString(Data(row).last_analyzed,   value);  return;
+            case 7: ToString(Data(row).num_rows,        value);  return;
+            case 8: ToString(Data(row).blocks,          value);  return;
             }
-        }
+        }                                                       
 
         bool IsVisibleRow(int row) const {
             return !Data(row).deleted;
         }
 
         virtual int Compare(int row1, int row2, int col) const {
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::TableName:      return Comp(Data(row1).table_name,      Data(row2).table_name);
-            case ColumnName::TableType:      return Comp(Data(row1).table_type,      Data(row2).table_type);
-            case ColumnName::Compression:    return Comp(Data(row1).compression,     Data(row2).compression);
-            case ColumnName::TablespaceName: return Comp(Data(row1).tablespace_name, Data(row2).tablespace_name);
-            case ColumnName::Created:        return Comp(Data(row1).created,         Data(row2).created);
-            case ColumnName::LastDdlTime:    return Comp(Data(row1).last_ddl_time,   Data(row2).last_ddl_time);
-            case ColumnName::LastAnalyzed:   return Comp(Data(row1).last_analyzed,   Data(row2).last_analyzed);
-            case ColumnName::NumRows:        return Comp(Data(row1).num_rows,        Data(row2).num_rows);
-            case ColumnName::Blocks:         return Comp(Data(row1).blocks,          Data(row2).blocks);
+            switch (col) {
+            case 0: return Comp(Data(row1).table_name,      Data(row2).table_name);
+            case 1: return Comp(Data(row1).table_type,      Data(row2).table_type);
+            case 2: return Comp(Data(row1).compression,     Data(row2).compression);
+            case 3: return Comp(Data(row1).tablespace_name, Data(row2).tablespace_name);
+            case 4: return Comp(Data(row1).created,         Data(row2).created);
+            case 5: return Comp(Data(row1).last_ddl_time,   Data(row2).last_ddl_time);
+            case 6: return Comp(Data(row1).last_analyzed,   Data(row2).last_analyzed);
+            case 7: return Comp(Data(row1).num_rows,        Data(row2).num_rows);
+            case 8: return Comp(Data(row1).blocks,          Data(row2).blocks);
             }
             return 0;
         }

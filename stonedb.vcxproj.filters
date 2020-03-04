@@ -14,6 +14,9 @@
     <Filter Include="data">
       <UniqueIdentifier>{9c822052-0dc3-4545-a5c3-7fb75a38dce6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="task">
+      <UniqueIdentifier>{ee43752f-4275-4630-915f-93cbc42c01ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\utils\exception.cpp">
@@ -118,6 +121,39 @@
     </ClCompile>
     <ClCompile Include="src\data\synonym_list_adapter.cpp">
       <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\recycled_bin_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\invalid_object_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\type_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\code_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\cluster_bin_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\grantee_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\dblink_list_adapter.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task\manager.cpp">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task\module.cpp">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task\scheduler.cpp">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task\thread_pool.cpp">
+      <Filter>task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -240,6 +276,45 @@
     </ClInclude>
     <ClInclude Include="src\data\synonym_list_adapter.h">
       <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\recycled_bin_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\invalid_object_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\type_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\code_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\cluster_bin_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\grantee_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\dblink_list_adapter.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task\manager.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task\module.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task\priority_queue.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task\scheduler.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task\task.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task\thread_pool.h">
+      <Filter>task</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

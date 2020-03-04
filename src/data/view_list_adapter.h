@@ -29,31 +29,22 @@ namespace Data {
         Oci20::Connect& m_connect;
 
     public:
-        enum class ColumnName {
-            ViewName = 0,
-            TextLength,
-            Created,
-            LastDdlTime,
-            Status,
-            Count,
-        };
-
         ViewListAdapter(Oci20::Connect& connect);
 
         const ViewEntry& Data(int row) const { return m_entries.at(row); }
 
         virtual int GetRowCount() const { return (int)m_entries.size(); }
 
-        virtual int GetColCount() const { return static_cast<int>(ColumnName::Count); }
+        virtual int GetColCount() const { return 5; }
 
         virtual ListDataProvider::ColumnType GetColumnType(int col) const {
             
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::ViewName:    return ColumnType::String;
-            case ColumnName::TextLength:  return ColumnType::Number;
-            case ColumnName::Created:     return ColumnType::Date;
-            case ColumnName::LastDdlTime: return ColumnType::Date;
-            case ColumnName::Status:      return ColumnType::String;
+            switch (col) {
+            case 0: return ColumnType::String;
+            case 1: return ColumnType::Number;
+            case 2: return ColumnType::Date;
+            case 3: return ColumnType::Date;
+            case 4: return ColumnType::String;
             }
 
             return ListDataProvider::ColumnType::String;
@@ -63,12 +54,12 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::ViewName:    value = "Name";
-            case ColumnName::TextLength:  value = "Text Length";
-            case ColumnName::Created:     value = "Created";
-            case ColumnName::LastDdlTime: value = "Modified";
-            case ColumnName::Status:      value = "Status";
+            switch (col) {
+            case 0: value = "Name";        return;
+            case 1: value = "Text Length"; return;
+            case 2: value = "Created";     return;
+            case 3: value = "Modified";    return;
+            case 4: value = "Status";      return;
             }
         }
 
@@ -76,12 +67,12 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::ViewName:    ToString(Data(row).view_name, value);
-            case ColumnName::TextLength:  ToString(Data(row).text_length, value);
-            case ColumnName::Created:     ToString(Data(row).created, value);
-            case ColumnName::LastDdlTime: ToString(Data(row).last_ddl_time, value);
-            case ColumnName::Status:      ToString(Data(row).status, value);
+            switch (col) {
+            case 0: ToString(Data(row).view_name,     value); return;
+            case 1: ToString(Data(row).text_length,   value); return;
+            case 2: ToString(Data(row).created,       value); return;
+            case 3: ToString(Data(row).last_ddl_time, value); return;
+            case 4: ToString(Data(row).status,        value); return;
             }
         }
 
@@ -90,12 +81,12 @@ namespace Data {
         }
 
         virtual int Compare(int row1, int row2, int col) const {
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::ViewName:    return Comp(Data(row1).view_name,     Data(row2).view_name);
-            case ColumnName::TextLength:  return Comp(Data(row1).text_length,   Data(row2).text_length);
-            case ColumnName::Created:     return Comp(Data(row1).created,       Data(row2).created);
-            case ColumnName::LastDdlTime: return Comp(Data(row1).last_ddl_time, Data(row2).last_ddl_time);
-            case ColumnName::Status:      return Comp(Data(row1).status,        Data(row2).status);
+            switch (col) {
+            case 0: return Comp(Data(row1).view_name,     Data(row2).view_name);
+            case 1: return Comp(Data(row1).text_length,   Data(row2).text_length);
+            case 2: return Comp(Data(row1).created,       Data(row2).created);
+            case 3: return Comp(Data(row1).last_ddl_time, Data(row2).last_ddl_time);
+            case 4: return Comp(Data(row1).status,        Data(row2).status);
             }
             return 0;
         }

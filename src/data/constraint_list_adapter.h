@@ -34,16 +34,6 @@ namespace Data {
 
     class ConstraintListAdapter : public ListDataProvider, ListDataProviderHelper {
     public:
-        enum class ColumnName {
-            Constraint = 0,
-            Table,
-            Columns,
-            Deferrable,
-            Deferred,
-            Status,
-            Count,
-        };
-
         enum class Type : char {
             PrimaryKey = 'P',
             ForeignKey = 'R',
@@ -64,17 +54,17 @@ namespace Data {
 
         virtual int GetRowCount() const { return (int)m_entries.size(); }
 
-        virtual int GetColCount() const { return static_cast<int>(ColumnName::Count); }
+        virtual int GetColCount() const { return 6; }
 
         virtual ListDataProvider::ColumnType GetColumnType(int col) const {
             
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::Constraint: return ColumnType::String;
-            case ColumnName::Table:      return ColumnType::String;
-            case ColumnName::Columns:    return ColumnType::String;
-            case ColumnName::Deferrable: return ColumnType::String;
-            case ColumnName::Deferred:   return ColumnType::String;
-            case ColumnName::Status:     return ColumnType::String;
+            switch (col) {
+            case 0: return ColumnType::String;
+            case 1: return ColumnType::String;
+            case 2: return ColumnType::String;
+            case 3: return ColumnType::String;
+            case 4: return ColumnType::String;
+            case 5: return ColumnType::String;
             }
 
             return ListDataProvider::ColumnType::String;
@@ -84,13 +74,13 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::Constraint: value = "Constraint";
-            case ColumnName::Table:      value = "Table";
-            case ColumnName::Columns:    value = "Columns";
-            case ColumnName::Deferrable: value = "Deferrable";
-            case ColumnName::Deferred:   value = "Deferred";
-            case ColumnName::Status:     value = "Status";
+            switch (col) {
+            case 0: value = "Constraint";  return;
+            case 1: value = "Table";       return;
+            case 2: value = "Columns";     return;
+            case 3: value = "Deferrable";  return;
+            case 4: value = "Deferred";    return;
+            case 5: value = "Status";      return;
             }                
         }
 
@@ -98,13 +88,13 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::Constraint: ToString(Data(row).constraint_name, value);
-            case ColumnName::Table:      ToString(Data(row).table_name, value);
-            case ColumnName::Columns:    ToString(Data(row).column_list, value);
-            case ColumnName::Deferrable: ToString(Data(row).deferrable, value);
-            case ColumnName::Deferred:   ToString(Data(row).deferred, value);
-            case ColumnName::Status:     ToString(Data(row).status, value);
+            switch (col) {
+            case 0: ToString(Data(row).constraint_name, value);  return;
+            case 1: ToString(Data(row).table_name,      value);  return;
+            case 2: ToString(Data(row).column_list,     value);  return;
+            case 3: ToString(Data(row).deferrable,      value);  return;
+            case 4: ToString(Data(row).deferred,        value);  return;
+            case 5: ToString(Data(row).status,          value);  return;
             }
         }
 
@@ -113,13 +103,13 @@ namespace Data {
         }
 
         virtual int Compare(int row1, int row2, int col) const {
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::Constraint: Comp(Data(row1).constraint_name, Data(row2).constraint_name);
-            case ColumnName::Table:      Comp(Data(row1).table_name     , Data(row2).table_name     );
-            case ColumnName::Columns:    Comp(Data(row1).column_list    , Data(row2).column_list    );
-            case ColumnName::Deferrable: Comp(Data(row1).deferrable     , Data(row2).deferrable     );
-            case ColumnName::Deferred:   Comp(Data(row1).deferred       , Data(row2).deferred       );
-            case ColumnName::Status:     Comp(Data(row1).status         , Data(row2).status         );
+            switch (col) {
+            case 0: return Comp(Data(row1).constraint_name ,Data(row2).constraint_name); 
+            case 1: return Comp(Data(row1).table_name      ,Data(row2).table_name);      
+            case 2: return Comp(Data(row1).column_list     ,Data(row2).column_list);     
+            case 3: return Comp(Data(row1).deferrable      ,Data(row2).deferrable);      
+            case 4: return Comp(Data(row1).deferred        ,Data(row2).deferred);        
+            case 5: return Comp(Data(row1).status          ,Data(row2).status );         
             }
             return 0;
         }
@@ -132,18 +122,12 @@ namespace Data {
 
         virtual InfoType GetInfoType() const { 
             switch (m_type) {
-            case Type::PrimaryKey:
-                return InfoType::PkConstraint;
-            case Type::ForeignKey:
-                return InfoType::FkConstraint;
-            case Type::UniqueKey:
-                return InfoType::UkConstraint;
-            case Type::Check:
-                return InfoType::ChkConstraint;
-            default:
-                break;
+            case Type::PrimaryKey: return InfoType::PkConstraint;
+            case Type::ForeignKey: return InfoType::FkConstraint;
+            case Type::UniqueKey:  return InfoType::UkConstraint;
+            case Type::Check:      return InfoType::ChkConstraint;
             }
-            return InfoType:: Undefined; 
+            return InfoType::Undefined;
         }
     };
 }

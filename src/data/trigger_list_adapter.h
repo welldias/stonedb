@@ -35,41 +35,27 @@ namespace Data {
         Oci20::Connect& m_connect;
 
     public:
-        enum class ColumnName {
-            TriggerName = 0,
-            TableOwner,
-            Table,
-            Type,
-            Event,
-            When,
-            Created,
-            Modified,
-            Enabled,
-            Status,
-            Count
-        };
-
         TriggerListAdapter(Oci20::Connect& connect);
 
         const TriggerEntry& Data(int row) const { return m_entries.at(row); }
 
         virtual int GetRowCount() const { return (int)m_entries.size(); }
 
-        virtual int GetColCount() const { return static_cast<int>(ColumnName::Count); }
+        virtual int GetColCount() const { return 10; }
 
         virtual ListDataProvider::ColumnType GetColumnType(int col) const {
             
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::TriggerName: return ColumnType::String;
-            case ColumnName::TableOwner:  return ColumnType::String;
-            case ColumnName::Table:       return ColumnType::String;
-            case ColumnName::Type:        return ColumnType::String;
-            case ColumnName::Event:       return ColumnType::String;
-            case ColumnName::When:        return ColumnType::String;
-            case ColumnName::Created:     return ColumnType::Date;
-            case ColumnName::Modified:    return ColumnType::Date;
-            case ColumnName::Enabled:     return ColumnType::String;
-            case ColumnName::Status:      return ColumnType::String;
+            switch (col) {
+            case 0: return ColumnType::String;
+            case 1: return ColumnType::String;
+            case 2: return ColumnType::String;
+            case 3: return ColumnType::String;
+            case 4: return ColumnType::String;
+            case 5: return ColumnType::String;
+            case 6: return ColumnType::Date;
+            case 7: return ColumnType::Date;
+            case 8: return ColumnType::String;
+            case 9: return ColumnType::String;
             }
 
             return ColumnType::String;
@@ -79,17 +65,17 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::TriggerName: value = "Trigger Name";
-            case ColumnName::TableOwner:  value = "Table Owner";
-            case ColumnName::Table:       value = "Table";
-            case ColumnName::Type:        value = "Type";
-            case ColumnName::Event:       value = "Event";
-            case ColumnName::When:        value = "When";
-            case ColumnName::Created:     value = "Created";
-            case ColumnName::Modified:    value = "Modified";
-            case ColumnName::Enabled:     value = "Enabled";
-            case ColumnName::Status:      value = "Status";
+            switch (col) {
+            case 0: value = "Trigger Name"; return;
+            case 1: value = "Table Owner";  return;
+            case 2: value = "Table";        return;
+            case 3: value = "Type";         return;
+            case 4: value = "Event";        return;
+            case 5: value = "When";         return;
+            case 6: value = "Created";      return;
+            case 7: value = "Modified";     return;
+            case 8: value = "Enabled";      return;
+            case 9: value = "Status";       return;
             }
         }
 
@@ -97,17 +83,17 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::TriggerName: ToString(Data(row).trigger_name      ,value);
-            case ColumnName::TableOwner:  ToString(Data(row).table_owner       ,value);
-            case ColumnName::Table:       ToString(Data(row).table_name        ,value);
-            case ColumnName::Type:        ToString(Data(row).trigger_type      ,value);
-            case ColumnName::Event:       ToString(Data(row).triggering_event  ,value);
-            case ColumnName::When:        ToString(Data(row).when_clause       ,value);
-            case ColumnName::Created:     ToString(Data(row).created           ,value);
-            case ColumnName::Modified:    ToString(Data(row).last_ddl_time     ,value);
-            case ColumnName::Enabled:     ToString(Data(row).enabled           ,value);
-            case ColumnName::Status:      ToString(Data(row).status            ,value);
+            switch (col) {
+            case 0: ToString(Data(row).trigger_name      ,value); return;
+            case 1: ToString(Data(row).table_owner       ,value); return;
+            case 2: ToString(Data(row).table_name        ,value); return;
+            case 3: ToString(Data(row).trigger_type      ,value); return;
+            case 4: ToString(Data(row).triggering_event  ,value); return;
+            case 5: ToString(Data(row).when_clause       ,value); return;
+            case 6: ToString(Data(row).created           ,value); return;
+            case 7: ToString(Data(row).last_ddl_time     ,value); return;
+            case 8: ToString(Data(row).enabled           ,value); return;
+            case 9: ToString(Data(row).status            ,value); return;
             }
         }
 
@@ -116,17 +102,17 @@ namespace Data {
         }
 
         virtual int Compare(int row1, int row2, int col) const {
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::TriggerName: return Comp(Data(row1).trigger_name     ,Data(row2).trigger_name);
-            case ColumnName::TableOwner:  return Comp(Data(row1).table_owner      ,Data(row2).table_owner);
-            case ColumnName::Table:       return Comp(Data(row1).table_name       ,Data(row2).table_name);
-            case ColumnName::Type:        return Comp(Data(row1).trigger_type     ,Data(row2).trigger_type);
-            case ColumnName::Event:       return Comp(Data(row1).triggering_event ,Data(row2).triggering_event);
-            case ColumnName::When:        return Comp(Data(row1).when_clause      ,Data(row2).when_clause);
-            case ColumnName::Created:     return Comp(Data(row1).created          ,Data(row2).created);
-            case ColumnName::Modified:    return Comp(Data(row1).last_ddl_time    ,Data(row2).last_ddl_time);
-            case ColumnName::Enabled:     return Comp(Data(row1).enabled          ,Data(row2).enabled);
-            case ColumnName::Status:      return Comp(Data(row1).status           ,Data(row2).status);
+            switch (col) {
+            case 0: return Comp(Data(row1).trigger_name     ,Data(row2).trigger_name);
+            case 1: return Comp(Data(row1).table_owner      ,Data(row2).table_owner);
+            case 2: return Comp(Data(row1).table_name       ,Data(row2).table_name);
+            case 3: return Comp(Data(row1).trigger_type     ,Data(row2).trigger_type);
+            case 4: return Comp(Data(row1).triggering_event ,Data(row2).triggering_event);
+            case 5: return Comp(Data(row1).when_clause      ,Data(row2).when_clause);
+            case 6: return Comp(Data(row1).created          ,Data(row2).created);
+            case 7: return Comp(Data(row1).last_ddl_time    ,Data(row2).last_ddl_time);
+            case 8: return Comp(Data(row1).enabled          ,Data(row2).enabled);
+            case 9: return Comp(Data(row1).status           ,Data(row2).status);
             }
             return 0;
         }

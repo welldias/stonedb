@@ -116,6 +116,7 @@
       <AdditionalIncludeDirectories>c:\oracle\x64\sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -166,13 +167,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\data\cluster_bin_list_adapter.cpp" />
+    <ClCompile Include="src\data\code_list_adapter.cpp" />
     <ClCompile Include="src\data\constraint_list_adapter.cpp" />
+    <ClCompile Include="src\data\dblink_list_adapter.cpp" />
+    <ClCompile Include="src\data\grantee_list_adapter.cpp" />
     <ClCompile Include="src\data\index_list_adapter.cpp" />
+    <ClCompile Include="src\data\invalid_object_list_adapter.cpp" />
     <ClCompile Include="src\data\list_manager.cpp" />
+    <ClCompile Include="src\data\recycled_bin_list_adapter.cpp" />
     <ClCompile Include="src\data\sequence_list_adapter.cpp" />
     <ClCompile Include="src\data\synonym_list_adapter.cpp" />
     <ClCompile Include="src\data\table_list_adapter.cpp" />
     <ClCompile Include="src\data\trigger_list_adapter.cpp" />
+    <ClCompile Include="src\data\type_list_adapter.cpp" />
     <ClCompile Include="src\data\user_list_adapter.cpp" />
     <ClCompile Include="src\data\view_list_adapter.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -196,6 +204,10 @@
     <ClCompile Include="src\oci20\string_var.cpp" />
     <ClCompile Include="src\oci20\timestamp_var.cpp" />
     <ClCompile Include="src\oci20\variable.cpp" />
+    <ClCompile Include="src\task\manager.cpp" />
+    <ClCompile Include="src\task\module.cpp" />
+    <ClCompile Include="src\task\scheduler.cpp" />
+    <ClCompile Include="src\task\thread_pool.cpp" />
     <ClCompile Include="src\utils\exception.cpp" />
     <ClCompile Include="src\utils\property.cpp" />
     <ClCompile Include="src\utils\settings.cpp" />
@@ -203,16 +215,23 @@
     <ClCompile Include="src\utils\substitutor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\data\cluster_bin_list_adapter.h" />
+    <ClInclude Include="src\data\code_list_adapter.h" />
     <ClInclude Include="src\data\constraint_list_adapter.h" />
     <ClInclude Include="src\data\data.h" />
+    <ClInclude Include="src\data\dblink_list_adapter.h" />
+    <ClInclude Include="src\data\grantee_list_adapter.h" />
     <ClInclude Include="src\data\index_list_adapter.h" />
+    <ClInclude Include="src\data\invalid_object_list_adapter.h" />
     <ClInclude Include="src\data\list_data_provider.h" />
     <ClInclude Include="src\data\list_data_provider_helper.h" />
     <ClInclude Include="src\data\list_manager.h" />
+    <ClInclude Include="src\data\recycled_bin_list_adapter.h" />
     <ClInclude Include="src\data\sequence_list_adapter.h" />
     <ClInclude Include="src\data\synonym_list_adapter.h" />
     <ClInclude Include="src\data\table_list_adapter.h" />
     <ClInclude Include="src\data\trigger_list_adapter.h" />
+    <ClInclude Include="src\data\type_list_adapter.h" />
     <ClInclude Include="src\data\user_list_adapter.h" />
     <ClInclude Include="src\data\view_list_adapter.h" />
     <ClInclude Include="src\oci20\auto_cursor.h" />
@@ -236,6 +255,12 @@
     <ClInclude Include="src\oci20\string_var.h" />
     <ClInclude Include="src\oci20\timestamp_var.h" />
     <ClInclude Include="src\oci20\variable.h" />
+    <ClInclude Include="src\task\manager.h" />
+    <ClInclude Include="src\task\module.h" />
+    <ClInclude Include="src\task\priority_queue.h" />
+    <ClInclude Include="src\task\scheduler.h" />
+    <ClInclude Include="src\task\task.h" />
+    <ClInclude Include="src\task\thread_pool.h" />
     <ClInclude Include="src\utils\exception.h" />
     <ClInclude Include="src\utils\property.h" />
     <ClInclude Include="src\utils\settings.h" />

@@ -7,6 +7,7 @@ file(GLOB_RECURSE SOURCES src/*.cpp)
 
 set (OCCI_LIB_NAME libocci.so)
 set (CLNT_LIB_NAME libclntsh.so)
+set (PTHD_LIB_NAME libpthread.so)
 link_directories(/opt/oracle)
 
 set(EXECUTABLE_OUTPUT_PATH "bin")
@@ -26,4 +27,4 @@ include_directories(
 )
 
 add_executable (stoneDB ${SOURCES})
-target_link_libraries(stoneDB ${OCCI_LIB_NAME} ${CLNT_LIB_NAME} )
+target_link_libraries(stoneDB ${OCCI_LIB_NAME} ${CLNT_LIB_NAME} ${PTHD_LIB_NAME} )

@@ -30,31 +30,22 @@ namespace Data {
         Oci20::Connect& m_connect;
 
     public:
-        enum class ColumnName {
-            Synonym = 0,
-            Owner,
-            Object,
-            DBLink,
-            Status,
-            Count,
-        };
-
         SynonymListAdapter(Oci20::Connect& connect);
 
         const SynonymEntry& Data(int row) const { return m_entries.at(row); }
 
         virtual int GetRowCount() const { return (int)m_entries.size(); }
 
-        virtual int GetColCount() const { return static_cast<int>(ColumnName::Count); }
+        virtual int GetColCount() const { return 5; }
 
         virtual ListDataProvider::ColumnType GetColumnType(int col) const {
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::Synonym: return ColumnType::String;
-            case ColumnName::Owner:   return ColumnType::String;
-            case ColumnName::Object:  return ColumnType::String;
-            case ColumnName::DBLink:  return ColumnType::String;
-            case ColumnName::Status:  return ColumnType::String;
+            switch (col) {
+            case 0: return ColumnType::String;
+            case 1: return ColumnType::String;
+            case 2: return ColumnType::String;
+            case 3: return ColumnType::String;
+            case 4: return ColumnType::String;
             }
 
             return ColumnType::String;
@@ -64,12 +55,12 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::Synonym: value = "Synonym";
-            case ColumnName::Owner:   value = "Owner";
-            case ColumnName::Object:  value = "Object";
-            case ColumnName::DBLink:  value = "DB Link";
-            case ColumnName::Status:  value = "Status";
+            switch (col) {
+            case 0: value = "Synonym";  return;
+            case 1: value = "Owner";    return;
+            case 2: value = "Object";   return;
+            case 3: value = "DB Link";  return;
+            case 4: value = "Status";   return;
             }
         }
 
@@ -77,12 +68,12 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::Synonym: ToString(Data(row).synonym_name, value);
-            case ColumnName::Owner:   ToString(Data(row).table_owner, value);
-            case ColumnName::Object:  ToString(Data(row).table_name, value);
-            case ColumnName::DBLink:  ToString(Data(row).db_link, value);
-            case ColumnName::Status:  ToString(Data(row).status, value);
+            switch (col) {
+            case 0: ToString(Data(row).synonym_name, value); return;
+            case 1: ToString(Data(row).table_owner,  value); return;
+            case 2: ToString(Data(row).table_name,   value); return;
+            case 3: ToString(Data(row).db_link,      value); return;
+            case 4: ToString(Data(row).status,       value); return;
             }
         }
 
@@ -91,12 +82,12 @@ namespace Data {
         }
 
         virtual int Compare(int row1, int row2, int col) const {
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::Synonym: return Comp(Data(row1).synonym_name, Data(row2).synonym_name);
-            case ColumnName::Owner:   return Comp(Data(row1).table_owner, Data(row2).table_owner);
-            case ColumnName::Object:  return Comp(Data(row1).table_name, Data(row2).table_name);
-            case ColumnName::DBLink:  return Comp(Data(row1).db_link, Data(row2).db_link);
-            case ColumnName::Status:  return Comp(Data(row1).status, Data(row2).status);
+            switch (col) {
+            case 0: return Comp(Data(row1).synonym_name, Data(row2).synonym_name);
+            case 1: return Comp(Data(row1).table_owner,  Data(row2).table_owner);
+            case 2: return Comp(Data(row1).table_name,   Data(row2).table_name);
+            case 3: return Comp(Data(row1).db_link,      Data(row2).db_link);
+            case 4: return Comp(Data(row1).status,       Data(row2).status);
             }
             return 0;
         }

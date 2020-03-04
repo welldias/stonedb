@@ -21,8 +21,13 @@ namespace Data {
 
         BuffCursor cursor(m_connect, "select username from all_users a_u where username <> user");
         cursor.Execute();
-        while (cursor.Fetch())
-            m_entries.push_back(cursor.ToString(0));
+        while (cursor.Fetch()) {
+            UserEntry entry;
+            
+            entry.user = cursor.ToString(0);
+
+            m_entries.push_back(entry);
+        }
 
         return m_entries.size();
 	}

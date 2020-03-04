@@ -11,6 +11,13 @@
 #include "oci20/oci20.h"
 #include "data/data.h"
 
+#include "task/manager.h"
+#include "task/thread_pool.h"
+#include "task/module.h"
+#include "task/priority_queue.h"
+#include "task/scheduler.h"
+#include "task/task.h"
+
 using namespace Utils;
 using namespace Oci20;
 using namespace Data;
@@ -97,12 +104,79 @@ int main(int argc, char *argv[])
     Connect::ServerVersion serverVersion = ociSession.GetVersion();
     ociSession.GetCurrentUserAndSchema(currentUser, currentSchema);
 
-    UserListAdapter userList(ociSession.getConnect());
-    loadDataProvider(userList, "");
-
     Settings::SetSynonymWithoutObjectInvalid(false);
     Settings::SetCurrentDBUser(currentUser);
     Settings::SetCurrentDBSchema(currentSchema);
+
+#if 0
+
+    // Create the thread pool with the initial number of threads (2 here).
+    Task::Module::init(4);
+
+    // Create a task manager with two worker.
+    auto manager = Task::Module::makeManager(2);
+
+    std::vector<std::future<int>> futureList;
+
+    ViewListAdapter viewList(ociSession.getConnect());
+    //loadDataProvider(viewList, currentSchema);
+    futureList.push_back(manager.get()->push(loadDataProvider, viewList, currentSchema));
+    
+    
+    //int ddd = future.get();
+
+    std::chrono::milliseconds span(50);
+    while (futureList[0].wait_for(span) == std::future_status::timeout)
+        std::cout << '.' << std::flush;
+
+    // Add a new task and get its future.
+    //auto future = manager.get()->push([] { return 42; });
+
+    // Get the result from the future and print it.
+    //std::cout << future.get() << std::endl; // Prints 42
+
+    // Not necessary here, but the stop method ensures that all launched tasks have been executed.
+    manager.get()->stop().get();
+#endif
+
+    UserListAdapter userList(ociSession.getConnect());
+    loadDataProvider(userList, "");
+
+    DbLinkListAdapter dblinkList(ociSession.getConnect());
+    loadDataProvider(dblinkList, currentSchema);
+
+    GranteeListAdapter granteeList(ociSession.getConnect());
+    loadDataProvider(granteeList, currentSchema);
+
+    ClusterListAdapter clusterList(ociSession.getConnect());
+    loadDataProvider(clusterList, currentSchema);
+
+    CodeListAdapter procedureList(ociSession.getConnect(), CodeListAdapter::MonoType::Procedure);
+    loadDataProvider(procedureList, currentSchema);
+
+    CodeListAdapter functionList(ociSession.getConnect(), CodeListAdapter::MonoType::Function);
+    loadDataProvider(functionList, currentSchema);
+
+    CodeListAdapter javaList(ociSession.getConnect(), CodeListAdapter::MonoType::Java);
+    loadDataProvider(javaList, currentSchema);
+
+    CodeListAdapter packageList(ociSession.getConnect(), CodeListAdapter::MonoType::Package);
+    loadDataProvider(packageList, currentSchema);
+
+    CodeListAdapter packageBodyList(ociSession.getConnect(), CodeListAdapter::MonoType::PackageBody);
+    loadDataProvider(packageBodyList, currentSchema);
+
+    TypeCodeListAdapter typecodeList(ociSession.getConnect(), TypeCodeListAdapter::MonoType::Type);
+    loadDataProvider(typecodeList, currentSchema);
+
+    TypeCodeListAdapter typecodeBodiesList(ociSession.getConnect(), TypeCodeListAdapter::MonoType::Bodies);
+    loadDataProvider(typecodeBodiesList, currentSchema);
+
+    InvalidObjectListAdapter invalidobjectList(ociSession.getConnect());
+    loadDataProvider(invalidobjectList, currentSchema);
+
+    RecyclebinListAdapter recyclebinList(ociSession.getConnect());
+    loadDataProvider(recyclebinList, currentSchema);
 
     SynonymListAdapter synonymList(ociSession.getConnect());
     loadDataProvider(synonymList, currentSchema);

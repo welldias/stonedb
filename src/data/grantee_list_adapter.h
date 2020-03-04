@@ -1,5 +1,5 @@
-#ifndef __PROJECT_STONE_DATA_USERLISTADAPTER_H__
-#define __PROJECT_STONE_DATA_USERLISTADAPTER_H__
+#ifndef __PROJECT_STONE_DATA_GRANTEELISTADAPTER_H__
+#define __PROJECT_STONE_DATA_GRANTEELISTADAPTER_H__
 
 #include <string>
 #include <vector>
@@ -12,23 +12,24 @@
 
 namespace Data {
 
-    struct UserEntry {
-        std::string user;
+    struct GranteeEntry
+    {
+        std::string grantee;
 
-        UserEntry() : deleted(false) {}
+        GranteeEntry() : deleted(false) {}
         bool deleted;
     };
 
-    class UserListAdapter : public ListDataProvider, ListDataProviderHelper {
-	protected:
-        std::vector<UserEntry> m_entries;
+    class GranteeListAdapter : public ListDataProvider, ListDataProviderHelper {
+    protected:
+        std::vector<GranteeEntry> m_entries;
         Oci20::Connect& m_connect;
 
     public:
 
-        UserListAdapter(Oci20::Connect& connect);
+        GranteeListAdapter(Oci20::Connect& connect);
 
-        const UserEntry& Data(int row) const { return m_entries.at(row); }
+        const GranteeEntry& Data(int row) const { return m_entries.at(row); }
 
         virtual int GetRowCount() const { return (int)m_entries.size(); }
 
@@ -46,7 +47,7 @@ namespace Data {
             value = "Unknown";
 
             switch (col) {
-            case  0: value = "User Name"; return;
+            case  0: value = "Grantee"; return;
             }
         }
 
@@ -55,17 +56,17 @@ namespace Data {
             value = "Unknown";
 
             switch (col) {
-            case 0: ToString(Data(row).user, value); return;
+            case 0: ToString(Data(row).grantee, value); return;
             }
         }
-        
+
         bool IsVisibleRow(int row) const {
             return !Data(row).deleted;
         }
 
         virtual int Compare(int row1, int row2, int col) const {
             switch (col) {
-            case  0: return Comp(Data(row1).user, Data(row2).user);
+            case  0: return Comp(Data(row1).grantee, Data(row2).grantee);
             }
             return 0;
         }
@@ -76,8 +77,8 @@ namespace Data {
 
         virtual size_t Query();
 
-        virtual InfoType GetInfoType() const { return InfoType::Undefined; }
+        virtual InfoType GetInfoType() const { return InfoType::Grantee; }
     };
 }
-#endif /*__PROJECT_STONE_DATA_USERLISTADAPTER_H__*/
+#endif /*__PROJECT_STONE_DATA_GRANTEELISTADAPTER_H__*/
 

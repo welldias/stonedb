@@ -36,41 +36,27 @@ namespace Data {
         Oci20::Connect& m_connect;
 
     public:
-        enum class ColumnName {
-            IndexName = 0,  //"Index"
-            TableName,      //"Table"
-            IndexType,      //"Type" 
-            Uniqueness,     //"Unique"
-            ColumnList,
-            TablespaceName, //"Tablespace"
-            Partitioned,    //"Initial"
-            Created,        //"Next"
-            LastDdlTime,    //"Increase"
-            LastAnalyzed,   //"Max Ext"
-            Count
-        };
-
         IndexListAdapter(Oci20::Connect& connect);
 
         const IndexEntry& Data(int row) const { return m_entries.at(row); }
 
         virtual int GetRowCount() const { return (int)m_entries.size(); }
 
-        virtual int GetColCount() const { return static_cast<int>(ColumnName::Count); }
+        virtual int GetColCount() const { return 10; }
 
         virtual ListDataProvider::ColumnType GetColumnType(int col) const {
             
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::IndexName:       return ColumnType::String; //string index_name;     
-            case ColumnName::TableName:       return ColumnType::String; //string table_name;     
-            case ColumnName::IndexType:       return ColumnType::String; //string index_type;     
-            case ColumnName::Uniqueness:      return ColumnType::String; //string uniqueness;     
-            case ColumnName::TablespaceName:  return ColumnType::String; //string tablespace_name;
-            case ColumnName::Partitioned:     return ColumnType::String; //
-            case ColumnName::Created:         return ColumnType::Date;   //
-            case ColumnName::LastDdlTime:     return ColumnType::Date;   //
-            case ColumnName::LastAnalyzed:    return ColumnType::Date;   //
-            case ColumnName::ColumnList:      return ColumnType::String;
+            switch (col) {
+            case  0: return ColumnType::String;
+            case  1: return ColumnType::String;
+            case  2: return ColumnType::String;
+            case  3: return ColumnType::String;
+            case  4: return ColumnType::String;
+            case  5: return ColumnType::String;
+            case  6: return ColumnType::Date;
+            case  7: return ColumnType::Date;
+            case  8: return ColumnType::Date;
+            case  9: return ColumnType::String;
             }
 
             return ColumnType::String;
@@ -80,17 +66,17 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::IndexName:       value = "Index";
-            case ColumnName::TableName:       value = "Table";
-            case ColumnName::IndexType:       value = "Type";
-            case ColumnName::Uniqueness:      value = "Unique";
-            case ColumnName::TablespaceName:  value = "Tablespace";
-            case ColumnName::Partitioned:     value = "Partitioned";
-            case ColumnName::Created:         value = "Created";
-            case ColumnName::LastDdlTime:     value = "Modified";
-            case ColumnName::LastAnalyzed:    value = "Last analyzed";
-            case ColumnName::ColumnList:      value = "Columns";
+            switch (col) {
+            case  0: value = "Index";         return;
+            case  1: value = "Table";         return;
+            case  2: value = "Type";          return;
+            case  3: value = "Unique";        return;
+            case  4: value = "Tablespace";    return;
+            case  5: value = "Partitioned";   return;
+            case  6: value = "Created";       return;
+            case  7: value = "Modified";      return;
+            case  8: value = "Last analyzed"; return;
+            case  9: value = "Columns";       return;
             }
         }
 
@@ -98,17 +84,17 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::IndexName:       ToString(Data(row).index_name       ,value);
-            case ColumnName::TableName:       ToString(Data(row).table_name       ,value);
-            case ColumnName::IndexType:       ToString(Data(row).index_type       ,value);
-            case ColumnName::Uniqueness:      ToString(Data(row).uniqueness       ,value);
-            case ColumnName::TablespaceName:  ToString(Data(row).tablespace_name  ,value);
-            case ColumnName::Partitioned:     ToString(Data(row).partitioned      ,value);
-            case ColumnName::Created:         ToString(Data(row).created          ,value);
-            case ColumnName::LastDdlTime:     ToString(Data(row).last_ddl_time    ,value);
-            case ColumnName::LastAnalyzed:    ToString(Data(row).last_analyzed    ,value);
-            case ColumnName::ColumnList:      ToString(Data(row).column_list      ,value);
+            switch (col) {
+            case  0: ToString(Data(row).index_name       ,value); return;
+            case  1: ToString(Data(row).table_name       ,value); return;
+            case  2: ToString(Data(row).index_type       ,value); return;
+            case  3: ToString(Data(row).uniqueness       ,value); return;
+            case  4: ToString(Data(row).tablespace_name  ,value); return;
+            case  5: ToString(Data(row).partitioned      ,value); return;
+            case  6: ToString(Data(row).created          ,value); return;
+            case  7: ToString(Data(row).last_ddl_time    ,value); return;
+            case  8: ToString(Data(row).last_analyzed    ,value); return;
+            case  9: ToString(Data(row).column_list      ,value); return;
             }
         }
 
@@ -117,17 +103,17 @@ namespace Data {
         }
 
         virtual int Compare(int row1, int row2, int col) const {
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::IndexName:       return Comp(Data(row1).index_name,       Data(row2).index_name);
-            case ColumnName::TableName:       return Comp(Data(row1).table_name,       Data(row2).table_name);
-            case ColumnName::IndexType:       return Comp(Data(row1).index_type,       Data(row2).index_type);
-            case ColumnName::Uniqueness:      return Comp(Data(row1).uniqueness,       Data(row2).uniqueness);
-            case ColumnName::TablespaceName:  return Comp(Data(row1).tablespace_name,  Data(row2).tablespace_name);
-            case ColumnName::Partitioned:     return Comp(Data(row1).partitioned,      Data(row2).partitioned);
-            case ColumnName::Created:         return Comp(Data(row1).created,          Data(row2).created);
-            case ColumnName::LastDdlTime:     return Comp(Data(row1).last_ddl_time,    Data(row2).last_ddl_time);
-            case ColumnName::LastAnalyzed:    return Comp(Data(row1).last_analyzed,    Data(row2).last_analyzed);
-            case ColumnName::ColumnList:      return Comp(Data(row1).column_list,      Data(row2).column_list);
+            switch (col) {
+            case  0: return Comp(Data(row1).index_name,       Data(row2).index_name);
+            case  1: return Comp(Data(row1).table_name,       Data(row2).table_name);
+            case  2: return Comp(Data(row1).index_type,       Data(row2).index_type);
+            case  3: return Comp(Data(row1).uniqueness,       Data(row2).uniqueness);
+            case  4: return Comp(Data(row1).tablespace_name,  Data(row2).tablespace_name);
+            case  5: return Comp(Data(row1).partitioned,      Data(row2).partitioned);
+            case  6: return Comp(Data(row1).created,          Data(row2).created);
+            case  7: return Comp(Data(row1).last_ddl_time,    Data(row2).last_ddl_time);
+            case  8: return Comp(Data(row1).last_analyzed,    Data(row2).last_analyzed);
+            case  9: return Comp(Data(row1).column_list,      Data(row2).column_list);
             }
             return 0;
         }

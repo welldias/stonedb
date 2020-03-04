@@ -36,43 +36,28 @@ namespace Data {
         Oci20::Connect& m_connect;
 
     public:
-        enum class ColumnName {
-            SequenceName = 0,
-            LastNumber,
-            MinValue,
-            MaxValue,
-            Interval,
-            Cache,
-            Cycle,
-            Order,
-            Generated,
-            Created,
-            Modified,
-            Count,
-        };
-
         SequenceListAdapter(Oci20::Connect& connect);
 
         const SequenceEntry& Data(int row) const { return m_entries.at(row); }
 
         virtual int GetRowCount() const { return (int)m_entries.size(); }
 
-        virtual int GetColCount() const { return static_cast<int>(ColumnName::Count); }
+        virtual int GetColCount() const { return 11; }
 
         virtual ListDataProvider::ColumnType GetColumnType(int col) const {
             
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::SequenceName:  return ColumnType::String;
-            case ColumnName::LastNumber:    return ColumnType::String;
-            case ColumnName::MinValue:      return ColumnType::String;
-            case ColumnName::MaxValue:      return ColumnType::String;
-            case ColumnName::Interval:      return ColumnType::String;
-            case ColumnName::Cache:         return ColumnType::String;
-            case ColumnName::Cycle:         return ColumnType::String;
-            case ColumnName::Order:         return ColumnType::String;
-            case ColumnName::Generated:     return ColumnType::String;
-            case ColumnName::Created:       return ColumnType::Date;
-            case ColumnName::Modified:      return ColumnType::Date;
+            switch (col) {
+            case  0:  return ColumnType::String;
+            case  1:  return ColumnType::String;
+            case  2:  return ColumnType::String;
+            case  3:  return ColumnType::String;
+            case  4:  return ColumnType::String;
+            case  5:  return ColumnType::String;
+            case  6:  return ColumnType::String;
+            case  7:  return ColumnType::String;
+            case  8:  return ColumnType::String;
+            case  9:  return ColumnType::Date;
+            case 10:  return ColumnType::Date;
             }
 
             return ColumnType::String;
@@ -82,18 +67,18 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::SequenceName:  value = "Sequence Name";
-            case ColumnName::LastNumber:    value = "Last Number";
-            case ColumnName::MinValue:      value = "Min Value";
-            case ColumnName::MaxValue:      value = "Max Value";
-            case ColumnName::Interval:      value = "Interval";
-            case ColumnName::Cache:         value = "Cache";
-            case ColumnName::Cycle:         value = "Cycle";
-            case ColumnName::Order:         value = "Order";
-            case ColumnName::Generated:     value = "Generated";
-            case ColumnName::Created:       value = "Created";
-            case ColumnName::Modified:      value = "Modified";
+            switch (col) {
+            case  0: value = "Sequence Name"; return;
+            case  1: value = "Last Number";   return;
+            case  2: value = "Min Value";     return;
+            case  3: value = "Max Value";     return;
+            case  4: value = "Interval";      return;
+            case  5: value = "Cache";         return;
+            case  6: value = "Cycle";         return;
+            case  7: value = "Order";         return;
+            case  8: value = "Generated";     return;
+            case  9: value = "Created";       return;
+            case 10: value = "Modified";      return;
             }
         }
 
@@ -101,18 +86,18 @@ namespace Data {
 
             value = "Unknown";
 
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::SequenceName:  ToString(Data(row).sequence_name     ,value);
-            case ColumnName::LastNumber:    ToString(Data(row).last_number       ,value);
-            case ColumnName::MinValue:      ToString(Data(row).min_value         ,value);
-            case ColumnName::MaxValue:      ToString(Data(row).max_value         ,value);
-            case ColumnName::Interval:      ToString(Data(row).increment_by      ,value);
-            case ColumnName::Cache:         ToString(Data(row).cache_size        ,value);
-            case ColumnName::Cycle:         ToString(Data(row).cycle_flag        ,value);
-            case ColumnName::Order:         ToString(Data(row).order_flag        ,value);
-            case ColumnName::Generated:     ToString(Data(row).generated         ,value);
-            case ColumnName::Created:       ToString(Data(row).created           ,value);
-            case ColumnName::Modified:      ToString(Data(row).last_ddl_time     ,value);
+            switch (col) {
+            case  0: ToString(Data(row).sequence_name, value); return;
+            case  1: ToString(Data(row).last_number, value);   return;
+            case  2: ToString(Data(row).min_value, value);     return;
+            case  3: ToString(Data(row).max_value, value);     return;
+            case  4: ToString(Data(row).increment_by, value);  return;
+            case  5: ToString(Data(row).cache_size, value);    return;
+            case  6: ToString(Data(row).cycle_flag, value);    return;
+            case  7: ToString(Data(row).order_flag, value);    return;
+            case  8: ToString(Data(row).generated, value);     return;
+            case  9: ToString(Data(row).created, value);       return;
+            case 10: ToString(Data(row).last_ddl_time, value); return;
             }
         }
 
@@ -121,18 +106,18 @@ namespace Data {
         }
 
         virtual int Compare(int row1, int row2, int col) const {
-            switch (static_cast<ColumnName>(col)) {
-            case ColumnName::SequenceName:  return Comp(Data(row1).sequence_name     ,Data(row2).sequence_name);
-            case ColumnName::LastNumber:    return Comp(Data(row1).last_number       ,Data(row2).last_number);
-            case ColumnName::MinValue:      return Comp(Data(row1).min_value         ,Data(row2).min_value);
-            case ColumnName::MaxValue:      return Comp(Data(row1).max_value         ,Data(row2).max_value);
-            case ColumnName::Interval:      return Comp(Data(row1).increment_by      ,Data(row2).increment_by);
-            case ColumnName::Cache:         return Comp(Data(row1).cache_size        ,Data(row2).cache_size);
-            case ColumnName::Cycle:         return Comp(Data(row1).cycle_flag        ,Data(row2).cycle_flag);
-            case ColumnName::Order:         return Comp(Data(row1).order_flag        ,Data(row2).order_flag);
-            case ColumnName::Generated:     return Comp(Data(row1).generated         ,Data(row2).generated);
-            case ColumnName::Created:       return Comp(Data(row1).created           ,Data(row2).created);
-            case ColumnName::Modified:      return Comp(Data(row1).last_ddl_time     ,Data(row2).last_ddl_time);
+            switch (col) {
+            case  0: return Comp(Data(row1).sequence_name, Data(row2).sequence_name);
+            case  1: return Comp(Data(row1).last_number,   Data(row2).last_number);
+            case  2: return Comp(Data(row1).min_value,     Data(row2).min_value);
+            case  3: return Comp(Data(row1).max_value,     Data(row2).max_value);
+            case  4: return Comp(Data(row1).increment_by,  Data(row2).increment_by);
+            case  5: return Comp(Data(row1).cache_size,    Data(row2).cache_size);
+            case  6: return Comp(Data(row1).cycle_flag,    Data(row2).cycle_flag);
+            case  7: return Comp(Data(row1).order_flag,    Data(row2).order_flag);
+            case  8: return Comp(Data(row1).generated,     Data(row2).generated);
+            case  9: return Comp(Data(row1).created,       Data(row2).created);
+            case 10: return Comp(Data(row1).last_ddl_time, Data(row2).last_ddl_time);
             }
             return 0;
         }
