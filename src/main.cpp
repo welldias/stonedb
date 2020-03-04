@@ -4,6 +4,7 @@
 #include <windows.h>
 #endif
 
+#include <utility>
 #include <string>
 #include <iostream>
 
@@ -24,16 +25,16 @@ using namespace Data;
 
 //#define LINX_ENV
 
-int loadDataProvider(ListDataProvider& dataProvider, const std::string& schema) {
+ListDataProvider* loadDataProvider(ListDataProvider* dataProvider, const std::string& schema) {
     try {
-        dataProvider.SetSchema(schema);
-        dataProvider.Query();
+        dataProvider->SetSchema(schema);
+        dataProvider->Query();
     }
     catch (const Exception & e) {
         std::cout << e.what() << std::endl;
     }
 
-    return dataProvider.GetRowCount();
+    return dataProvider;
 }
 
 #ifdef _WINDOWS
@@ -50,8 +51,8 @@ int main(int argc, char *argv[])
     std::string currentUser;
     std::string currentSchema;
 
-    Connect::Mode mode = Connect::Mode::Default;
-    Connect::Safety safety = Connect::Safety::None;
+    auto mode = Connect::Mode::Default;
+    auto safety = Connect::Safety::None;
 
 #ifdef LINX_ENV
     std::string user = "lasadb01_safe_fai";
@@ -61,7 +62,7 @@ int main(int argc, char *argv[])
     std::string user = "system";
     std::string password = "custonil";
     std::string tnsAlias = "";
-    std::string host = "192.168.15.2";
+    std::string host = "localhost";
     std::string port = "1521";
     std::string sid = "XEPDB1";
     bool serviceInsteadOfSid = true;
@@ -90,6 +91,8 @@ int main(int argc, char *argv[])
     Settings::SetTimestampSupported(true);
     Settings::SetIntervalToTextSupported(true);
 
+    Clock64 startTime = SystemClock::StartCount();
+
     try {
 #ifdef LINX_ENV
         ociSession.Open(user, password, tnsAlias, mode, safety);
@@ -101,114 +104,69 @@ int main(int argc, char *argv[])
         std::cout << e.what() << std::endl;
     }
 
-    Connect::ServerVersion serverVersion = ociSession.GetVersion();
+    auto serverVersion = ociSession.GetVersion();
     ociSession.GetCurrentUserAndSchema(currentUser, currentSchema);
 
     Settings::SetSynonymWithoutObjectInvalid(false);
     Settings::SetCurrentDBUser(currentUser);
     Settings::SetCurrentDBSchema(currentSchema);
 
-#if 0
 
-    // Create the thread pool with the initial number of threads (2 here).
-    Task::Module::init(4);
+    Task::Module::init(2);
+    std::vector<std::future<ListDataProvider*>> futureList;
+    auto manager = Task::Module::makeManager(1);
 
-    // Create a task manager with two worker.
-    auto manager = Task::Module::makeManager(2);
+    ListDataProvider* listaDataprovider[] = {
+        new UserListAdapter(ociSession.getConnect()),
+        new DbLinkListAdapter(ociSession.getConnect()),
+        new GranteeListAdapter(ociSession.getConnect()),
+        new ClusterListAdapter(ociSession.getConnect()),
+        new CodeListAdapter(ociSession.getConnect(), CodeListAdapter::MonoType::Procedure),
+        new CodeListAdapter(ociSession.getConnect(), CodeListAdapter::MonoType::Function),
+        new CodeListAdapter(ociSession.getConnect(), CodeListAdapter::MonoType::Java),
+        new CodeListAdapter(ociSession.getConnect(), CodeListAdapter::MonoType::Package),
+        new CodeListAdapter(ociSession.getConnect(), CodeListAdapter::MonoType::PackageBody),
+        new TypeCodeListAdapter(ociSession.getConnect(), TypeCodeListAdapter::MonoType::Type),
+        new TypeCodeListAdapter(ociSession.getConnect(), TypeCodeListAdapter::MonoType::Bodies),
+        new InvalidObjectListAdapter(ociSession.getConnect()),
+        new RecyclebinListAdapter(ociSession.getConnect()),
+        new SynonymListAdapter(ociSession.getConnect()),
+        new SequenceListAdapter(ociSession.getConnect()),
+        new TriggerListAdapter(ociSession.getConnect()),
+        new IndexListAdapter(ociSession.getConnect()),
+        new TableListAdapter(ociSession.getConnect()),
+        new ViewListAdapter(ociSession.getConnect()),
+        new ConstraintListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::PrimaryKey),
+        new ConstraintListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::ForeignKey),
+        new ConstraintListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::UniqueKey),
+        new ConstraintListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::Check),
+    };
 
-    std::vector<std::future<int>> futureList;
+    for (int i = 0; i < (sizeof(listaDataprovider) / sizeof(ListDataProvider*)); i++) {
+        futureList.push_back(manager.get()->push(loadDataProvider, listaDataprovider[i], currentSchema));
+    }
 
-    ViewListAdapter viewList(ociSession.getConnect());
-    //loadDataProvider(viewList, currentSchema);
-    futureList.push_back(manager.get()->push(loadDataProvider, viewList, currentSchema));
-    
-    
-    //int ddd = future.get();
+    std::chrono::milliseconds span(100);
+    std::vector<std::future<ListDataProvider*>>::iterator it;
 
-    std::chrono::milliseconds span(50);
-    while (futureList[0].wait_for(span) == std::future_status::timeout)
-        std::cout << '.' << std::flush;
+    while (!futureList.empty()) {
+        it = futureList.begin();
+        while (it != futureList.end()) {
+            if ((*it).wait_for(span) == std::future_status::ready) {
+                auto infoType = (*it).get();
+                it = futureList.erase(it);
+            }
+        }
+    }
 
-    // Add a new task and get its future.
-    //auto future = manager.get()->push([] { return 42; });
-
-    // Get the result from the future and print it.
-    //std::cout << future.get() << std::endl; // Prints 42
-
-    // Not necessary here, but the stop method ensures that all launched tasks have been executed.
     manager.get()->stop().get();
-#endif
 
-    UserListAdapter userList(ociSession.getConnect());
-    loadDataProvider(userList, "");
-
-    DbLinkListAdapter dblinkList(ociSession.getConnect());
-    loadDataProvider(dblinkList, currentSchema);
-
-    GranteeListAdapter granteeList(ociSession.getConnect());
-    loadDataProvider(granteeList, currentSchema);
-
-    ClusterListAdapter clusterList(ociSession.getConnect());
-    loadDataProvider(clusterList, currentSchema);
-
-    CodeListAdapter procedureList(ociSession.getConnect(), CodeListAdapter::MonoType::Procedure);
-    loadDataProvider(procedureList, currentSchema);
-
-    CodeListAdapter functionList(ociSession.getConnect(), CodeListAdapter::MonoType::Function);
-    loadDataProvider(functionList, currentSchema);
-
-    CodeListAdapter javaList(ociSession.getConnect(), CodeListAdapter::MonoType::Java);
-    loadDataProvider(javaList, currentSchema);
-
-    CodeListAdapter packageList(ociSession.getConnect(), CodeListAdapter::MonoType::Package);
-    loadDataProvider(packageList, currentSchema);
-
-    CodeListAdapter packageBodyList(ociSession.getConnect(), CodeListAdapter::MonoType::PackageBody);
-    loadDataProvider(packageBodyList, currentSchema);
-
-    TypeCodeListAdapter typecodeList(ociSession.getConnect(), TypeCodeListAdapter::MonoType::Type);
-    loadDataProvider(typecodeList, currentSchema);
-
-    TypeCodeListAdapter typecodeBodiesList(ociSession.getConnect(), TypeCodeListAdapter::MonoType::Bodies);
-    loadDataProvider(typecodeBodiesList, currentSchema);
-
-    InvalidObjectListAdapter invalidobjectList(ociSession.getConnect());
-    loadDataProvider(invalidobjectList, currentSchema);
-
-    RecyclebinListAdapter recyclebinList(ociSession.getConnect());
-    loadDataProvider(recyclebinList, currentSchema);
-
-    SynonymListAdapter synonymList(ociSession.getConnect());
-    loadDataProvider(synonymList, currentSchema);
-
-    SequenceListAdapter sequenceList(ociSession.getConnect());
-    loadDataProvider(sequenceList, currentSchema);
-
-    TriggerListAdapter triggerList(ociSession.getConnect());
-    loadDataProvider(triggerList, currentSchema);
-
-    IndexListAdapter indexList(ociSession.getConnect());
-    loadDataProvider(indexList, currentSchema);
-
-    TableListAdapter tableList(ociSession.getConnect());
-    loadDataProvider(tableList, currentSchema);
-
-    ViewListAdapter viewList(ociSession.getConnect());
-    loadDataProvider(viewList, currentSchema);
-
-    ConstraintListAdapter pkListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::PrimaryKey);
-    loadDataProvider(pkListAdapter, currentSchema);
-
-    ConstraintListAdapter fkListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::ForeignKey);
-    loadDataProvider(fkListAdapter, currentSchema);
-
-    ConstraintListAdapter ukListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::UniqueKey);
-    loadDataProvider(ukListAdapter, currentSchema);
-
-    ConstraintListAdapter chkListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::Check);
-    loadDataProvider(chkListAdapter, currentSchema);
+    for (int i = 0; i < (sizeof(listaDataprovider) / sizeof(ListDataProvider*)); i++)
+        delete std::exchange(listaDataprovider[i], nullptr);
 
     ociSession.Close(false);
+
+    auto milliseconds = SystemClock::StopCount(startTime);
 
     return 0;
 }

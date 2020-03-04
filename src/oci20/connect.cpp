@@ -15,7 +15,6 @@ namespace Oci20 {
 		m_interrupted = false;
 		m_isClosing = false;
 		m_ext_auth = false;
-		m_lastExecutionClockTime = 0;
 
 		m_mode = Mode::Default;
 		m_safety = Safety::None;

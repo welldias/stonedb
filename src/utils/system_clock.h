@@ -7,38 +7,25 @@
 #include <time.h>
 #endif
 
+#include <chrono>
 #include <cstring>
 #include <cstdint>
 
 namespace Utils {
 
-	typedef uint64_t Clock64;
+    using namespace std::chrono;
+
+    typedef system_clock::time_point Clock64;
 
 	class  SystemClock  {
 
     public:
 		static Clock64 StartCount() {
-
-#ifdef _WINDOWS
-            FILETIME filetime;
-            GetSystemTimeAsFileTime(&filetime);
-
-            /* calculate the elapsed number of 100 nanosecond units */
-            Clock64 current_tics = (Clock64)filetime.dwLowDateTime + (((Clock64)filetime.dwHighDateTime) << 32);
-
-            /* return number of elapsed milliseconds */
-            return (current_tics / 10000);
-#else
-            return 0;
-#endif
+            return system_clock::now();
 		}
 
-        static double StopCount(Clock64 startTime) {
-#ifdef _WINDOWS
-            return double(GetCurrentTime() - startTime) / CLOCKS_PER_SEC;
-#else
-            return 0.0;
-#endif
+        static long long StopCount(Clock64 startTime) {
+            return (duration_cast<milliseconds>(system_clock::now() - startTime)).count();
         }
 
         static bool LocalTime(time_t& t, tm& time) {

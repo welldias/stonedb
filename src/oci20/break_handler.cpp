@@ -11,9 +11,7 @@ namespace Oci20 {
     }
 
     bool BreakHandler::IsCalledIn(unsigned int ms) {
-
-        Clock64 result = static_cast<Clock64>(SystemClock::StopCount(m_break_time));
-        if (result < ms)
+        if (SystemClock::StopCount(m_break_time) < ms)
             return true;
 
         return false;

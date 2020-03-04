@@ -17,7 +17,7 @@ namespace Oci20 {
 
     public:
         BreakHandler(OCISvcCtx* svchp, OCIError* errhp) 
-            : m_svchp(svchp), m_errhp(errhp), m_break_time(0) {}
+            : m_svchp(svchp), m_errhp(errhp) {}
 
         ~BreakHandler();
 

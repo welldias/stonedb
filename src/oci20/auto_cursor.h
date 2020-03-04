@@ -67,7 +67,7 @@ namespace Oci20 {
         int          GetStringLimit() { return m_StringLimit; }
         int          GetBlobHexRowLength() { return m_BlobHexRowLength; }
         bool         GetSkipLobs() { return m_SkipLobs; }
-        double       GetExecutionTime() { return m_ExecutionTime; }
+        long long    GetExecutionTime() { return m_ExecutionTime; }
 
         void SetNumberFormat(const std::string& value) { m_NumberFormat = value; }
         void SetDateFormat(const std::string& value) { m_DateFormat = value; }
@@ -80,7 +80,7 @@ namespace Oci20 {
         void SetStringLimit(int value) { m_StringLimit = value; }
         void SetBlobHexRowLength(int value) { m_BlobHexRowLength = value; }
         void SetSkipLobs(bool value) { m_SkipLobs = value; }
-        void SetExecutionTime(double value) { m_ExecutionTime = value; }
+        void SetExecutionTime(long long value) { m_ExecutionTime = value; }
 	
     protected:
         std::string m_NumberFormat;
@@ -94,7 +94,7 @@ namespace Oci20 {
         int m_StringLimit;
         int m_BlobHexRowLength;
         bool m_SkipLobs;
-        double m_ExecutionTime;
+        long long m_ExecutionTime;
 
 		std::vector<std::string> m_fieldNames;
 		std::vector<Variable*> m_fields;
