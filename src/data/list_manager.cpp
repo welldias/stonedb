@@ -82,9 +82,4 @@ namespace Data {
     void ListCtrlManager::DoSort() {
 
     }
-
-    int CALLBACK ListCtrlManager::CompProc(LPARAM lparam1, LPARAM lparam2, LPARAM lparam3) {
-        return 0;
-    }
-
 }

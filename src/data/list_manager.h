@@ -4,9 +4,6 @@
 #ifdef _WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#else
-#define CALLBACK
-#define LPARAM void*
 #endif
 
 #include <string>
@@ -32,7 +29,7 @@ namespace Data {
         FilterComponent(const std::string& v, Operation op = Operation::Contain) : operation(op), value(v) {}
     };
 
-    typedef std::vector<FilterComponent> FilterCollection;
+    using FilterCollection = std::vector<FilterComponent>;
     
     class ListCtrlManager
 	{
@@ -86,7 +83,6 @@ namespace Data {
         void RefreshFilter();
         bool IsMatchedToFilter(int row);
         void DoSort();
-        static int CALLBACK CompProc(LPARAM lparam1, LPARAM lparam2, LPARAM lparam3);
 	};
 }
 #endif /*__PROJECT_STONE_DATA_LISTCTRLMANAGER_H__*/

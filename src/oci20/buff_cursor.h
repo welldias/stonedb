@@ -82,8 +82,11 @@ namespace Oci20 {
         std::vector<std::string> m_fieldNames;
         std::vector<HostArray*> m_fields;
         std::map<std::string, Variable*> m_boundFields;
-        ub4 m_curRecord, m_buffRecords, m_retRecords;
-        bool m_endOfFetch, m_restore_lda;
+        ub4 m_curRecord;
+        ub4 m_buffRecords;
+        ub4 m_retRecords;
+        bool m_endOfFetch;
+        bool m_restore_lda;
 
         int         m_strLimit;
         std::string m_dateFormat;

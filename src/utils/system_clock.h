@@ -4,9 +4,9 @@
 #ifdef _WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <time.h>
 #endif
 
+#include <time.h>
 #include <chrono>
 #include <cstring>
 #include <cstdint>
@@ -15,16 +15,16 @@ namespace Utils {
 
     using namespace std::chrono;
 
-    typedef system_clock::time_point Clock64;
+    using Timepoint = system_clock::time_point;
 
 	class  SystemClock  {
 
     public:
-		static Clock64 StartCount() {
+		static Timepoint StartCount() {
             return system_clock::now();
 		}
 
-        static long long StopCount(Clock64 startTime) {
+        static long long StopCount(Timepoint startTime) {
             return (duration_cast<milliseconds>(system_clock::now() - startTime)).count();
         }
 
@@ -32,12 +32,15 @@ namespace Utils {
 #ifdef _WINDOWS
             return (localtime_s(&time, &t) == 0);
 #else
+            return (localtime_r(&t, &time) != NULL);
+            /*
             tm* ptrTime = localtime(&t);
             if (ptrTime != NULL) {
                 memcpy(&time, &ptrTime, sizeof(time));
                 return true;
             }
             return false;
+            */
 #endif
         }
 
@@ -46,12 +49,15 @@ namespace Utils {
 #ifdef _WINDOWS
             return (gmtime_s(&time, &t) == 0);
 #else
+            return (gmtime_r(&t, &time) != NULL);
+            /*
             tm* ptrTime = gmtime(&t);
             if (ptrTime != NULL) {
                 memcpy(&time, &ptrTime, sizeof(time));
                 return true;
             }
             return false;
+            */
 #endif
         }
 

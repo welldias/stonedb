@@ -1,12 +1,18 @@
-#ifdef _WINDOWS
+#ifdef _WIN32
 #include <SDKDDKVer.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#elif MACOS
+#include <sys/param.h>
+#include <sys/sysctl.h>
+#else
+#include <unistd.h>
 #endif
 
 #include <utility>
 #include <string>
 #include <iostream>
+#include <sstream>
 
 #include "utils/utils.h"
 #include "oci20/oci20.h"
@@ -22,6 +28,43 @@
 using namespace Utils;
 using namespace Oci20;
 using namespace Data;
+
+void FormatString() {
+    std::stringstream ss;
+
+    ss << 4.5 << ", " << 4 << " whatever" << std::endl;
+
+    std::string str = ss.str();
+}
+
+unsigned int GetNumCores() {
+    
+    unsigned int nthreads = std::thread::hardware_concurrency();
+    if (nthreads > 0)
+        return nthreads;
+
+#ifdef WIN32
+    SYSTEM_INFO sysinfo;
+    GetSystemInfo(&sysinfo);
+    return sysinfo.dwNumberOfProcessors;
+#elif MACOS
+    int nm[2];
+    size_t len = 4;
+    uint32_t count;
+
+    nm[0] = CTL_HW; nm[1] = HW_AVAILCPU;
+    sysctl(nm, 2, &count, &len, NULL, 0);
+
+    if (count < 1) {
+        nm[1] = HW_NCPU;
+        sysctl(nm, 2, &count, &len, NULL, 0);
+        if (count < 1) { count = 1; }
+    }
+    return count;
+#else
+    return sysconf(_SC_NPROCESSORS_ONLN);
+#endif
+}
 
 //#define LINX_ENV
 
@@ -51,6 +94,7 @@ int main(int argc, char *argv[])
     std::string currentUser;
     std::string currentSchema;
 
+    auto startTime = SystemClock::StartCount();
     auto mode = Connect::Mode::Default;
     auto safety = Connect::Safety::None;
 
@@ -91,8 +135,6 @@ int main(int argc, char *argv[])
     Settings::SetTimestampSupported(true);
     Settings::SetIntervalToTextSupported(true);
 
-    Clock64 startTime = SystemClock::StartCount();
-
     try {
 #ifdef LINX_ENV
         ociSession.Open(user, password, tnsAlias, mode, safety);
@@ -111,10 +153,10 @@ int main(int argc, char *argv[])
     Settings::SetCurrentDBUser(currentUser);
     Settings::SetCurrentDBSchema(currentSchema);
 
-
-    Task::Module::init(2);
     std::vector<std::future<ListDataProvider*>> futureList;
-    auto manager = Task::Module::makeManager(1);
+    
+    Task::Module::Init(GetNumCores());
+    auto manager = Task::Module::MakeManager(1);
 
     ListDataProvider* listaDataprovider[] = {
         new UserListAdapter(ociSession.getConnect()),
@@ -143,23 +185,23 @@ int main(int argc, char *argv[])
     };
 
     for (int i = 0; i < (sizeof(listaDataprovider) / sizeof(ListDataProvider*)); i++) {
-        futureList.push_back(manager.get()->push(loadDataProvider, listaDataprovider[i], currentSchema));
+        futureList.push_back(manager.get()->Push(loadDataProvider, listaDataprovider[i], currentSchema));
     }
 
-    std::chrono::milliseconds span(100);
-    std::vector<std::future<ListDataProvider*>>::iterator it;
+    std::this_thread::sleep_for(std::chrono::seconds(10));
 
+    std::chrono::milliseconds span(50);
     while (!futureList.empty()) {
-        it = futureList.begin();
+        auto it = futureList.begin();
         while (it != futureList.end()) {
-            if ((*it).wait_for(span) == std::future_status::ready) {
+            if ((*it).valid() && (*it).wait_for(span) == std::future_status::ready) {
                 auto infoType = (*it).get();
                 it = futureList.erase(it);
             }
         }
     }
 
-    manager.get()->stop().get();
+    manager.get()->Stop().get();
 
     for (int i = 0; i < (sizeof(listaDataprovider) / sizeof(ListDataProvider*)); i++)
         delete std::exchange(listaDataprovider[i], nullptr);

@@ -13,7 +13,7 @@ namespace Oci20 {
 	class BreakHandler {
         OCISvcCtx* m_svchp;
         OCIError* m_errhp;
-        Clock64 m_break_time;
+        Timepoint m_break_time;
 
     public:
         BreakHandler(OCISvcCtx* svchp, OCIError* errhp) 

@@ -76,7 +76,7 @@ namespace Oci20 {
 		Mode m_mode;
 		Safety         m_safety;
 		ClientVersion  m_clientVersion;
-		Clock64 m_lastExecutionClockTime;
+		Timepoint m_lastExecutionClockTime;
 
 	private:
 		OCIEnv*     m_envhp;
@@ -134,8 +134,8 @@ namespace Oci20 {
 		OCIError*     GetOCIError()      const { return m_errhp; }
 		ClientVersion GetClientVersion() const { return m_clientVersion; }
 
-		Clock64 GetLastExecutionClockTime() const { return m_lastExecutionClockTime; }
-		void    SetLastExecutionClockTime() { m_lastExecutionClockTime = SystemClock::StartCount(); }
+		Timepoint GetLastExecutionClockTime() const { return m_lastExecutionClockTime; }
+		void      SetLastExecutionClockTime() { m_lastExecutionClockTime = SystemClock::StartCount(); }
 
 		void Interrupted(bool interrupted) { m_interrupted = interrupted; }
 

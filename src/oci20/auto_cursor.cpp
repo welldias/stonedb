@@ -54,7 +54,7 @@ namespace Oci20 {
 
 	void AutoCursor::Execute() {
 
-		Clock64 startTime = SystemClock::StartCount();
+		auto startTime = SystemClock::StartCount();
 
 		if (GetType() == Statement::Type::Select) {
 			Statement::Execute(0);
@@ -71,7 +71,7 @@ namespace Oci20 {
 
 	void AutoCursor::ExecuteShadow() {
 
-		Clock64 startTime = SystemClock::StartCount();
+		auto startTime = SystemClock::StartCount();
 
 		if (GetType() == Statement::Type::Select) {
 			Statement::ExecuteShadow(0);
