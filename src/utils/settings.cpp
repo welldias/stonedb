@@ -3,7 +3,7 @@
 
 namespace Utils {
 
-	Settings::Settings() {
-
+	Settings::Settings(const std::string& fileName) : m_updated(false) {
+		m_fileName = fileName;
 	}
 }
