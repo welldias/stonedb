@@ -1,6 +1,6 @@
 #include "text_file_stream.h"
 
-namespace Data {
+namespace MetaDictionary {
 
     TextFileStream::TextFileStream(const std::string& fileName, bool lowerDBName)
         : MetaStream(lowerDBName) {
@@ -12,8 +12,19 @@ namespace Data {
         m_stream.close();
     }
 
-    int TextFileStream::GetPosition() {
+
+    size_t TextFileStream::GetPosition() {
         return static_cast<int>(m_stream.tellp());
+    }
+
+    size_t TextFileStream::GetLength() {
+
+        auto oldPos = m_stream.tellp();
+        m_stream.seekp(0, std::ios::end);
+        auto size = m_stream.tellp();
+        m_stream.seekp(oldPos);
+
+        return static_cast<int>(size);
     }
 
     void TextFileStream::PutIndent() {

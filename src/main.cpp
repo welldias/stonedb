@@ -17,6 +17,7 @@
 #include "utils/utils.h"
 #include "oci20/oci20.h"
 #include "data/data.h"
+#include "meta_dictionary/meta_dictionary.h"
 
 #include "task/manager.h"
 #include "task/thread_pool.h"
@@ -28,6 +29,7 @@
 using namespace Utils;
 using namespace Oci20;
 using namespace Data;
+using namespace MetaDictionary;
 
 void FormatString() {
     std::stringstream ss;
@@ -134,6 +136,34 @@ int main(int argc, char *argv[])
     /* new properties */
     Settings::SetTimestampSupported(true);
     Settings::SetIntervalToTextSupported(true);
+    
+    // Common settings
+    MetaSettings metaSettings;
+    metaSettings.SetComments(true);
+    metaSettings.SetGrants(true);
+    metaSettings.SetLowerNames(true);
+    metaSettings.SetShemaName(false);
+    metaSettings.SetSQLPlusCompatibility(true);
+    metaSettings.SetGeneratePrompts(true);
+    // Table Specific
+    metaSettings.SetCommentsAfterColumn(false);
+    metaSettings.SetCommentsPos(48);
+    metaSettings.SetConstraints(true);
+    metaSettings.SetIndexes(true);
+    metaSettings.SetNoStorageForConstraint(false);
+    metaSettings.SetStorageClause(1);
+    metaSettings.SetAlwaysPutTablespace(false);
+    metaSettings.SetTableDefinition(true);
+    metaSettings.SetTriggers(true);
+    // Othes
+    metaSettings.SetSequnceWithStart(false);
+    metaSettings.SetViewWithTriggers(true);
+    metaSettings.SetViewWithForce(false);
+    // Hidden
+    metaSettings.SetEndOfShortStatement(";");
+    metaSettings.SetStorageSubstitutedClause(false);
+    metaSettings.SetAlwaysWriteColumnLengthSematics(false);
+
 
     try {
 #ifdef LINX_ENV

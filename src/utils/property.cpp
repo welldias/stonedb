@@ -5,11 +5,26 @@
 namespace Utils {
 
 	Property::Property(const std::string& name)
-		: m_name(name) {
+		: m_name(name), m_type(Type::Unknown) {
 	}
 
 	Property::Property(const std::string& name, const std::string& value)
-		: m_name(name), m_value(value) {
+		: m_name(name), m_value(value), m_type(Type::String) {
+	}
+
+	Property::Property(const std::string& name, bool value)
+		: m_name(name), m_type(Type::Boolean) {
+		SetValue(value);
+	}
+
+	Property::Property(const std::string& name, int value)
+		: m_name(name), m_type(Type::Number) {
+		SetValue(value);
+	}
+
+	Property::Property(const std::string& name, double value)
+		: m_name(name), m_type(Type::Number) {
+		SetValue(value);
 	}
 
 	Property::~Property() {
@@ -41,5 +56,18 @@ namespace Utils {
 
 	void Property::SetValue(const std::string& value) {
 		m_value = value;
+	}
+
+	void Property::SetValue(bool value) {
+		std::string strValue = (value ? "true" : "false");
+		SetValue(strValue);
+	}
+
+	void Property::SetValue(int value) {
+		SetValue(std::to_string(value));
+	}
+
+	void Property::SetValue(double value) {
+		SetValue(std::to_string(value));
 	}
 }

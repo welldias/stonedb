@@ -135,15 +135,15 @@ namespace Data {
 
         substitutor.AddPair("<RULE>", (serverVersion < Connect::ServerVersion::Server10X) ? "/*+RULE*/" : "");
 
-        if (SETTINGS_PROPERTY_BOOL(SynonymWithoutObjectInvalid)) {
+        if (Settings::GetSynonymWithoutObjectInvalid()) {
             substitutor << ((serverVersion < Connect::ServerVersion::Server10X) ? csz_synonym_sttm : csz_synonym_sttm_10g);
         }
         else if (serverVersion < Connect::ServerVersion::Server81X) {
             substitutor << csz_synonym_fast_sttm;
         }
         else {
-            std::string currentUser = SETTINGS_PROPERTY(CurrentDBUser);
-            std::string currentSchema = SETTINGS_PROPERTY(CurrentDBSchema);
+            std::string currentUser = Settings::GetCurrentDBUser();
+            std::string currentSchema = Settings::GetCurrentDBSchema();
 
             if (m_schema == currentUser && m_schema == currentSchema)
                 substitutor << csz_synonym_user_fast_sttm;

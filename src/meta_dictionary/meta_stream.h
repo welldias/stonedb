@@ -8,7 +8,7 @@
 #include <list>
 #include <vector>
 
-namespace Data {
+namespace MetaDictionary {
 
 	class MetaStream {
 	protected:
@@ -28,10 +28,11 @@ namespace Data {
         unsigned int  SetIndent(unsigned int lenght);
         unsigned int  MoveIndent(int offset);
 
-        virtual int  GetPosition() const = 0;
-        virtual void PutIndent() = 0;
-        virtual void NewLine() = 0;
-        virtual void Put(const std::string& buffer) = 0;
+        virtual size_t  GetPosition() = 0;
+        virtual size_t  GetLength() = 0;
+        virtual void    PutIndent() = 0;
+        virtual void    NewLine() = 0;
+        virtual void    Put(const std::string& buffer) = 0;
 
         bool IsLowerDBName() const { return m_lowerDBName; }
         void SetLowerDBName(bool lower) { m_lowerDBName = lower; }

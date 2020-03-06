@@ -1,9 +1,19 @@
 #include "string_stream.h"
 
-namespace Data {
+namespace MetaDictionary {
 
-	int StringStream::GetPosition() {
+	size_t StringStream::GetPosition() {
         return static_cast<int>(m_stream.tellp());
+    }
+
+    size_t StringStream::GetLength() {
+
+        auto oldPos = m_stream.tellp();
+        m_stream.seekg(0, std::ios::end);
+        auto size = m_stream.tellg();
+        m_stream.seekg(oldPos);
+
+        return static_cast<int>(size);
     }
 
     void StringStream::PutIndent() {

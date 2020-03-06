@@ -5,7 +5,7 @@
 
 #include "meta_stream.h"
 
-namespace Data {
+namespace MetaDictionary {
 
 	class TextFileStream final : public MetaStream {
     private:
@@ -15,7 +15,8 @@ namespace Data {
         TextFileStream(const std::string& fileName, bool lowerDBName = false);
         virtual ~TextFileStream();
 
-        virtual int  GetPosition();
+        virtual size_t  GetPosition();
+        virtual size_t GetLength();
         virtual void PutIndent();
         virtual void NewLine();
         virtual void Put(const std::string& buffer);

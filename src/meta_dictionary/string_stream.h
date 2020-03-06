@@ -5,9 +5,9 @@
 
 #include "meta_stream.h"
 
-namespace Data {
+namespace MetaDictionary {
 
-	class StringStream final : public MetaStream {
+	class StringStream : public MetaStream {
     private:
         std::stringstream m_stream;
 
@@ -17,10 +17,14 @@ namespace Data {
 
 		virtual ~StringStream() {}
 
-        virtual int  GetPosition();
+        virtual size_t  GetPosition();
+        virtual size_t GetLength();
         virtual void PutIndent();
         virtual void NewLine();
         virtual void Put(const std::string& buffer);
+
+
+        std::string GetString() const { return m_stream.str();  }
 	};
 
 }

@@ -7,5 +7,6 @@
 #include "string_util.h"
 #include "substitutor.h"
 #include "settings.h"
+#include "variable.h"
 
 #endif /*__PROJECT_STONE_UTILS_H__*/

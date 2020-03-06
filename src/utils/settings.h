@@ -4,65 +4,53 @@
 #include <set>
 #include <string>
 
-#include "property.h"
+#include "variable.h"
 
 namespace Utils {
 
-#define SETTINGS_PROPERTY(N)        (Settings::Get##N().ToString())
-#define SETTINGS_PROPERTY_BOOL(N)   (Settings::Get##N().ToBool())
-#define SETTINGS_PROPERTY_INT(N)    (Settings::Get##N().ToInt())
-#define SETTINGS_PROPERTY_DOUBLE(N) (Settings::Get##N().ToDouble())
-
-    class Settings  {
+    class Settings {
     private:
-        static std::set<Property*> m_properties;
         Settings();
 
-    private:
-        static Property& GetProperty(const std::string& name);
+#define SETTINGS_PROPERTY(T,N) \
+        private: \
+        static Variable<T> m_##N; \
+        public: \
+        static const T& Get##N () { return m_##N.GetValue(); }; \
+        static void  Set##N (const T& value) { m_##N.Set(value); }
 
-        static void  AddProperty(const std::string& name, std::string value);
-        static void  AddProperty(const std::string& name, bool value);
-        static void  AddProperty(const std::string& name, int  value);
-        static void  AddProperty(const std::string& name, double value);
+        SETTINGS_PROPERTY(std::string, DateFormat);
+        SETTINGS_PROPERTY(bool, Autocommit);
+        SETTINGS_PROPERTY(int, CommitOnDisconnect); // 0-rollback,1-commit,2-confirm
+        SETTINGS_PROPERTY(bool, SavePassword);
+        SETTINGS_PROPERTY(bool, OutputEnable);
+        SETTINGS_PROPERTY(int, OutputSize);
+        SETTINGS_PROPERTY(bool, SessionStatistics);
+        SETTINGS_PROPERTY(std::string, SessionStatisticsMode);
+        SETTINGS_PROPERTY(bool, ScanForSubstitution);
+        SETTINGS_PROPERTY(std::string, PlanTable);
+        SETTINGS_PROPERTY(int, CancelQueryDelay);
+        SETTINGS_PROPERTY(bool, TopmostCancelQuery);
+        SETTINGS_PROPERTY(bool, DbmsXplanDisplayCursor);
+        SETTINGS_PROPERTY(bool, WhitespaceLineDelim);
+        SETTINGS_PROPERTY(bool, EmptyLineDelim);
+        SETTINGS_PROPERTY(bool, UnlimitedOutputSize);
+        SETTINGS_PROPERTY(std::string, ExternalToolCommand);
+        SETTINGS_PROPERTY(std::string, ExternalToolParameters);
+        SETTINGS_PROPERTY(bool, HaltOnErrors);
+        SETTINGS_PROPERTY(bool, UseDbmsMetaData);
+        SETTINGS_PROPERTY(bool, SaveFilesBeforeExecute);
+        SETTINGS_PROPERTY(bool, ColumnOrderByName);
+        SETTINGS_PROPERTY(bool, EnhancedVisuals);
+        SETTINGS_PROPERTY(int, MaxIdentLength);
+        SETTINGS_PROPERTY(bool, CacheKnownDBObjects);
 
-    public:
-#define UTILS_DECLARE_PROPERTY(T,N) \
-        static Property&  Get##N () { return Settings::GetProperty(#N); }; \
-        static void  Set##N (const T value) { Settings::AddProperty(std::string(#N), value); }
+        SETTINGS_PROPERTY(bool, TimestampSupported);
+        SETTINGS_PROPERTY(bool, IntervalToTextSupported);
 
-        UTILS_DECLARE_PROPERTY(std::string, DateFormat);
-        UTILS_DECLARE_PROPERTY(bool, Autocommit);
-        UTILS_DECLARE_PROPERTY(int, CommitOnDisconnect); // 0-rollback,1-commit,2-confirm
-        UTILS_DECLARE_PROPERTY(bool, SavePassword);
-        UTILS_DECLARE_PROPERTY(bool, OutputEnable);
-        UTILS_DECLARE_PROPERTY(int, OutputSize);
-        UTILS_DECLARE_PROPERTY(bool, SessionStatistics);
-        UTILS_DECLARE_PROPERTY(std::string, SessionStatisticsMode);
-        UTILS_DECLARE_PROPERTY(bool, ScanForSubstitution);
-        UTILS_DECLARE_PROPERTY(std::string, PlanTable);
-        UTILS_DECLARE_PROPERTY(int, CancelQueryDelay);
-        UTILS_DECLARE_PROPERTY(bool, TopmostCancelQuery);
-        UTILS_DECLARE_PROPERTY(bool, DbmsXplanDisplayCursor);
-        UTILS_DECLARE_PROPERTY(bool, WhitespaceLineDelim);
-        UTILS_DECLARE_PROPERTY(bool, EmptyLineDelim);
-        UTILS_DECLARE_PROPERTY(bool, UnlimitedOutputSize);
-        UTILS_DECLARE_PROPERTY(std::string, ExternalToolCommand);
-        UTILS_DECLARE_PROPERTY(std::string, ExternalToolParameters);
-        UTILS_DECLARE_PROPERTY(bool, HaltOnErrors);
-        UTILS_DECLARE_PROPERTY(bool, UseDbmsMetaData);
-        UTILS_DECLARE_PROPERTY(bool, SaveFilesBeforeExecute);
-        UTILS_DECLARE_PROPERTY(bool, ColumnOrderByName);
-        UTILS_DECLARE_PROPERTY(bool, EnhancedVisuals);
-        UTILS_DECLARE_PROPERTY(int, MaxIdentLength);
-        UTILS_DECLARE_PROPERTY(bool, CacheKnownDBObjects);
-
-        UTILS_DECLARE_PROPERTY(bool, TimestampSupported);
-        UTILS_DECLARE_PROPERTY(bool, IntervalToTextSupported);
-
-        UTILS_DECLARE_PROPERTY(bool, SynonymWithoutObjectInvalid);
-        UTILS_DECLARE_PROPERTY(std::string, CurrentDBUser);
-        UTILS_DECLARE_PROPERTY(std::string, CurrentDBSchema);
+        SETTINGS_PROPERTY(bool, SynonymWithoutObjectInvalid);
+        SETTINGS_PROPERTY(std::string, CurrentDBUser);
+        SETTINGS_PROPERTY(std::string, CurrentDBSchema);
     };
 }
 

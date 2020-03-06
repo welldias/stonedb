@@ -184,6 +184,9 @@
     <ClCompile Include="src\data\user_list_adapter.cpp" />
     <ClCompile Include="src\data\view_list_adapter.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\meta_dictionary\grant.cpp" />
+    <ClCompile Include="src\meta_dictionary\grant_container.cpp" />
+    <ClCompile Include="src\meta_dictionary\storage.cpp" />
     <ClCompile Include="src\meta_dictionary\text_file_stream.cpp" />
     <ClCompile Include="src\meta_dictionary\meta_stream.cpp" />
     <ClCompile Include="src\meta_dictionary\string_stream.cpp" />
@@ -237,6 +240,13 @@
     <ClInclude Include="src\data\type_list_adapter.h" />
     <ClInclude Include="src\data\user_list_adapter.h" />
     <ClInclude Include="src\data\view_list_adapter.h" />
+    <ClInclude Include="src\meta_dictionary\db_object.h" />
+    <ClInclude Include="src\meta_dictionary\grant.h" />
+    <ClInclude Include="src\meta_dictionary\grant_container.h" />
+    <ClInclude Include="src\meta_dictionary\meta_dictionary.h" />
+    <ClInclude Include="src\meta_dictionary\storage.h" />
+    <ClInclude Include="src\meta_dictionary\user.h" />
+    <ClInclude Include="src\meta_dictionary\meta_settings.h" />
     <ClInclude Include="src\meta_dictionary\text_file_stream.h" />
     <ClInclude Include="src\meta_dictionary\meta_stream.h" />
     <ClInclude Include="src\meta_dictionary\string_stream.h" />
@@ -274,6 +284,7 @@
     <ClInclude Include="src\utils\substitutor.h" />
     <ClInclude Include="src\utils\system_clock.h" />
     <ClInclude Include="src\utils\utils.h" />
+    <ClInclude Include="src\utils\variable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

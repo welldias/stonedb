@@ -29,6 +29,17 @@ namespace Utils {
     public:
         UserCancel(int code, const std::string& msg) : Exception(code, msg) {}
     };
+
+    class NotFound : public Exception {
+    public:
+        NotFound(const std::string& objName);
+    };
+
+    class AlreadyExists : public Exception {
+    public:
+        AlreadyExists(const std::string& objName);
+    };
+
 }
 
 #endif // __PROJECT_STONE_UTILS_EXCEPTION_H__

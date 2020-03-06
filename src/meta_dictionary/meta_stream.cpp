@@ -2,7 +2,7 @@
 
 #include  "..\utils\utils.h"
 
-namespace Data {
+namespace MetaDictionary {
 
 	using namespace Utils;
 
@@ -92,24 +92,11 @@ namespace Data {
 	void MetaStream::SafeWriteDBName(const std::string& name) {
 
 		bool regular = true;
-		bool isPublic = false;
 
-		const char* pChr = name.c_str();
-
-		if (pChr[0] < 'A' || pChr[0] > 'Z') {
-			regular = false;
-		}
-		else {
-			while (*pChr) {
-				if (!((*pChr >= 'A' && *pChr <= 'Z') 
-					|| (*pChr >= '0' && *pChr <= '9') 
-					|| *pChr == '_' 
-					|| *pChr == '$' 
-					|| *pChr == '#')) {
-					regular = false;
-					break;
-				}
-				pChr++;
+		for (auto& c : name) {
+			if (!((c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '$' || c == '#')) {
+				regular = false;
+				break;
 			}
 		}
 
