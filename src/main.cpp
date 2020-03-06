@@ -115,8 +115,6 @@ int main(int argc, char *argv[])
 #endif 
 
     Settings::SetDateFormat("dd.mm.yy");
-#if 0
-    
     Settings::SetAutocommit(false);
     Settings::SetCommitOnDisconnect(2);
     Settings::SetSavePassword(true);
@@ -138,7 +136,6 @@ int main(int argc, char *argv[])
     /* new properties */
     Settings::SetTimestampSupported(true);
     Settings::SetIntervalToTextSupported(true);
-#endif 
 
     // Common settings
     MetaSettings metaSettings;
