@@ -176,6 +176,9 @@
     <ClCompile Include="src\meta_dictionary\storage.cpp">
       <Filter>meta_dictionary</Filter>
     </ClCompile>
+    <ClCompile Include="src\meta_dictionary\table_storage.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\exception.h">
@@ -369,6 +372,12 @@
     </ClInclude>
     <ClInclude Include="src\utils\variable.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\table_storage.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\table_space.h">
+      <Filter>meta_dictionary</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

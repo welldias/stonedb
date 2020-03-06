@@ -14,6 +14,30 @@ namespace MetaDictionary {
 
     using namespace Utils;
 
+#define IS_PRINTABLE(par, storage, settings) ((par).IsPrintable((settings).IsStorageAlways(), &((storage).par) ) )
+
+    struct PintLineInt {
+    public:
+        void operator()(MetaStream& out, const std::string& format, int value) {
+            memset(buff, 0, sizeof(buff));
+            std::snprintf(buff, sizeof(buff) - 1, format.c_str(), value);
+            out.PutLine(buff);
+        }
+    private:
+        char buff[128];
+    };
+
+    struct PintInt {
+    public:
+        void operator()(MetaStream& out, const std::string& format, int value) {
+            memset(buff, 0, sizeof(buff));
+            std::snprintf(buff, sizeof(buff) - 1, format.c_str(), value);
+            out.Put(buff);
+        }
+    private:
+        char buff[128];
+    };
+
     /// Storage parameters for tablespaces, tables, indices & clusters //////
     class Storage
     {

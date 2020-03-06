@@ -187,6 +187,7 @@
     <ClCompile Include="src\meta_dictionary\grant.cpp" />
     <ClCompile Include="src\meta_dictionary\grant_container.cpp" />
     <ClCompile Include="src\meta_dictionary\storage.cpp" />
+    <ClCompile Include="src\meta_dictionary\table_storage.cpp" />
     <ClCompile Include="src\meta_dictionary\text_file_stream.cpp" />
     <ClCompile Include="src\meta_dictionary\meta_stream.cpp" />
     <ClCompile Include="src\meta_dictionary\string_stream.cpp" />
@@ -245,6 +246,8 @@
     <ClInclude Include="src\meta_dictionary\grant_container.h" />
     <ClInclude Include="src\meta_dictionary\meta_dictionary.h" />
     <ClInclude Include="src\meta_dictionary\storage.h" />
+    <ClInclude Include="src\meta_dictionary\table_space.h" />
+    <ClInclude Include="src\meta_dictionary\table_storage.h" />
     <ClInclude Include="src\meta_dictionary\user.h" />
     <ClInclude Include="src\meta_dictionary\meta_settings.h" />
     <ClInclude Include="src\meta_dictionary\text_file_stream.h" />

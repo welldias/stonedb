@@ -22,8 +22,8 @@ namespace MetaDictionary {
         virtual bool IsGrantable() const { return false; }
         virtual bool IsGenerated() const { return false; }
 
-        virtual std::string GetDefExt()  const { return "sql"; };
-        virtual std::string GetTypeStr() const = 0;
+        virtual const std::string& GetDefExt()  const { return "sql"; };
+        virtual const std::string& GetTypeStr() const = 0;
 
         // return code offset for functions,procedures,packages & views
         virtual int  Write(MetaStream& out, const MetaSettings& settings) const = 0;
