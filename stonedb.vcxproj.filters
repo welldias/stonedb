@@ -179,6 +179,12 @@
     <ClCompile Include="src\meta_dictionary\table_storage.cpp">
       <Filter>meta_dictionary</Filter>
     </ClCompile>
+    <ClCompile Include="src\meta_dictionary\column.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_dictionary\index.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\exception.h">
@@ -377,6 +383,24 @@
       <Filter>meta_dictionary</Filter>
     </ClInclude>
     <ClInclude Include="src\meta_dictionary\table_space.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\index_storage.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\partition.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\column.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\table_column.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\index_partition.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\index.h">
       <Filter>meta_dictionary</Filter>
     </ClInclude>
   </ItemGroup>

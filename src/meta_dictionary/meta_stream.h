@@ -44,6 +44,7 @@ namespace MetaDictionary {
         void PutOwnerAndName(const std::string& owner, const std::string& name, bool putOwner);
         void WriteColumns(const std::vector<std::string>& columns, int indent, bool safeWriteDBName = true);
         void WriteColumns(const std::list<std::string>& columns, int indent, bool safeWriteDBName = true);
+        void WriteColumns(const std::map<int, std::string>& columns, int nIndent, const std::map<int, bool> & = std::map<int, bool>());
         void SafeWriteDBName(const std::string& strName);
         void WriteSQLString(const std::string& str);
 

@@ -89,6 +89,29 @@ namespace MetaDictionary {
 		MoveIndent(-indent);
 	}
 
+	void MetaStream::WriteColumns(const std::map<int, std::string>& columns, int nIndent, const std::map<int, bool>& safeWriteDBName)
+	{
+		MoveIndent(nIndent);
+
+		auto it = columns.begin();
+		auto end = columns.end();
+		int nSize = columns.size();
+
+		for (int i(0); it != end; it++, i++) {
+			PutIndent();
+
+			if (safeWriteDBName.empty() || safeWriteDBName.find(i) == safeWriteDBName.end() || safeWriteDBName.find(i)->second != false)
+				SafeWriteDBName(it->second);
+			else
+				Put(it->second);
+
+			if (i < nSize - 1) 
+				Put(",");
+			NewLine();
+		}
+		MoveIndent(-nIndent);
+	}
+
 	void MetaStream::SafeWriteDBName(const std::string& name) {
 
 		bool regular = true;
