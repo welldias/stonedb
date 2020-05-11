@@ -14,11 +14,13 @@ namespace MetaDictionary {
     {
     protected:
         std::vector<IndexPartition*> m_subpartitions;
-        std::string m_strName;
-        std::string m_strHighValue;
+        std::string m_name;
+        std::string m_highValue;
 
     public:
         IndexPartition() {}
+        std::string GetName() { return m_name;  }
+        std::string GetHighValue() { return m_highValue; }
 
     private:
         // copy-constraction & assign-operation is not supported

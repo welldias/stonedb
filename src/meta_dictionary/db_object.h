@@ -31,6 +31,8 @@ namespace MetaDictionary {
         //TODO: Isto esta horrivel, verificar forma mais elegante para resolver essa amarra.
         //virtual void WriteGrants(MetaStream& out, const MetaSettings& settings) const;
 
+        static void WriteSubstitutedClause(MetaStream& out, const std::string& text, const std::string& suffix);
+
     public:
         std::string m_owner;
         std::string m_name;

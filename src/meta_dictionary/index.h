@@ -34,6 +34,8 @@ namespace MetaDictionary {
         void WriteIndexParams(MetaStream&, const MetaSettings& settings, bool skip_parallel = false) const;
         void WriteCompress(MetaStream&, const MetaSettings& settings) const;
         void WriteIOTClause(MetaStream&, const MetaSettings& settings, bool overflow) const;
+        //void WriteDomainClause(MetaStream& out, const MetaSettings& settings) const;
+        //void WriteIndexPartitions(MetaStream& out, const MetaSettings& settings) const;
 
     protected:
         std::string m_tableOwner;
@@ -68,9 +70,9 @@ namespace MetaDictionary {
         bool m_local;
 
     private:
-        void writeDomainClause(MetaStream& out, const MetaSettings& settings) const;
-        void writeIndexPartitions(MetaStream& out, const MetaSettings& settings) const;
-        void writeSubpartitions(MetaStream& out, const MetaSettings& settings, const PartitionContainer& subpartitions) const;
+        void WriteDomainClause(MetaStream& out, const MetaSettings& settings) const;
+        void WriteIndexPartitions(MetaStream& out, const MetaSettings& settings) const;
+        void WriteSubpartitions(MetaStream& out, const MetaSettings& settings, const PartitionContainer& subpartitions) const;
 
         // copy-constraction & assign-operation is not supported
         Index(const Index&);

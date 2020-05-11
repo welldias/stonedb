@@ -39,7 +39,7 @@ namespace MetaDictionary {
 
     void Storage::CopyNotNulls(const Storage& other) {
 
-        //;-)
+        //unsual but satisfactory identation :D
         m_tablespaceName.SetIfNotNull(other.m_tablespaceName);
          m_initialExtent.SetIfNotNull(other.m_initialExtent);
             m_nextExtent.SetIfNotNull(other.m_nextExtent);

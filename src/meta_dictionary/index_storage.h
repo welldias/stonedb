@@ -7,10 +7,10 @@ namespace MetaDictionary {
 
     class IndexStorage : public Storage {
     public:
-        IndexStorage() : m_nCompressionPrefixLength(-1) { }
+        IndexStorage() : m_compressionPrefixLength(-1) { }
 
     protected:
-        int m_nCompressionPrefixLength;
+        int m_compressionPrefixLength;
     };
 }
 

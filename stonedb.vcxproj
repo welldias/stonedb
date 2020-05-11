@@ -185,6 +185,7 @@
     <ClCompile Include="src\data\view_list_adapter.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\meta_dictionary\column.cpp" />
+    <ClCompile Include="src\meta_dictionary\db_object.cpp" />
     <ClCompile Include="src\meta_dictionary\grant.cpp" />
     <ClCompile Include="src\meta_dictionary\grant_container.cpp" />
     <ClCompile Include="src\meta_dictionary\index.cpp" />

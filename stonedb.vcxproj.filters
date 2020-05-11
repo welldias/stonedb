@@ -185,6 +185,9 @@
     <ClCompile Include="src\meta_dictionary\index.cpp">
       <Filter>meta_dictionary</Filter>
     </ClCompile>
+    <ClCompile Include="src\meta_dictionary\db_object.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\exception.h">
