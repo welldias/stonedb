@@ -7,8 +7,6 @@
 
 namespace MetaDictionary {
 
-    using PartitionContainer = std::vector<Partition*>;
-
     class Partition : public TableStorage
     {
     public:
@@ -22,7 +20,7 @@ namespace MetaDictionary {
         Partition() {}
 
     protected:
-        PartitionContainer m_subpartitions;
+        std::vector<Partition*> m_subpartitions;
         std::string m_name;
         std::string m_highValue;
 

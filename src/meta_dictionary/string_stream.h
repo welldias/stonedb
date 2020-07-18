@@ -23,6 +23,8 @@ namespace MetaDictionary {
         virtual void NewLine();
         virtual void Put(const std::string& buffer);
 
+        void TrimRight(const std::string& charset);
+
 
         std::string GetString() const { return m_stream.str();  }
 	};

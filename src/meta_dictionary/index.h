@@ -72,7 +72,7 @@ namespace MetaDictionary {
     private:
         void WriteDomainClause(MetaStream& out, const MetaSettings& settings) const;
         void WriteIndexPartitions(MetaStream& out, const MetaSettings& settings) const;
-        void WriteSubpartitions(MetaStream& out, const MetaSettings& settings, const PartitionContainer& subpartitions) const;
+        void WriteSubpartitions(MetaStream& out, const MetaSettings& settings, const std::vector<IndexPartition*>& subpartitions) const;
 
         // copy-constraction & assign-operation is not supported
         Index(const Index&);

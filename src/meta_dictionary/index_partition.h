@@ -19,8 +19,10 @@ namespace MetaDictionary {
 
     public:
         IndexPartition() {}
-        std::string GetName() { return m_name;  }
-        std::string GetHighValue() { return m_highValue; }
+        const std::string& Name() { return m_name;  }
+        const std::string& HighValue() { return m_highValue; }
+        const std::vector<IndexPartition*>& SubPartitions() { return m_subpartitions; }
+
 
     private:
         // copy-constraction & assign-operation is not supported

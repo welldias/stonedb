@@ -90,7 +90,7 @@ namespace MetaDictionary {
 
             // parallel cannot be part create constraint
             if (skip_parallel) {
-                TableStorage storage(*this);
+                TableStorage storage(*((TableStorage*)this));
                 storage.m_degree.SetNull();
                 storage.m_instances.SetNull();
                 storage.WriteStorage(out, defStorage, settings);
@@ -187,7 +187,7 @@ namespace MetaDictionary {
             int maxNameLen = 0;
             int nameLen = 0;
             for (auto it = m_partitions.begin(); it != m_partitions.end(); ++it) {
-                nameLen = static_cast<int>((*it)->GetName().length());
+                nameLen = static_cast<int>((*it)->Name().length());
                 maxNameLen = maxNameLen > nameLen ? maxNameLen : nameLen;
             }
 
@@ -198,11 +198,11 @@ namespace MetaDictionary {
                 out.SafeWriteDBName(((DbObject*)(*it))->m_name);
 
                 if ((!m_local || m_type == Type::IoitTop) && m_partitioningType != Partition::Type::Hash) {
-                    int j = (*it)->GetName().size();
+                    int j = (*it)->Name().size();
                     do out.Put(" "); while (++j < maxNameLen + 1);
 
                     out.Put(m_partitioningType == Partition::Type::Range ? "VALUES LESS THAN (" : "VALUES (");
-                    out.Put((*it)->GetHighValue());
+                    out.Put((*it)->HighValue());
                     out.Put(")");
                 }
 
@@ -211,40 +211,43 @@ namespace MetaDictionary {
                     out2.SetLike(out);
 
                     TableStorage defStorage;
-                    BuildDefault(defStorage, m_dictionary, m_owner, (*it)->m_tablespaceName.GetValue());
-                    defStorage.CopyNotNulls(*this); // copy defaults defined on index level
+                    //TODO: Isto esta horrivel, verificar forma mais elegante para resolver essa amarra.
+                    //BuildDefault(defStorage, m_dictionary, m_owner, (*it)->m_tablespaceName.GetValue());
+
+                    defStorage.CopyNotNulls(*((TableStorage*)this)); // copy defaults defined on index level
 
                     out2.MoveIndent(2);
                     (*it)->WriteStorage(out2, defStorage, settings);
                     out2.MoveIndent(-2);
 
-                    if (m_Type == eitIOT_TOP && !m_IOTOverflowPartitions.empty()) {
-                        TextOutputInMEM out3(true, 2 * 1024);
+                    if (m_type == Type::IoitTop && !m_iOTOverflowPartitions.empty()) {
+                        StringStream out3(true);
                         out3.SetLike(out);
 
                         TableStorage defStorage;
-                        BuildDefault(defStorage, m_Dictionary, m_strOwner, m_IOTOverflowPartitions.at(i)->m_strTablespaceName.GetValue());
-                        defStorage.CopyNotNulls(m_IOTOverflowPartitionDefaultStrorage);
+                        //TODO: Isto esta horrivel, verificar forma mais elegante para resolver essa amarra.
+                        //BuildDefault(defStorage, m_dictionary, m_owner, m_iOTOverflowPartitions.at(i)->m_tablespaceName.GetValue());
+                        defStorage.CopyNotNulls(m_iOTOverflowPartitionDefaultStrorage);
 
                         out3.MoveIndent(2);
-                        m_IOTOverflowPartitions.at(i)->WriteStorage(out3, defStorage, settings);
+                        m_iOTOverflowPartitions.at(i)->WriteStorage(out3, defStorage, settings);
                         out3.MoveIndent(-2);
 
                         if (out3.GetLength())
                         {
                             out2.PutLine("OVERFLOW");
-                            out2.Put(out3.GetData(), out3.GetLength());
+                            out2.Put(out3.GetString());
                         }
                     }
 
-                    if (!(*it)->m_subpartitions.empty())
-                        writeSubpartitions(out2, settings, (*it)->m_subpartitions);
+                    if (!(*it)->SubPartitions().empty())
+                        WriteSubpartitions(out2, settings, (*it)->SubPartitions());
 
                     out2.TrimRight(" \n\r");
 
                     if (out2.GetLength()) {
                         out.NewLine();
-                        out.Put(out2.GetData(), out2.GetLength());
+                        out.Put(out2.GetString());
                     }
 
                     if ((i < count - 1)) out.Put(",");
@@ -255,5 +258,62 @@ namespace MetaDictionary {
             out.MoveIndent(-2);
             out.PutLine(")");
         }
+    }
+
+    void Index::WriteSubpartitions(MetaStream& out, const MetaSettings& settings, const std::vector<IndexPartition*>& subpartitions) const {
+
+        //TODO: how to handle defaul subpartitioning?
+        out.MoveIndent(2);
+        out.PutLine("(");
+        out.MoveIndent(2);
+
+        int maxNameLen = 0;
+        int nameLen = 0;
+        for (auto it = subpartitions.begin(); it != subpartitions.end(); ++it) {
+            nameLen = static_cast<int>((*it)->Name().length());
+            maxNameLen = maxNameLen > nameLen ? maxNameLen : nameLen;
+        }
+
+        int i = 0, count = subpartitions.size();
+        for (auto it = subpartitions.begin(); it != subpartitions.end(); ++it, ++i) {
+
+            out.PutIndent();
+            out.Put("SUBPARTITION ");
+            out.SafeWriteDBName((*it)->Name());
+
+            if (!m_local && m_subpartitioningType != Partition::Type::Hash)
+            {
+                int j = (*it)->Name.size();
+                do out.Put(" "); while (++j < maxNameLen + 1);
+
+                out.Put(m_subpartitioningType == Partition::Type::Range ? "VALUES LESS THAN (" : "VALUES (");
+                out.Put((*it)->HighValue());
+                out.Put(")");
+            }
+
+            //bool isDefaultTablespace(const Dictionary & dictionary, const string & tablespace, const string & owner)
+
+            bool isDefaultTablespace = false;
+            try
+            {
+                if (tablespace == m_dictionary.LookupUser(owner.c_str()).m_strDefTablespace)
+                    return true;
+            }
+            catch (const XNotFound&) {}
+
+
+            if (!(*it)->m_tablespaceName.IsNull() && (settings.IsStorageAlways() || settings.GetAlwaysPutTablespace() || !isDefaultTablespace(m_Dictionary, (*it)->m_tablespaceName.GetValue(), m_owner)))
+            {
+                out.Put(" TABLESPACE ");
+                out.SafeWriteDBName((*it)->m_strTablespaceName.GetValue());
+            }
+
+            if ((i < count - 1)) out.Put(",");
+            out.NewLine();
+        }
+        out.MoveIndent(-2);
+        out.PutIndent();
+        out.Put(")");
+        out.MoveIndent(-2);
     }
 }

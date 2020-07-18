@@ -27,4 +27,8 @@ namespace MetaDictionary {
     void StringStream::Put(const std::string& buffer) {
         m_stream << buffer;
     }
+
+    void StringStream::TrimRight(const std::string& charset)
+    {
+    }
 }
