@@ -15,7 +15,7 @@ namespace MetaDictionary {
         User() : DbObject(){};
         virtual ~User() {};
 
-        virtual std::string GetTypeStr() const { return "USER"; };
+        virtual const std::string GetTypeStr() const { return std::string("USER"); };
         virtual int Write(MetaStream&, const MetaSettings&) const { return 0; };
 
     private:

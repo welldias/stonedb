@@ -95,7 +95,7 @@ namespace MetaDictionary {
 
 		auto it = columns.begin();
 		auto end = columns.end();
-		int nSize = columns.size();
+		auto nSize = columns.size();
 
 		for (int i(0); it != end; it++, i++) {
 			PutIndent();

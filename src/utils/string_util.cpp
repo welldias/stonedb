@@ -1,7 +1,11 @@
 #include <string.h> 
+#include <cstdarg>
+#include <cstdlib>
+#include <memory>
+#include <algorithm>
 
 #include "string_util.h"
-
+#include "exception.h"
 
 namespace Utils {
 	const std::string  StringUtil::strKip = " \t\n\r";
@@ -71,5 +75,4 @@ namespace Utils {
 
 		return 0;
 	}
-
 }

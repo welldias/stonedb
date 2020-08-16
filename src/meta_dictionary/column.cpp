@@ -2,6 +2,25 @@
 
 namespace MetaDictionary {
 
+    Column::SubtypeMap::SubtypeMap() {
+        insert(value_type("CHAR",      1));
+        insert(value_type("NCHAR",     1));
+        insert(value_type("RAW",       1));
+        insert(value_type("VARCHAR2",  1));
+        insert(value_type("NVARCHAR2", 1));
+        insert(value_type("NUMBER",    2));
+        insert(value_type("FLOAT",     2));
+        insert(value_type("LONG",      0));
+        insert(value_type("DATE",      0));
+        insert(value_type("LONG RAW",  0));
+        insert(value_type("ROWID",     0));
+        insert(value_type("MLSLABEL",  0));
+        insert(value_type("CLOB",      0));
+        insert(value_type("NCLOB",     0));
+        insert(value_type("BLOB",      0));
+        insert(value_type("BFILE",     0));
+    }
+
     Column::SubtypeMap Column::m_mapSubtypes;
 
     Column::Column() {

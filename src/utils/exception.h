@@ -14,6 +14,7 @@ namespace Utils {
 
     public:
         Exception();
+        Exception(const char* msg) : m_errcode(0), m_message(msg) {}
         Exception(int code, const char* msg)  : m_errcode(code), m_message(msg) {}
         Exception(int code, const std::string& msg) : m_errcode(code), m_message(msg) {}
         Exception(const Exception& other)     : std::exception(other), m_errcode(other.m_errcode), m_message(other.what()) {}
@@ -40,6 +41,10 @@ namespace Utils {
         AlreadyExists(const std::string& objName);
     };
 
+    class FormatError : public Exception {
+    public:
+        FormatError(const std::string& format);
+    };
 }
 
 #endif // __PROJECT_STONE_UTILS_EXCEPTION_H__

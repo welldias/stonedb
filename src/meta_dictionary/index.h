@@ -15,7 +15,7 @@ namespace MetaDictionary {
 
     class Index : public DbObject, public IndexStorage {
     public:
-        enum Type { 
+        enum class Type {
             Normal, 
             Bitmap, 
             Cluster, 
@@ -27,7 +27,7 @@ namespace MetaDictionary {
 
         Index();
 
-        virtual const std::string& GetTypeStr() const { return "INDEX"; };
+        virtual const std::string GetTypeStr()  const { return std::string("INDEX"); };
         virtual bool IsGenerated()              const { return m_generated; }
         virtual int Write(MetaStream& out, const MetaSettings& settings) const;
 
@@ -36,6 +36,9 @@ namespace MetaDictionary {
         void WriteIOTClause(MetaStream&, const MetaSettings& settings, bool overflow) const;
         //void WriteDomainClause(MetaStream& out, const MetaSettings& settings) const;
         //void WriteIndexPartitions(MetaStream& out, const MetaSettings& settings) const;
+
+        bool GetTemporary() const { return m_temporary; };
+        Type GetType() const { return m_type; };
 
     protected:
         std::string m_tableOwner;
@@ -55,8 +58,8 @@ namespace MetaDictionary {
         std::map<int, std::string> m_columns; // or expression for eitFunctionBased
         std::map<int, bool>        m_isExpression;
 
-        TableStorage m_iOTOverflow_Storage;
-        int          m_iOTOverflow_PCTThreshold;
+        TableStorage m_iOTOverflowStorage;
+        int          m_iOTOverflowPCTThreshold;
 
         Partition::Type              m_partitioningType;
         std::vector<std::string>     m_partKeyColumns;

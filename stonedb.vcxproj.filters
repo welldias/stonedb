@@ -188,6 +188,12 @@
     <ClCompile Include="src\meta_dictionary\db_object.cpp">
       <Filter>meta_dictionary</Filter>
     </ClCompile>
+    <ClCompile Include="src\meta_dictionary\constraint.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_dictionary\table_base.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\exception.h">
@@ -404,6 +410,12 @@
       <Filter>meta_dictionary</Filter>
     </ClInclude>
     <ClInclude Include="src\meta_dictionary\index.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\constraint.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\table_base.h">
       <Filter>meta_dictionary</Filter>
     </ClInclude>
   </ItemGroup>

@@ -62,7 +62,7 @@ namespace Task {
 		//! @param args the parameters to pass to the function.
 		template <class F, class... Args>
 		auto ScheduleIn(const std::string& id, Duration delay, F&& function, Args&&... args) {
-			return this->scheduleAt(id, Detail::Clock::now() + delay, std::forward<F>(function), std::forward<Args>(args)...);
+			return this->ScheduleAt(id, Detail::Clock::now() + delay, std::forward<F>(function), std::forward<Args>(args)...);
 		}
 
 		//! Add a new task to the scheduler.
@@ -86,11 +86,11 @@ namespace Task {
 					std::lock_guard<std::mutex> guard(m_mutex);
 
 					--m_workerCount;
-					this->processTasks();
+					this->ProcessTasks();
 				}
 			};
 			std::lock_guard<std::mutex> guard(m_mutex);
-			this->addTask(m_hasher(id), std::move(functor), timepoint);
+			this->AddTask(m_hasher(id), std::move(functor), timepoint);
 
 			return future;
 		}
@@ -116,11 +116,11 @@ namespace Task {
 					if (periodicTask == m_periodicTasks.end()) {
 						return;
 					}
-					this->addTask(hash, periodicTask->second, Detail::Clock::now() + delay);
+					this->AddTask(hash, periodicTask->second, Detail::Clock::now() + delay);
 				}
 			};
 			std::lock_guard<std::mutex> guard(m_mutex);
-			this->addTask(hash, std::move(periodicTask), Detail::Clock::now() + delay, true);
+			this->AddTask(hash, std::move(periodicTask), Detail::Clock::now() + delay, true);
 		}
 
 		//! Remove a task from the scheduler.

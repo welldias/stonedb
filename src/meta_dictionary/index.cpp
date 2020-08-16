@@ -1,10 +1,19 @@
 #include "index.h"
 #include "string_stream.h"
 
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+
 namespace MetaDictionary {
 
+    bool isDefaultTablespace()
+    {
+        throw NotFound("Dictionary");
+    }
+
     Index::Index() {
-        m_type = Type::Normal;
+        m_type = Index::Type::Normal;
         m_uniqueness = false;
         m_temporary = false;
         m_generated = false;
@@ -12,7 +21,7 @@ namespace MetaDictionary {
         m_partitioningType = Partition::Type::None;
         m_subpartitioningType = Partition::Type::None;
         m_local = false;
-        m_iOTOverflow_PCTThreshold = 0;
+        m_iOTOverflowPCTThreshold = 0;
         m_indexCompression = false;
     };
 
@@ -117,10 +126,8 @@ namespace MetaDictionary {
         out.Put("COMPRESS");
 
         if (settings.IsStorageAlways() || (!(m_uniqueness && m_compressionPrefixLength == static_cast<int>(m_columns.size()) - 1) && !(!m_uniqueness && m_compressionPrefixLength == static_cast<int>(m_columns.size())))) {
-            char buff[128]; 
-
-            memset(buff, 0, sizeof(buff));
-            std::snprintf(buff, sizeof(buff) - 1, " %d", m_compressionPrefixLength);
+            
+            std::string buff = " " + m_compressionPrefixLength;
             out.Put(buff);
         }
 
@@ -191,14 +198,15 @@ namespace MetaDictionary {
                 maxNameLen = maxNameLen > nameLen ? maxNameLen : nameLen;
             }
 
-            int i = 0, count = m_partitions.size();
+            auto i = 0;
+            auto count = m_partitions.size();
             for (auto it = m_partitions.begin(); it != m_partitions.end(); ++it, ++i) {
                 out.PutIndent();
                 out.Put("PARTITION ");
                 out.SafeWriteDBName(((DbObject*)(*it))->m_name);
 
                 if ((!m_local || m_type == Type::IoitTop) && m_partitioningType != Partition::Type::Hash) {
-                    int j = (*it)->Name().size();
+                    auto j = (*it)->Name().size();
                     do out.Put(" "); while (++j < maxNameLen + 1);
 
                     out.Put(m_partitioningType == Partition::Type::Range ? "VALUES LESS THAN (" : "VALUES (");
@@ -274,16 +282,16 @@ namespace MetaDictionary {
             maxNameLen = maxNameLen > nameLen ? maxNameLen : nameLen;
         }
 
-        int i = 0, count = subpartitions.size();
+        auto i = 0;
+        auto count = subpartitions.size();
         for (auto it = subpartitions.begin(); it != subpartitions.end(); ++it, ++i) {
 
             out.PutIndent();
             out.Put("SUBPARTITION ");
             out.SafeWriteDBName((*it)->Name());
 
-            if (!m_local && m_subpartitioningType != Partition::Type::Hash)
-            {
-                int j = (*it)->Name.size();
+            if (!m_local && m_subpartitioningType != Partition::Type::Hash) {
+                auto j = (*it)->Name().length();
                 do out.Put(" "); while (++j < maxNameLen + 1);
 
                 out.Put(m_subpartitioningType == Partition::Type::Range ? "VALUES LESS THAN (" : "VALUES (");
@@ -291,29 +299,93 @@ namespace MetaDictionary {
                 out.Put(")");
             }
 
-            //bool isDefaultTablespace(const Dictionary & dictionary, const string & tablespace, const string & owner)
-
-            bool isDefaultTablespace = false;
-            try
-            {
-                if (tablespace == m_dictionary.LookupUser(owner.c_str()).m_strDefTablespace)
-                    return true;
-            }
-            catch (const XNotFound&) {}
-
-
-            if (!(*it)->m_tablespaceName.IsNull() && (settings.IsStorageAlways() || settings.GetAlwaysPutTablespace() || !isDefaultTablespace(m_Dictionary, (*it)->m_tablespaceName.GetValue(), m_owner)))
-            {
+            if (!(*it)->m_tablespaceName.IsNull() 
+                && (settings.IsStorageAlways() 
+                    || settings.GetAlwaysPutTablespace() 
+                    || !isDefaultTablespace())) {
                 out.Put(" TABLESPACE ");
-                out.SafeWriteDBName((*it)->m_strTablespaceName.GetValue());
+                out.SafeWriteDBName((*it)->m_tablespaceName.GetValue());
             }
 
             if ((i < count - 1)) out.Put(",");
             out.NewLine();
         }
+
         out.MoveIndent(-2);
         out.PutIndent();
         out.Put(")");
         out.MoveIndent(-2);
+    }
+
+    void Index::WriteIOTClause(MetaStream& out, const MetaSettings& settings, bool overflow) const {
+
+        if (m_partitioningType == Partition::Type::None) {
+
+            TableStorage defStorage;
+            
+            //TODO: Isto esta horrivel, verificar forma mais elegante para resolver essa amarra.
+            //BuildDefault(defStorage, m_dictionary, m_strOwner, m_strTablespaceName.GetValue());
+            //defStorage.m_nIniTrans.SetDefault(2);
+
+            out.MoveIndent(2);
+            WriteStorage(out, defStorage, settings);
+            out.MoveIndent(-2);
+
+            if (overflow) {
+                if (settings.IsStorageAlways() || m_iOTOverflowPCTThreshold != 50) {
+
+                    std::string buff;
+                    std::stringstream(buff) << "PCTTHRESHOLD "  << std::setfill('0') << std::setw(3) << m_iOTOverflowPCTThreshold;
+
+                    out.PutLine(buff);
+                }
+
+                out.PutLine("OVERFLOW ");
+
+                TableStorage defStorage;
+                //TODO: Isto esta horrivel, verificar forma mais elegante para resolver essa amarra.
+                //BuildDefault(defStorage, m_Dictionary, m_strOwner, m_IOTOverflow_Storage.m_strTablespaceName.GetValue());
+
+                out.MoveIndent(2);
+                m_iOTOverflowStorage.WriteStorage(out, defStorage, settings);
+                out.MoveIndent(-2);
+            }
+        }
+        else // partitioned
+        {
+            TableStorage defStorage;
+            //TODO: Isto esta horrivel, verificar forma mais elegante para resolver essa amarra.
+            //BuildDefault(defStorage, m_Dictionary, m_strOwner, m_strTablespaceName.GetValue());
+            //defStorage.m_nIniTrans.SetDefault(2);
+
+            out.MoveIndent(2);
+            WriteStorage(out, defStorage, settings);
+            WriteCompress(out, settings);
+            out.MoveIndent(-2);
+
+            if (overflow) {
+                if (settings.IsStorageAlways() || m_iOTOverflowPCTThreshold != 50) {
+
+                    std::string buff;
+                    std::stringstream(buff) << "PCTTHRESHOLD " << std::setfill('0') << std::setw(3) << m_iOTOverflowPCTThreshold;
+
+                    out.PutLine(buff);
+                }
+
+                out.PutLine("OVERFLOW ");
+
+                {
+                    TableStorage defStorage;
+                    //TODO: Isto esta horrivel, verificar forma mais elegante para resolver essa amarra.
+                    //BuildDefault(defStorage, m_Dictionary, m_strOwner, m_IOTOverflowPartitionDefaultStrorage.m_strTablespaceName.GetValue());
+                    out.MoveIndent(2);
+                    m_iOTOverflowPartitionDefaultStrorage.WriteStorage(out, defStorage, settings);
+                    out.MoveIndent(-2);
+                }
+            }
+
+            if (m_partitioningType != Partition::Type::None)
+                WriteIndexPartitions(out, settings);
+        }
     }
 }
