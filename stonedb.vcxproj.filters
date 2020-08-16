@@ -194,6 +194,9 @@
     <ClCompile Include="src\meta_dictionary\table_base.cpp">
       <Filter>meta_dictionary</Filter>
     </ClCompile>
+    <ClCompile Include="src\meta_dictionary\table.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\exception.h">
@@ -416,6 +419,9 @@
       <Filter>meta_dictionary</Filter>
     </ClInclude>
     <ClInclude Include="src\meta_dictionary\table_base.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\table.h">
       <Filter>meta_dictionary</Filter>
     </ClInclude>
   </ItemGroup>
