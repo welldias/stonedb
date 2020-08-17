@@ -96,7 +96,7 @@ namespace MetaDictionary {
 
             WriteParallel(out, defStorage, settings);
         }
-        else if (settings.GetAlwaysPutTablespace()) {
+        else if (settings.AlwaysPutTablespace) {
             WriteTablespace(out);
         }
     }

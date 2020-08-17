@@ -190,6 +190,7 @@
     <ClCompile Include="src\meta_dictionary\grant.cpp" />
     <ClCompile Include="src\meta_dictionary\grant_container.cpp" />
     <ClCompile Include="src\meta_dictionary\index.cpp" />
+    <ClCompile Include="src\meta_dictionary\sequence.cpp" />
     <ClCompile Include="src\meta_dictionary\storage.cpp" />
     <ClCompile Include="src\meta_dictionary\table.cpp" />
     <ClCompile Include="src\meta_dictionary\table_base.cpp" />
@@ -257,6 +258,7 @@
     <ClInclude Include="src\meta_dictionary\index_storage.h" />
     <ClInclude Include="src\meta_dictionary\meta_dictionary.h" />
     <ClInclude Include="src\meta_dictionary\partition.h" />
+    <ClInclude Include="src\meta_dictionary\sequence.h" />
     <ClInclude Include="src\meta_dictionary\storage.h" />
     <ClInclude Include="src\meta_dictionary\table.h" />
     <ClInclude Include="src\meta_dictionary\table_base.h" />

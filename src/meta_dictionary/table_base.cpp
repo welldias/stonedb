@@ -24,7 +24,7 @@ namespace MetaDictionary {
                     //TODO: Isto esta horrivel, verificar forma mais elegante para resolver essa amarra.
                     //m_dictionary.LookupConstraint(it->c_str());
                     // all indexes for constraints
-                    if (settings.GetNoStorageForConstraint())
+                    if (settings.NoStorageForConstraint)
                         index.Write(out, settings);
                 }
                 catch (const NotFound&) {

@@ -8,16 +8,23 @@
 namespace MetaDictionary {
 
     class TableColumn : public Column {
-    private:
-        std::string m_strDataDefault;
-        std::string m_strComments;
-        bool m_bVirtual;
-        bool m_bIdentity;
-        std::string m_strSequenceName;
-        std::string m_strIndentityGenerationType;
-
     public:
-        TableColumn() : m_bVirtual(false), m_bIdentity(false) {}
+        TableColumn() : m_virtual(false), m_identity(false) {}
+
+        inline const std::string& GetDataDefault() const { return m_dataDefault; };
+        inline const std::string& GetComments() const { return m_comments; };
+        inline bool GetVirtual() const { return m_virtual; }
+        inline bool GetIdentity() const { return m_identity; }
+        inline const std::string& GetSequenceName() const { return m_sequenceName; };
+        inline const std::string& GetIndentityGenerationType() const { return m_indentityGenerationType; };
+
+    protected:
+        std::string m_dataDefault;
+        std::string m_comments;
+        bool m_virtual;
+        bool m_identity;
+        std::string m_sequenceName;
+        std::string m_indentityGenerationType;
 
     private:
         // copy-constraction & assign-operation is not supported

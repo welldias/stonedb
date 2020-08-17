@@ -21,7 +21,7 @@ namespace MetaDictionary {
         void WriteConstraints(MetaStream& out, const MetaSettings& settings, char chType) const;
         void WriteTriggers(MetaStream& out, const MetaSettings& settings) const;
 
-    private:
+    protected:
         std::string m_clusterName;
         std::string m_comments;
         Variable<bool> m_cache;

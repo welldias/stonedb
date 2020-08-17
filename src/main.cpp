@@ -139,30 +139,30 @@ int main(int argc, char *argv[])
 
     // Common settings
     MetaSettings metaSettings;
-    metaSettings.SetComments(true);
-    metaSettings.SetGrants(true);
-    metaSettings.SetLowerNames(true);
-    metaSettings.SetShemaName(false);
-    metaSettings.SetSQLPlusCompatibility(true);
-    metaSettings.SetGeneratePrompts(true);
+    metaSettings.Comments = true;
+    metaSettings.Grants = true;
+    metaSettings.LowerNames = true;
+    metaSettings.SchemaName = false;
+    metaSettings.SQLPlusCompatibility = true;
+    metaSettings.GeneratePrompts = true;
     // Table Specific
-    metaSettings.SetCommentsAfterColumn(false);
-    metaSettings.SetCommentsPos(48);
-    metaSettings.SetConstraints(true);
-    metaSettings.SetIndexes(true);
-    metaSettings.SetNoStorageForConstraint(false);
-    metaSettings.SetStorageClause(1);
-    metaSettings.SetAlwaysPutTablespace(false);
-    metaSettings.SetTableDefinition(true);
-    metaSettings.SetTriggers(true);
+    metaSettings.CommentsAfterColumn = false;
+    metaSettings.CommentsPos = 48;
+    metaSettings.Constraints = true;
+    metaSettings.Indexes = true;
+    metaSettings.NoStorageForConstraint = false;
+    metaSettings.StorageClause = 1;
+    metaSettings.AlwaysPutTablespace = false;
+    metaSettings.TableDefinition = true;
+    metaSettings.Triggers = true;
     // Othes
-    metaSettings.SetSequnceWithStart(false);
-    metaSettings.SetViewWithTriggers(true);
-    metaSettings.SetViewWithForce(false);
+    metaSettings.SequnceWithStart = false;
+    metaSettings.ViewWithTriggers = true;
+    metaSettings.ViewWithForce = false;
     // Hidden
-    metaSettings.SetEndOfShortStatement(";");
-    metaSettings.SetStorageSubstitutedClause(false);
-    metaSettings.SetAlwaysWriteColumnLengthSematics(false);
+    metaSettings.EndOfShortStatement = ";";
+    metaSettings.StorageSubstitutedClause = false;
+    metaSettings.AlwaysWriteColumnLengthSematics = false;
 
 
     try {

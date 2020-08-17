@@ -3,6 +3,7 @@
 
 #include <map>
 
+#include "table_column.h"
 #include "table_base.h"
 #include "constraint.h"
 
@@ -10,7 +11,7 @@ namespace MetaDictionary {
 
     class Table : public TableBase {
     private:
-        using ColumnContainer = std::map<int, TabColumn*>;
+        using ColumnContainer = std::map<int, TableColumn*>;
         using PartKeyColumnContainer = std::vector<std::string>;
         using PartitionContainer = std::vector<Partition*>;
 
@@ -51,14 +52,14 @@ namespace MetaDictionary {
     private:
         Type m_type;
         TemporaryDuration m_temporaryDuration;
-        ColumnContainer m_Columns;
+        ColumnContainer m_columns;
 
         // should the following attributes be moved to TableBase?
         int m_iotOverflowIncludeColumn;
 
         Partition::Type          m_partitioningType;
-        PartKeyColumnContainer   m_PartKeyColumns;
-        PartitionContainer       m_Partitions;
+        PartKeyColumnContainer   m_partKeyColumns;
+        PartitionContainer       m_partitions;
         Partition::Type          m_subpartitioningType;
         PartKeyColumnContainer   m_subpartKeyColumns;
         PartitionContainer       m_subpartTemplates;

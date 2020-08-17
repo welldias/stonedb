@@ -27,10 +27,10 @@ namespace MetaDictionary {
 
     int Index::Write(MetaStream& out, const MetaSettings& settings) const {
 
-        if (settings.GetGeneratePrompts()) {
+        if (settings.GeneratePrompts) {
             out.PutIndent();
             out.Put("PROMPT CREATE INDEX ");
-            out.PutOwnerAndName(m_owner, m_name, settings.GetShemaName() || m_owner != m_tableOwner);
+            out.PutOwnerAndName(m_owner, m_name, settings.SchemaName || m_owner != m_tableOwner);
             out.NewLine();
         }
 
@@ -44,7 +44,7 @@ namespace MetaDictionary {
                 out.Put("UNIQUE ");
 
         out.Put("INDEX ");
-        out.PutOwnerAndName(m_owner, m_name, settings.GetShemaName() || m_owner != m_tableOwner);
+        out.PutOwnerAndName(m_owner, m_name, settings.SchemaName || m_owner != m_tableOwner);
         out.NewLine();
 
         out.MoveIndent(2);
@@ -52,7 +52,7 @@ namespace MetaDictionary {
         out.Put("ON ");
 
         if (m_type != Type::Cluster) {
-            out.PutOwnerAndName(m_tableOwner, m_tableName, settings.GetShemaName());
+            out.PutOwnerAndName(m_tableOwner, m_tableName, settings.SchemaName);
             out.Put(" (");
             out.NewLine();
 
@@ -67,7 +67,7 @@ namespace MetaDictionary {
         }
         else {
             out.Put("CLUSTER ");
-            out.PutOwnerAndName(m_tableOwner, m_tableName, settings.GetShemaName());
+            out.PutOwnerAndName(m_tableOwner, m_tableName, settings.SchemaName);
             out.NewLine();
         }
 
@@ -113,7 +113,7 @@ namespace MetaDictionary {
                 WriteIndexPartitions(out, settings);
         }
 
-        if (settings.GetStorageSubstitutedClause())
+        if (settings.StorageSubstitutedClause)
             DbObject::WriteSubstitutedClause(out, m_name, "_st");
     }
 
@@ -138,7 +138,7 @@ namespace MetaDictionary {
 
         out.PutIndent();
         out.Put("INDEXTYPE IS ");
-        out.PutOwnerAndName(m_domainOwner, m_domain, settings.GetShemaName() || m_owner != m_domainOwner);
+        out.PutOwnerAndName(m_domainOwner, m_domain, settings.SchemaName || m_owner != m_domainOwner);
         out.NewLine();
 
         if (!m_domainParams.empty()) {
@@ -301,7 +301,7 @@ namespace MetaDictionary {
 
             if (!(*it)->m_tablespaceName.IsNull() 
                 && (settings.IsStorageAlways() 
-                    || settings.GetAlwaysPutTablespace() 
+                    || settings.AlwaysPutTablespace 
                     || !isDefaultTablespace())) {
                 out.Put(" TABLESPACE ");
                 out.SafeWriteDBName((*it)->m_tablespaceName.GetValue());

@@ -33,11 +33,11 @@ namespace MetaDictionary {
 
     int Constraint::Write(MetaStream& out, const MetaSettings& settings) const {
 
-        if (settings.GetGeneratePrompts()) {
+        if (settings.GeneratePrompts) {
 
             out.PutIndent();
             out.Put(!m_onView ? "PROMPT ALTER TABLE " : "PROMPT ALTER VIEW ");
-            out.PutOwnerAndName(m_owner, m_tableName, settings.GetShemaName());
+            out.PutOwnerAndName(m_owner, m_tableName, settings.SchemaName);
             out.Put(" ADD ");
 
             if (!IsGenerated()) {
@@ -57,7 +57,7 @@ namespace MetaDictionary {
 
         out.PutIndent();
         out.Put(!m_onView ? "ALTER TABLE " : "ALTER VIEW ");
-        out.PutOwnerAndName(m_owner, m_tableName, settings.GetShemaName());
+        out.PutOwnerAndName(m_owner, m_tableName, settings.SchemaName);
         out.NewLine();
 
         out.MoveIndent(2);
@@ -92,7 +92,7 @@ namespace MetaDictionary {
             //Constraint& refKey = m_dictionary.LookupConstraint(m_rOwner.c_str(), m_rConstraintName.c_str());
             out.PutIndent();
             out.Put(") REFERENCES ");
-            out.PutOwnerAndName(refKey.m_owner, refKey.m_tableName, settings.GetShemaName() || m_owner != refKey.m_owner);
+            out.PutOwnerAndName(refKey.m_owner, refKey.m_tableName, settings.SchemaName || m_owner != refKey.m_owner);
             out.Put(" (");
             out.NewLine();
             out.WriteColumns(refKey.m_columns, 2);
@@ -126,7 +126,7 @@ namespace MetaDictionary {
         if (m_noValidate)
             out.PutLine("NOVALIDATE");
 
-        if (!settings.GetNoStorageForConstraint() && (m_type[0] == 'P' || m_type[0] == 'U')) {
+        if (!settings.NoStorageForConstraint && (m_type[0] == 'P' || m_type[0] == 'U')) {
             try {
                 Index index;
                 //TODO: Isto esta horrivel, verificar forma mais elegante para resolver essa amarra.

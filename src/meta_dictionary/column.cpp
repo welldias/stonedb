@@ -25,41 +25,41 @@ namespace MetaDictionary {
 
     Column::Column() {
 
-		m_nDataPrecision = 0;
-		m_nDataScale = 0;
-		m_nDataLength = 0;
-		m_bNullable = false;
+		m_dataPrecision = 0;
+		m_dataScale = 0;
+		m_dataLength = 0;
+		m_nullable = false;
 		m_charLengthSemantics = CharLengthSemantics::UseByte;
 		m_defCharLengthSemantics = CharLengthSemantics::UseByte;
     }
 
     void Column::GetSpecString(std::string& strBuff, const MetaSettings& settings) const {
 
-        strBuff = m_strDataType;
-        switch (m_mapSubtypes[m_strDataType]) {
+        strBuff = m_dataType;
+        switch (m_mapSubtypes[m_dataType]) {
         case 0:
             break;
         case 1:
             strBuff += '(';
-            strBuff += std::to_string(m_nDataLength);
-            if ((m_strDataType == "VARCHAR2" || m_strDataType == "CHAR") && (m_charLengthSemantics != m_defCharLengthSemantics || settings.GetAlwaysWriteColumnLengthSematics()))
+            strBuff += std::to_string(m_dataLength);
+            if ((m_dataType == "VARCHAR2" || m_dataType == "CHAR") && (m_charLengthSemantics != m_defCharLengthSemantics || settings.AlwaysWriteColumnLengthSematics))
                 strBuff += (m_charLengthSemantics == CharLengthSemantics::UseChar) ? " CHAR" : " BYTE";
             strBuff += ')';
             break;
         case 2:
-            if (m_nDataPrecision != -1 && m_nDataScale != -1) {
+            if (m_dataPrecision != -1 && m_dataScale != -1) {
                 strBuff += '(';
-                strBuff += std::to_string(m_nDataPrecision);
+                strBuff += std::to_string(m_dataPrecision);
                 strBuff += ',';
-                strBuff += std::to_string(m_nDataScale);
+                strBuff += std::to_string(m_dataScale);
                 strBuff += ')';
             }
-            else if (m_nDataPrecision != -1) {
+            else if (m_dataPrecision != -1) {
                 strBuff += '(';
-                strBuff += std::to_string(m_nDataPrecision);
+                strBuff += std::to_string(m_dataPrecision);
                 strBuff += ')';
             }
-            else if (m_nDataScale != -1) {
+            else if (m_dataScale != -1) {
                 strBuff = "INTEGER";
             }
             break;

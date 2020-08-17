@@ -19,6 +19,10 @@ namespace MetaDictionary {
 
         Partition() {}
 
+        inline const std::vector<Partition*>& GetSubpartitions() const { return m_subpartitions; };
+        inline const std::string& GetName() const { return m_name; };
+        inline const std::string& GetHighValue() const { return m_highValue; };
+
     protected:
         std::vector<Partition*> m_subpartitions;
         std::string m_name;

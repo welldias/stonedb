@@ -35,20 +35,20 @@ namespace MetaDictionary {
                     out.Put(out2.GetString());
 
                     out.Put(" ON ");
-                    out.PutOwnerAndName(m_owner, m_name, settings.GetShemaName());
+                    out.PutOwnerAndName(m_owner, m_name, settings.SchemaName);
                     out.Put(" TO ");
                     out.SafeWriteDBName(m_grantee);
 
                     if (i) out.Put(" WITH GRANT OPTION");
 
-                    out.Put(settings.GetEndOfShortStatement());
+                    out.Put(settings.EndOfShortStatement);
                     out.NewLine();
                 }
             }
 
             if (privileges.find("ENQUEUE") != end) {
                 out.Put("exec Dbms_Aqadm.Grant_Queue_Privilege(\'enqueue', \'");
-                out.PutOwnerAndName(m_owner, m_name, settings.GetShemaName());
+                out.PutOwnerAndName(m_owner, m_name, settings.SchemaName);
 
                 out.Put("\',\'");
                 out.SafeWriteDBName(m_grantee);
@@ -60,7 +60,7 @@ namespace MetaDictionary {
 
             if (privileges.find("DEQUEUE") != end) {
                 out.Put("exec Dbms_Aqadm.Grant_Queue_Privilege(\'dequeue', \'");
-                out.PutOwnerAndName(m_owner, m_name, settings.GetShemaName());
+                out.PutOwnerAndName(m_owner, m_name, settings.SchemaName);
                 out.Put("\',\'");
                 out.SafeWriteDBName(m_grantee);
 
@@ -109,13 +109,13 @@ namespace MetaDictionary {
                     out.Put(out2.GetString());
 
                     out.Put(" ON ");
-                    out.PutOwnerAndName(m_owner, m_name, settings.GetShemaName());
+                    out.PutOwnerAndName(m_owner, m_name, settings.SchemaName);
                     out.Put(" TO ");
                     out.SafeWriteDBName(m_grantee);
 
                     if (i) out.Put(" WITH GRANT OPTION");
 
-                    out.Put(settings.GetEndOfShortStatement());
+                    out.Put(settings.EndOfShortStatement);
                     out.NewLine();
                 }
             }
