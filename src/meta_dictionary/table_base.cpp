@@ -47,8 +47,8 @@ namespace MetaDictionary {
                 vector.push_back(&constraint);
         }
 
-        std::stable_sort(vector.begin(), vector.end(),
-            [](const Constraint* c1, const Constraint* c2) {
+        std::stable_sort(vector.begin(), vector.end(), [](const Constraint* c1, const Constraint* c2) {
+
             if (c1->GetType() != c2->GetType())
                 return (c1->GetType() < c2->GetType());
 

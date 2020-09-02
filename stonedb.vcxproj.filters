@@ -200,6 +200,12 @@
     <ClCompile Include="src\meta_dictionary\sequence.cpp">
       <Filter>meta_dictionary</Filter>
     </ClCompile>
+    <ClCompile Include="src\meta_dictionary\trigger.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_dictionary\view.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\exception.h">
@@ -428,6 +434,12 @@
       <Filter>meta_dictionary</Filter>
     </ClInclude>
     <ClInclude Include="src\meta_dictionary\sequence.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\trigger.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\view.h">
       <Filter>meta_dictionary</Filter>
     </ClInclude>
   </ItemGroup>

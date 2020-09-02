@@ -108,8 +108,8 @@ namespace MetaDictionary {
             column.GetSpecString(type, settings);
             listTypeSpecs.push_back(type);
 
-            nMaxNameLen = max(nMaxNameLen, static_cast<int>(column.GetColumnName().size()));
-            nMaxTypeLen = max(nMaxTypeLen, static_cast<int>(type.size()));
+            nMaxNameLen = std::max<int>(nMaxNameLen, static_cast<int>(column.GetColumnName().size()));
+            nMaxTypeLen = std::max<int>(nMaxTypeLen, static_cast<int>(type.size()));
 
             size_t nLength = 0;
             if (column.GetIdentity()) {
@@ -135,7 +135,7 @@ namespace MetaDictionary {
             if (i < (m_columns.size() - 1))
                 nLength++;      // add place for ',' 
 
-            nMaxOtherLen = max(nMaxOtherLen, static_cast<int>(nLength));
+            nMaxOtherLen = std::max<int>(nMaxOtherLen, static_cast<int>(nLength));
             i++;
         }
 
@@ -186,7 +186,7 @@ namespace MetaDictionary {
             if (settings.CommentsAfterColumn && !column.GetComments().empty()) {
                 auto j = out.GetPosition() - nPos;
                 int nMaxLen = nMaxNameLen + nMaxTypeLen + nMaxOtherLen + 2;
-                nMaxLen = max(nMaxLen, settings.CommentsPos);
+                nMaxLen = std::max<int>(nMaxLen, settings.CommentsPos);
 
                 while (j++ < nMaxLen)
                     out.Put(" ");
@@ -316,7 +316,7 @@ namespace MetaDictionary {
 
             int nMaxNameLen = 0;
             for (auto it : m_subpartTemplates)
-                nMaxNameLen = max(nMaxNameLen, static_cast<int>(it->GetName().length()));
+                nMaxNameLen = std::max<int>(nMaxNameLen, static_cast<int>(it->GetName().length()));
 
             int i = 0;
             auto count = m_subpartTemplates.size();
@@ -355,7 +355,7 @@ namespace MetaDictionary {
 
         int nMaxNameLen = 0;
         for (auto it : m_partitions)
-            nMaxNameLen = max(nMaxNameLen, static_cast<int>(it->GetName().length()));
+            nMaxNameLen = std::max<int>(nMaxNameLen, static_cast<int>(it->GetName().length()));
 
         int i = 0;
         auto count = m_partitions.size();
@@ -465,7 +465,7 @@ namespace MetaDictionary {
 
         int nMaxNameLen = 0;
         for (PartitionContainer::const_iterator it = subpartitions.begin(); it != subpartitions.end(); ++it)
-            nMaxNameLen = max(nMaxNameLen, static_cast<int>((*it)->GetName().length()));
+            nMaxNameLen = std::max<int>(nMaxNameLen, static_cast<int>((*it)->GetName().length()));
 
         int i = 0;
         auto count = subpartitions.size();

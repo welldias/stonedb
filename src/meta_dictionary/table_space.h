@@ -15,7 +15,7 @@ namespace MetaDictionary {
     public:
         Tablespace() {};
 
-        virtual const std::string& GetTypeStr() const { return "TABLESPACE"; };
+        virtual const std::string GetTypeStr() const { return "TABLESPACE"; };
         virtual int Write(MetaStream&, const MetaSettings&) const { return 0; };
 
     private:

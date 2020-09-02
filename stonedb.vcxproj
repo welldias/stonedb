@@ -198,6 +198,8 @@
     <ClCompile Include="src\meta_dictionary\text_file_stream.cpp" />
     <ClCompile Include="src\meta_dictionary\meta_stream.cpp" />
     <ClCompile Include="src\meta_dictionary\string_stream.cpp" />
+    <ClCompile Include="src\meta_dictionary\trigger.cpp" />
+    <ClCompile Include="src\meta_dictionary\view.cpp" />
     <ClCompile Include="src\oci20\auto_cursor.cpp" />
     <ClCompile Include="src\oci20\break_handler.cpp" />
     <ClCompile Include="src\oci20\buff_cursor.cpp" />
@@ -265,11 +267,13 @@
     <ClInclude Include="src\meta_dictionary\table_column.h" />
     <ClInclude Include="src\meta_dictionary\table_space.h" />
     <ClInclude Include="src\meta_dictionary\table_storage.h" />
+    <ClInclude Include="src\meta_dictionary\trigger.h" />
     <ClInclude Include="src\meta_dictionary\user.h" />
     <ClInclude Include="src\meta_dictionary\meta_settings.h" />
     <ClInclude Include="src\meta_dictionary\text_file_stream.h" />
     <ClInclude Include="src\meta_dictionary\meta_stream.h" />
     <ClInclude Include="src\meta_dictionary\string_stream.h" />
+    <ClInclude Include="src\meta_dictionary\view.h" />
     <ClInclude Include="src\oci20\auto_cursor.h" />
     <ClInclude Include="src\oci20\break_handler.h" />
     <ClInclude Include="src\oci20\buff_cursor.h" />
