@@ -187,9 +187,11 @@
     <ClCompile Include="src\meta_dictionary\column.cpp" />
     <ClCompile Include="src\meta_dictionary\constraint.cpp" />
     <ClCompile Include="src\meta_dictionary\db_object.cpp" />
+    <ClCompile Include="src\meta_dictionary\function.cpp" />
     <ClCompile Include="src\meta_dictionary\grant.cpp" />
     <ClCompile Include="src\meta_dictionary\grant_container.cpp" />
     <ClCompile Include="src\meta_dictionary\index.cpp" />
+    <ClCompile Include="src\meta_dictionary\parser_util.cpp" />
     <ClCompile Include="src\meta_dictionary\sequence.cpp" />
     <ClCompile Include="src\meta_dictionary\storage.cpp" />
     <ClCompile Include="src\meta_dictionary\table.cpp" />
@@ -253,12 +255,14 @@
     <ClInclude Include="src\meta_dictionary\column.h" />
     <ClInclude Include="src\meta_dictionary\constraint.h" />
     <ClInclude Include="src\meta_dictionary\db_object.h" />
+    <ClInclude Include="src\meta_dictionary\function.h" />
     <ClInclude Include="src\meta_dictionary\grant.h" />
     <ClInclude Include="src\meta_dictionary\grant_container.h" />
     <ClInclude Include="src\meta_dictionary\index.h" />
     <ClInclude Include="src\meta_dictionary\index_partition.h" />
     <ClInclude Include="src\meta_dictionary\index_storage.h" />
     <ClInclude Include="src\meta_dictionary\meta_dictionary.h" />
+    <ClInclude Include="src\meta_dictionary\parser_util.h" />
     <ClInclude Include="src\meta_dictionary\partition.h" />
     <ClInclude Include="src\meta_dictionary\sequence.h" />
     <ClInclude Include="src\meta_dictionary\storage.h" />
