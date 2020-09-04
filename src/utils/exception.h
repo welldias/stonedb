@@ -45,6 +45,11 @@ namespace Utils {
     public:
         FormatError(const std::string& format);
     };
+
+    class ParserError : public Exception {
+    public:
+        ParserError(const std::string& msg);
+    };
 }
 
 #endif // __PROJECT_STONE_UTILS_EXCEPTION_H__

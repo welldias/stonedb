@@ -19,6 +19,7 @@ namespace MetaDictionary {
         static int  SkipDbName(const char* str);
         static int  CountLines(const char* str, int len);
         static void WriteTextBlock(MetaStream& out, const std::string& text, bool trunc, bool strip);
+        static void WriteSubstitutedClause(MetaStream& out, const std::string& text, const std::string& suffix);
     };
 }
 

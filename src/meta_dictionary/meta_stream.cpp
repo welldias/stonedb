@@ -93,22 +93,23 @@ namespace MetaDictionary {
 	{
 		MoveIndent(nIndent);
 
-		auto it = columns.begin();
-		auto end = columns.end();
+		int i = 0;
 		auto nSize = columns.size();
-
-		for (int i(0); it != end; it++, i++) {
+		for (const auto& [key, value] : columns) {
 			PutIndent();
 
 			if (safeWriteDBName.empty() || safeWriteDBName.find(i) == safeWriteDBName.end() || safeWriteDBName.find(i)->second != false)
-				SafeWriteDBName(it->second);
+				SafeWriteDBName(value);
 			else
-				Put(it->second);
+				Put(value);
 
-			if (i < nSize - 1) 
+			if (i < nSize - 1)
 				Put(",");
 			NewLine();
+
+			i++;
 		}
+
 		MoveIndent(-nIndent);
 	}
 
@@ -116,7 +117,7 @@ namespace MetaDictionary {
 
 		bool regular = true;
 
-		for (auto& c : name) {
+		for (auto c : name) {
 			if (!((c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '$' || c == '#')) {
 				regular = false;
 				break;

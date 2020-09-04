@@ -125,4 +125,20 @@ namespace MetaDictionary {
             }
         }
     }
+
+    void ParserUtil::WriteSubstitutedClause(MetaStream& out, const std::string& text, const std::string& suffix) {
+
+        auto clause = StringUtil::ToLower(text);
+        if ((clause.size() + suffix.size()) > 30)
+            clause.resize(30 - suffix.size());
+
+        for (auto it  : clause)
+            if (!isalnum(it)) it = '_';
+
+        out.PutIndent();
+        out.Put("&");
+        out.Put(clause);
+        out.Put(suffix);
+        out.NewLine();
+    }
 }

@@ -16,4 +16,9 @@ namespace Utils {
 	FormatError::FormatError(const std::string& format)
 		: Exception(0, std::string("Format error! format: '" + format + "'.")) {
 	}
+
+	ParserError::ParserError(const std::string& format)
+		: Exception(0, std::string("Parser error! '" + format + "'.")) {
+	}
+
 }

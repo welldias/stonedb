@@ -8,7 +8,6 @@ namespace MetaDictionary {
 
     using namespace Utils;
 
-
     Grant& GrantContainer::CreateGrant(const std::string& grantxx, const std::string& object) {
         
         std::string key = grantxx + "." + object;

@@ -6,6 +6,8 @@
 #include <string>
 #include <functional>
 
+#include "db_object.h"
+
 #include "grant.h"
 #include "meta_stream.h"
 #include "meta_settings.h"
@@ -16,9 +18,9 @@ namespace MetaDictionary {
     using GrantVector = std::vector<const Grant*>;
     using FuncEnum = std::function<void(const Grant&)>;
 
-    class GrantContainer {
+    class GrantContainer : public DbObject {
     public:
-        GrantContainer() {}
+        GrantContainer() : DbObject() {};
 
         // If it's grantor then the arguments are (grantee_name, object_name)
         // If it's grantee then the arguments are (grantor_name, object_name)
@@ -34,8 +36,6 @@ namespace MetaDictionary {
     protected:
         GrantMap m_mapGrants;
 
-        std::string Makekey(const std::string& owner, const std::string& name);
-
     private:
         // copy-constraction & assign-operation is not supported
         GrantContainer(const GrantContainer&);
@@ -45,14 +45,14 @@ namespace MetaDictionary {
     class Grantor : public GrantContainer {
     public:
         Grantor() {}
-        virtual std::string GetTypeStr() const { return "GRANTOR"; };
+        virtual const std::string GetTypeStr() const { return "GRANTOR"; };
         void WriteObjectGrants(const std::string& name, MetaStream& out, const MetaSettings& settings) const;
     };
 
     class Grantee : public GrantContainer {
     public:
         Grantee() {}
-        virtual std::string GetTypeStr() const { return "GRANTEE"; };
+        virtual const std::string GetTypeStr() const { return "GRANTEE"; };
     };
 
 }

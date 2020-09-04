@@ -13,18 +13,12 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <thread>
 
 #include "utils/utils.h"
 #include "oci20/oci20.h"
 #include "data/data.h"
 #include "meta_dictionary/meta_dictionary.h"
-
-#include "task/manager.h"
-#include "task/thread_pool.h"
-#include "task/module.h"
-#include "task/priority_queue.h"
-#include "task/scheduler.h"
-#include "task/task.h"
 
 using namespace Utils;
 using namespace Oci20;
@@ -164,7 +158,6 @@ int main(int argc, char *argv[])
     metaSettings.StorageSubstitutedClause = false;
     metaSettings.AlwaysWriteColumnLengthSematics = false;
 
-
     try {
 #ifdef LINX_ENV
         ociSession.Open(user, password, tnsAlias, mode, safety);
@@ -182,11 +175,6 @@ int main(int argc, char *argv[])
     Settings::SetSynonymWithoutObjectInvalid(false);
     Settings::SetCurrentDBUser(currentUser);
     Settings::SetCurrentDBSchema(currentSchema);
-
-    std::vector<std::future<ListDataProvider*>> futureList;
-    
-    Task::Module::Init(GetNumCores());
-    auto manager = Task::Module::MakeManager(1);
 
     ListDataProvider* listaDataprovider[] = {
         new UserListAdapter(ociSession.getConnect()),
@@ -213,25 +201,6 @@ int main(int argc, char *argv[])
         new ConstraintListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::UniqueKey),
         new ConstraintListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::Check),
     };
-
-    for (int i = 0; i < (sizeof(listaDataprovider) / sizeof(ListDataProvider*)); i++) {
-        futureList.push_back(manager.get()->Push(loadDataProvider, listaDataprovider[i], currentSchema));
-    }
-
-    std::this_thread::sleep_for(std::chrono::seconds(10));
-
-    std::chrono::milliseconds span(50);
-    while (!futureList.empty()) {
-        auto it = futureList.begin();
-        while (it != futureList.end()) {
-            if ((*it).valid() && (*it).wait_for(span) == std::future_status::ready) {
-                auto infoType = (*it).get();
-                it = futureList.erase(it);
-            }
-        }
-    }
-
-    manager.get()->Stop().get();
 
     for (int i = 0; i < (sizeof(listaDataprovider) / sizeof(ListDataProvider*)); i++)
         delete std::exchange(listaDataprovider[i], nullptr);

@@ -10,7 +10,6 @@
 #include "db_object.h"
 #include "user.h"
 #include "storage.h"
-
 #include "column.h"
 #include "constraint.h"
 #include "index.h"
@@ -26,5 +25,18 @@
 #include "table_storage.h"
 #include "trigger.h"
 #include "view.h"
+#include "pls_code.h"
+#include "function.h"
+#include "procedure.h"
+#include "package.h"
+#include "package_body.h"
+#include "type.h"
+#include "type_body.h"
+#include "java_source.h"
+#include "synonym.h"
+#include "cluster.h"
+#include "db_link.h"
+#include "snapshot_log.h"
+#include "snapshot.h"
 
 #endif /*__PROJECT_STONE_META_DICTIONARY_H__*/

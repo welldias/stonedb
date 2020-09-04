@@ -14,9 +14,6 @@
     <Filter Include="data">
       <UniqueIdentifier>{9c822052-0dc3-4545-a5c3-7fb75a38dce6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="task">
-      <UniqueIdentifier>{ee43752f-4275-4630-915f-93cbc42c01ad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="meta_dictionary">
       <UniqueIdentifier>{cf54c1ec-3590-47ff-bc1a-88b70a187e26}</UniqueIdentifier>
     </Filter>
@@ -146,18 +143,6 @@
     <ClCompile Include="src\data\dblink_list_adapter.cpp">
       <Filter>data</Filter>
     </ClCompile>
-    <ClCompile Include="src\task\manager.cpp">
-      <Filter>task</Filter>
-    </ClCompile>
-    <ClCompile Include="src\task\module.cpp">
-      <Filter>task</Filter>
-    </ClCompile>
-    <ClCompile Include="src\task\scheduler.cpp">
-      <Filter>task</Filter>
-    </ClCompile>
-    <ClCompile Include="src\task\thread_pool.cpp">
-      <Filter>task</Filter>
-    </ClCompile>
     <ClCompile Include="src\meta_dictionary\meta_stream.cpp">
       <Filter>meta_dictionary</Filter>
     </ClCompile>
@@ -206,10 +191,31 @@
     <ClCompile Include="src\meta_dictionary\view.cpp">
       <Filter>meta_dictionary</Filter>
     </ClCompile>
-    <ClCompile Include="src\meta_dictionary\function.cpp">
+    <ClCompile Include="src\meta_dictionary\parser_util.cpp">
       <Filter>meta_dictionary</Filter>
     </ClCompile>
-    <ClCompile Include="src\meta_dictionary\parser_util.cpp">
+    <ClCompile Include="src\meta_dictionary\pls_code.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_dictionary\type.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_dictionary\java_source.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_dictionary\synonym.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_dictionary\cluster.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_dictionary\db_link.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_dictionary\snapshot_log.cpp">
+      <Filter>meta_dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meta_dictionary\snapshot.cpp">
       <Filter>meta_dictionary</Filter>
     </ClCompile>
   </ItemGroup>
@@ -355,24 +361,6 @@
     <ClInclude Include="src\data\dblink_list_adapter.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="src\task\manager.h">
-      <Filter>task</Filter>
-    </ClInclude>
-    <ClInclude Include="src\task\module.h">
-      <Filter>task</Filter>
-    </ClInclude>
-    <ClInclude Include="src\task\priority_queue.h">
-      <Filter>task</Filter>
-    </ClInclude>
-    <ClInclude Include="src\task\scheduler.h">
-      <Filter>task</Filter>
-    </ClInclude>
-    <ClInclude Include="src\task\task.h">
-      <Filter>task</Filter>
-    </ClInclude>
-    <ClInclude Include="src\task\thread_pool.h">
-      <Filter>task</Filter>
-    </ClInclude>
     <ClInclude Include="src\meta_dictionary\meta_stream.h">
       <Filter>meta_dictionary</Filter>
     </ClInclude>
@@ -452,6 +440,42 @@
       <Filter>meta_dictionary</Filter>
     </ClInclude>
     <ClInclude Include="src\meta_dictionary\parser_util.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\pls_code.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\procedure.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\package.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\package_body.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\type.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\type_body.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\java_source.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\synonym.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\cluster.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\db_link.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\snapshot_log.h">
+      <Filter>meta_dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meta_dictionary\snapshot.h">
       <Filter>meta_dictionary</Filter>
     </ClInclude>
   </ItemGroup>

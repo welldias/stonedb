@@ -99,6 +99,7 @@
       <AdditionalIncludeDirectories>c:\oracle\x32\sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -116,7 +117,7 @@
       <AdditionalIncludeDirectories>c:\oracle\x64\sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,6 +137,7 @@
       <AdditionalIncludeDirectories>c:\oracle\x32\sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,6 +159,7 @@
       <AdditionalIncludeDirectories>c:\oracle\x64\sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -184,16 +187,22 @@
     <ClCompile Include="src\data\user_list_adapter.cpp" />
     <ClCompile Include="src\data\view_list_adapter.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\meta_dictionary\cluster.cpp" />
     <ClCompile Include="src\meta_dictionary\column.cpp" />
     <ClCompile Include="src\meta_dictionary\constraint.cpp" />
+    <ClCompile Include="src\meta_dictionary\db_link.cpp" />
     <ClCompile Include="src\meta_dictionary\db_object.cpp" />
-    <ClCompile Include="src\meta_dictionary\function.cpp" />
     <ClCompile Include="src\meta_dictionary\grant.cpp" />
     <ClCompile Include="src\meta_dictionary\grant_container.cpp" />
     <ClCompile Include="src\meta_dictionary\index.cpp" />
+    <ClCompile Include="src\meta_dictionary\java_source.cpp" />
     <ClCompile Include="src\meta_dictionary\parser_util.cpp" />
+    <ClCompile Include="src\meta_dictionary\pls_code.cpp" />
     <ClCompile Include="src\meta_dictionary\sequence.cpp" />
+    <ClCompile Include="src\meta_dictionary\snapshot.cpp" />
+    <ClCompile Include="src\meta_dictionary\snapshot_log.cpp" />
     <ClCompile Include="src\meta_dictionary\storage.cpp" />
+    <ClCompile Include="src\meta_dictionary\synonym.cpp" />
     <ClCompile Include="src\meta_dictionary\table.cpp" />
     <ClCompile Include="src\meta_dictionary\table_base.cpp" />
     <ClCompile Include="src\meta_dictionary\table_storage.cpp" />
@@ -201,6 +210,7 @@
     <ClCompile Include="src\meta_dictionary\meta_stream.cpp" />
     <ClCompile Include="src\meta_dictionary\string_stream.cpp" />
     <ClCompile Include="src\meta_dictionary\trigger.cpp" />
+    <ClCompile Include="src\meta_dictionary\type.cpp" />
     <ClCompile Include="src\meta_dictionary\view.cpp" />
     <ClCompile Include="src\oci20\auto_cursor.cpp" />
     <ClCompile Include="src\oci20\break_handler.cpp" />
@@ -222,10 +232,6 @@
     <ClCompile Include="src\oci20\string_var.cpp" />
     <ClCompile Include="src\oci20\timestamp_var.cpp" />
     <ClCompile Include="src\oci20\variable.cpp" />
-    <ClCompile Include="src\task\manager.cpp" />
-    <ClCompile Include="src\task\module.cpp" />
-    <ClCompile Include="src\task\scheduler.cpp" />
-    <ClCompile Include="src\task\thread_pool.cpp" />
     <ClCompile Include="src\utils\exception.cpp" />
     <ClCompile Include="src\utils\property.cpp" />
     <ClCompile Include="src\utils\settings.cpp" />
@@ -252,8 +258,10 @@
     <ClInclude Include="src\data\type_list_adapter.h" />
     <ClInclude Include="src\data\user_list_adapter.h" />
     <ClInclude Include="src\data\view_list_adapter.h" />
+    <ClInclude Include="src\meta_dictionary\cluster.h" />
     <ClInclude Include="src\meta_dictionary\column.h" />
     <ClInclude Include="src\meta_dictionary\constraint.h" />
+    <ClInclude Include="src\meta_dictionary\db_link.h" />
     <ClInclude Include="src\meta_dictionary\db_object.h" />
     <ClInclude Include="src\meta_dictionary\function.h" />
     <ClInclude Include="src\meta_dictionary\grant.h" />
@@ -261,17 +269,27 @@
     <ClInclude Include="src\meta_dictionary\index.h" />
     <ClInclude Include="src\meta_dictionary\index_partition.h" />
     <ClInclude Include="src\meta_dictionary\index_storage.h" />
+    <ClInclude Include="src\meta_dictionary\java_source.h" />
     <ClInclude Include="src\meta_dictionary\meta_dictionary.h" />
+    <ClInclude Include="src\meta_dictionary\package.h" />
+    <ClInclude Include="src\meta_dictionary\package_body.h" />
     <ClInclude Include="src\meta_dictionary\parser_util.h" />
     <ClInclude Include="src\meta_dictionary\partition.h" />
+    <ClInclude Include="src\meta_dictionary\pls_code.h" />
+    <ClInclude Include="src\meta_dictionary\procedure.h" />
     <ClInclude Include="src\meta_dictionary\sequence.h" />
+    <ClInclude Include="src\meta_dictionary\snapshot.h" />
+    <ClInclude Include="src\meta_dictionary\snapshot_log.h" />
     <ClInclude Include="src\meta_dictionary\storage.h" />
+    <ClInclude Include="src\meta_dictionary\synonym.h" />
     <ClInclude Include="src\meta_dictionary\table.h" />
     <ClInclude Include="src\meta_dictionary\table_base.h" />
     <ClInclude Include="src\meta_dictionary\table_column.h" />
     <ClInclude Include="src\meta_dictionary\table_space.h" />
     <ClInclude Include="src\meta_dictionary\table_storage.h" />
     <ClInclude Include="src\meta_dictionary\trigger.h" />
+    <ClInclude Include="src\meta_dictionary\type.h" />
+    <ClInclude Include="src\meta_dictionary\type_body.h" />
     <ClInclude Include="src\meta_dictionary\user.h" />
     <ClInclude Include="src\meta_dictionary\meta_settings.h" />
     <ClInclude Include="src\meta_dictionary\text_file_stream.h" />
@@ -299,12 +317,6 @@
     <ClInclude Include="src\oci20\string_var.h" />
     <ClInclude Include="src\oci20\timestamp_var.h" />
     <ClInclude Include="src\oci20\variable.h" />
-    <ClInclude Include="src\task\manager.h" />
-    <ClInclude Include="src\task\module.h" />
-    <ClInclude Include="src\task\priority_queue.h" />
-    <ClInclude Include="src\task\scheduler.h" />
-    <ClInclude Include="src\task\task.h" />
-    <ClInclude Include="src\task\thread_pool.h" />
     <ClInclude Include="src\utils\exception.h" />
     <ClInclude Include="src\utils\property.h" />
     <ClInclude Include="src\utils\settings.h" />

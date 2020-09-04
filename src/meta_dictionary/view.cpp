@@ -4,6 +4,7 @@
 
 #include "view.h"
 #include "constraint.h"
+#include "parser_util.h"
 
 namespace MetaDictionary {
 
@@ -162,17 +163,7 @@ namespace MetaDictionary {
         out.PutLine(") AS");
         nHeaderLines++;
 
-        if (!settings.SQLPlusCompatibility) {
-            out.PutLine(m_text);
-        }
-        else {
-            
-            std::string buffer;
-            std::stringstream stream(m_text);
-            while (std::getline(stream, buffer, '\n')) {
-                out.PutLine(buffer);
-            }
-        }
+        ParserUtil::WriteTextBlock(out, m_text, settings.SQLPlusCompatibility, settings.SQLPlusCompatibility);
 
         if (!m_viewConstraint.empty()) {
             out.MoveIndent(1);
