@@ -231,7 +231,7 @@ namespace MetaDictionary {
             out.Put(" INCLUDING ");
             
             auto it = m_columns.find(m_iotOverflowIncludeColumn - 1);
-            if (it != m_columns.end() == NULL)
+            if (it != m_columns.end())
                 throw Exception("IOT error: Invalid include column!");
             out.SafeWriteDBName(it->second->GetColumnName());
         }

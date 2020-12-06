@@ -95,16 +95,16 @@ int main(int argc, char *argv[])
     auto safety = Connect::Safety::None;
 
 #ifdef LINX_ENV
-    std::string user = "lasadb01_safe_fai";
-    std::string password = "lasadb01_safe_fai";
-    std::string tnsAlias = "ORA11GD";
-#else
     std::string user = "system";
-    std::string password = "custonil";
-    std::string tnsAlias = "";
+    std::string password = "passwd";
+    std::string tnsAlias = "XEPDB1";
+#else
+    std::string user = "user";
+    std::string password = "password";
+    std::string tnsAlias;
     std::string host = "localhost";
-    std::string port = "1521";
-    std::string sid = "XEPDB1";
+    std::string port = "9999";
+    std::string sid = "SID";
     bool serviceInsteadOfSid = true;
 #endif 
 
@@ -202,8 +202,33 @@ int main(int argc, char *argv[])
         new ConstraintListAdapter(ociSession.getConnect(), ConstraintListAdapter::Type::Check),
     };
 
-    for (int i = 0; i < (sizeof(listaDataprovider) / sizeof(ListDataProvider*)); i++)
-        delete std::exchange(listaDataprovider[i], nullptr);
+    std::string colName;
+    std::string colValue;
+    for (auto & i : listaDataprovider) {
+        try {
+            auto result = i->Query();    
+        } catch (...) {
+            std::cout << "Query error : " << std::to_string((int)i->GetInfoType()) << std::endl;
+            continue;
+        }
+        
+        for(size_t y=0; y<i->GetColCount(); y++) {
+            i->GetColHeader(y, colName);
+            std::cout << colName << " | ";
+        }
+        std::cout << std::endl;
+
+        for(size_t x=0; x<i->GetRowCount(); x++) {
+            for(size_t y=0; y<i->GetColCount(); y++) {
+                i->GetString(x, y, colValue);
+                std::cout << colValue << " | ";
+            }
+            std::cout << std::endl;
+        }
+    }
+
+    for (auto & i : listaDataprovider)
+        delete std::exchange(i, nullptr);
 
     ociSession.Close(false);
 

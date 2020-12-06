@@ -1,14 +1,14 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.17)
 project(stoneDB)
 
 set(CMAKE_BUILD_TYPE Debug)
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
-set (OCCI_LIB_NAME libocci.so)
-set (CLNT_LIB_NAME libclntsh.so)
-set (PTHD_LIB_NAME libpthread.so)
-link_directories(/opt/oracle)
+set(CMAKE_CXX_STANDARD 17)
+
+set (OCCI_LIB_NAME oci.lib)
+link_directories(./external/oci/lib/msvc)
 
 set(EXECUTABLE_OUTPUT_PATH "bin")
 
@@ -22,8 +22,8 @@ configure_file(
 )
 
 include_directories(
-  /opt/oracle/sdk/include
-  "${PROJECT_BINARY_DIR}"
+	./external/oci/include
+	"${PROJECT_BINARY_DIR}"
 )
 
 add_executable (stoneDB ${SOURCES})
